@@ -28,7 +28,7 @@
 \begin{center}
 	{\Large Compression of Linear Algebra Data Structures to Reduce Memory Access Latencies}
 	
-	Neil Lindquist
+	Neil Lindquist 
 	
 	\bigskip
 	\bigskip
@@ -67,6 +67,12 @@
 \clearpage
 
 
+\section{Proposal Summary}
+Some simulations and scientific computations require solving sparse linear systems of equations.
+However, these solver often spend more time fetching data from main memory, then doing the actual computation~\cite{Goumas:2009:performanceEval}.
+So, this project will attempt to improve the performance of these types of codes by using data compression.
+Specifically, various compression techniques will be applied to certain arrays in the main data structures of the conjugate gradient implementation present in the High Performance Conjugate Gradient (HPCG) Benchmark~\cite{Dongarra:2015:HPCG}.
+
 \section{Statement of Purpose}
 The goal of this project is to improve the performance of certain parts
 used in some scientific computations.
@@ -96,14 +102,9 @@ have the opportunity to provide significant improvements in performance, even if
 Specifically, data compression schemes with very simple decoding algorithms are being experimented with
 to find the most effective way to store the key data structures of the solvers.
 
-
-\section{Proposal Summary}
-
-This project is working at finding compression methods that improve performance by reducing memory access latencies.
-The High Performance Conjugate Gradient (HPCG) benchmark is being used as the codebase to test compression methods with~\cite{Dongarra:2015:HPCG}.
+The HPCG benchmark is being used as the codebase to test compression methods with~\cite{Dongarra:2015:HPCG}.
 This code is modified to utilize different compression methods, then is used to test the compression's performance.
-Because HPCG is a benchmark that uses a sparse, iterative linear solver to test performance,
-it provides both an implementation of a sparse, iterative linear solver (specificly Conjugate Gradient)
+It provides both a base implementation of a sparse, iterative linear solver (specificly Conjugate Gradient)
 and measures of performance for both the overall solver as well as the major components.
 Compression techniques being used include single precision floats, SZ compression and ZFP compression for floating point data
 and Elias Gamma coding, Elias Delta coding, SZ compression, Huffman coding for integers~\cite{Di:2016:SZ,Lindstrom:2014:zfp,Elias:1975:codeword,Huffman:1952:coding}.
