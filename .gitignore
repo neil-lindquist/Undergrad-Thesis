@@ -1,3 +1,4 @@
+#### Latex Generated Files
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -11,7 +12,7 @@
 *.cb
 *.cb2
 .*.lb
-
+*.synctex.gz
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
 *.bcf
@@ -19,9 +20,7 @@
 *-blx.aux
 *-blx.bib
 *.run.xml
-
-
-# beamer
+## beamer
 *.nav
 *.pre
 *.snm

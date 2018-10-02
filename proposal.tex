@@ -1,0 +1,134 @@
+\documentclass[titlepage]{article}
+
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{amsmath}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{mathtools}
+
+
+%number the bib as a section
+\patchcmd{\thebibliography}{\section*}{\section}{}{}
+\renewcommand\refname{Preliminary References}
+
+\begin{document}
+
+\title{
+	Compression of Linear Algebra Data Structures to Reduce Memory Access Latencies \\
+	\bigskip
+	\Large Thesis Proposal}
+\author{Neil Lindquist}
+\date{October 15th, 2018}
+
+\maketitle
+
+\begin{center}
+	{\Large Compression of Linear Algebra Data Structures to Reduce Memory Access Latencies}
+	
+	Neil Lindquist
+	
+	\bigskip
+	\bigskip
+	
+	\textbf{Approved By:}
+	
+	\bigskip
+	
+	Mike Heroux\\
+	\textit{Thesis Advisor}\\
+	\textit{Scientist in Residence}
+
+	\bigskip
+
+	%TODO find reader 1
+	Bob Hesse\\
+	\textit{Faculty Reader}\\
+	\textit{Associate Professor of Mathematics}
+
+	\bigskip
+
+	%TODO find reader 2
+	Jeremy Iverson\\
+	\textit{Faculty Reader}\\
+	\textit{Assistant Professor of Computer Science}
+	
+	\bigskip
+	
+	Imad Rahal\\
+	\textit{Chair, Department of Computer Science}
+	
+	\bigskip
+	
+	Bret Benesh\\
+	\textit{Chair, Deparment of Mathematics}
+\end{center}
+
+\clearpage
+
+
+\section{Statement of Purpose}
+The goal of this project is to improve the performance of certain parts
+used in some scientific computations.
+These calculations include problems such as modeling fluid flow, chemical processes and electromagnetism.
+The specific parts being optimized are iterative solvers for sparse, linear equations.
+The majority of the time spent in these types of solvers is spent moving data from main memory
+to the processor where the actual arithmetic is done~\cite{Lawlor:2013:compression}.
+So, by compressing the largest pieces of this data, this project will try to reduce the time spent waiting and thus improve the overall efficiency.
+This improvement can allow running important computations more often and with more detail.
+
+As a more detailed description of the computations being improved, a basic description of
+this type of linear solver follows.
+The specific problem this work focuses on is solving systems of linear equations.
+A simple example of a system of linear equations is finding values for \(x\) and \(y\) such that
+\begin{align*}
+	5x + 3y &= 10\\
+	3x + 3y &= 6
+\end{align*}
+are both true.
+Some of the linear system used in real-work problems, such as representing a set of physics equations,
+can become very large, with possibly hundreds of millions of equations~\cite{Davis:2011:FloridaMatrixCollection}.
+Not only does this large size result in long times to solve the problem,
+it means that the problem has to be stored in the slow-to-access main memory instead of the quick-to-access caches.
+Accessing main memory can take over 100 times as long as a single arithmetic operation~\cite{Goumas:2009:performanceEval}.
+So, reductions in the amount of memory used to store key components of the problem
+have the opportunity to provide significant improvements in performance, even if it increases the actual calculations needed.
+Specifically, data compression schemes with very simple decoding algorithms are being experimented with
+to find the most effective way to store the key data structures of the solvers.
+
+
+\section{Proposal Summary}
+
+This project is working at finding compression methods that improve performance by reducing memory access latencies.
+The High Performance Conjugate Gradient (HPCG) benchmark is being used as the codebase to test compression methods with~\cite{Dongarra:2015:HPCG}.
+This code is modified to utilize different compression methods, then is used to test the compression's performance.
+Because HPCG is a benchmark that uses a sparse, iterative linear solver to test performance,
+it provides both an implementation of a sparse, iterative linear solver (specificly Conjugate Gradient)
+and measures of performance for both the overall solver as well as the major components.
+Compression techniques being used include single precision floats, SZ compression and ZFP compression for floating point data
+and Elias Gamma coding, Elias Delta coding, SZ compression, Huffman coding for integers~\cite{Di:2016:SZ,Lindstrom:2014:zfp,Elias:1975:codeword,Huffman:1952:coding}.
+
+
+\section{Preliminary Outline}
+
+At the highest level, the thesis will have a vary simple outline.
+First, it will provide enough information to understand the goals, test problem, compression methods used and the interactions there of.
+Next will be the actual test results and analysis there of.
+Finally, the paper will present any conclusions discovered in the test results as well as ways the work can be extended in the future.
+The first section will cover a number of relevant topics.
+Firstly, the relevance and goal of this work will be presented.
+Next, the current state of the art for this type of computations will be described,
+including both the computational aspects and the underlying mathematics.
+After that will be a description of the code base used to create the test results.
+Then, a short discussion of restrictions on the compression and data access patterns will be provided.
+Finally, information on the various compression methods will be provided.
+The other two overall sections will be simpler.
+The test results will largely contain tables of times and other metrics, but will also contain analysis of the results.
+The concluding section will summarize the results and conclusions of the work as well as propose future projects that builds on these results.
+
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{bibliograph}
+
+\end{document}
