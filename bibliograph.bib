@@ -1,27 +1,7 @@
 
 
-@article{Davis:2011:FloridaMatrixCollection,
-	author = {Davis, Timothy A. and Hu, Yifan},
-	title = {The University of Florida Sparse Matrix Collection},
-	journal = {ACM Trans. Math. Softw.},
-	issue_date = {November 2011},
-	volume = {38},
-	number = {1},
-	month = dec,
-	year = {2011},
-	issn = {0098-3500},
-	pages = {1:1--1:25},
-	articleno = {1},
-	numpages = {25},
-	url = {http://doi.acm.org/10.1145/2049662.2049663},
-	doi = {10.1145/2049662.2049663},
-	acmid = {2049663},
-	publisher = {ACM},
-	address   = {New York, NY, USA},
-	keywords  = {Graph drawing, multilevel algorithms, performance evaluation, sparse matrices},
-	annote    = {A collection of sparse, linear systems from real world problems.}
-}
- 
+@comment{----------------Compression-----------------------------}
+
 
 @article{Elias:1975:codeword, 
 	author    = {P. Elias}, 
@@ -89,7 +69,6 @@
 }
 
 
-@comment{ zfp compression: }
 @article{Lindstrom:2014:zfp, 
 	author    = {P. Lindstrom}, 
 	journal   = {IEEE Transactions on Visualization and Computer Graphics}, 
@@ -106,20 +85,7 @@
 }
 
 
-@techreport {Dongarra:2015:HPCG,
-	author    = {Jack Dongarra and Michael Heroux and Piotr Luszczek},
-	title     = {HPCG Benchmark: a New Metric for Ranking High Performance Computing Systems},
-	journal   = {University of Tennessee Computer Science Technical Report },
-	number    = {UT-EECS-15-736},
-	month     = {November},
-	year      = {2015},
-	institution={Electrical Engineering and Computer Sciente Department, Knoxville, Tennessee},
-	publisher = {University of Tennessee},
-	keywords  = {Additive Schwarz, HPC Benchmarking, Multigrid smoothing, Preconditioned Conjugate Gradient, Validation and Verification},
-	url       = {http://www.eecs.utk.edu/resources/library/file/1047/ut-eecs-15-736.pdf},
-	annote    = {HPCG is the code base used to test different compression techniques.  This is the paper that describes it as a benchmark.  Nuff said.}
-}
-
+@comment{----------------Solver BG Info--------------------------}
 
 @book{Saad:2003:IterativeMethods,
 	author    = {Saad, Y.},
@@ -132,6 +98,16 @@
 	annote    = {A textbook on iterative methods for sparse linear systems.  In particular, it contains a description of CSR format.}
 } 
 
+@book{Kincaid:2009:Numerical,
+	title     = {Numerical Analysis: Mathematics of Scientific Computing},
+	author    = {Kincaid, David R. and Cheney, E. Ward},
+	isbn      = {9780821847886},
+	lccn      = {2008047389},
+	series    = {Pure and applied undergraduate texts},
+	year      = {2002},
+	publisher = {American Mathematical Society},
+	annote    = {A general numerical analysis textbook, including iterative methods}
+}
 
 @Article{Goumas:2009:performanceEval,
 	author    = {Goumas, Georgios
@@ -153,6 +129,91 @@
 	annote    = {An evaluation of the performance of SpMV on modern hardware.  IE memory bound computation.}
 }
 
+@techreport{Shewchuk:1994:IntroToCG,
+	author    = {Shewchuk, Jonathan R},
+	title     = {An Introduction to the Conjugate Gradient Method Without the Agonizing Pain},
+	year      = {1994},
+	publisher = {Carnegie Mellon University},
+	address   = {Pittsburgh, PA, USA},
+	institution={Carnegie Mellon University}
+} 
+
+
+
+
+@comment{----------------------Misc------------------------------}
+
+
+@article{Davis:2011:FloridaMatrixCollection,
+	author = {Davis, Timothy A. and Hu, Yifan},
+	title = {The University of Florida Sparse Matrix Collection},
+	journal = {ACM Trans. Math. Softw.},
+	issue_date = {November 2011},
+	volume = {38},
+	number = {1},
+	month = dec,
+	year = {2011},
+	issn = {0098-3500},
+	pages = {1:1--1:25},
+	articleno = {1},
+	numpages = {25},
+	url = {http://doi.acm.org/10.1145/2049662.2049663},
+	doi = {10.1145/2049662.2049663},
+	acmid = {2049663},
+	publisher = {ACM},
+	address   = {New York, NY, USA},
+	keywords  = {Graph drawing, multilevel algorithms, performance evaluation, sparse matrices},
+	annote    = {A collection of sparse, linear systems from real world problems.}
+}
+
+
+@techreport{Dongarra:2015:HPCG,
+	author    = {Jack Dongarra and Michael Heroux and Piotr Luszczek},
+	title     = {HPCG Benchmark: a New Metric for Ranking High Performance Computing Systems},
+	journal   = {University of Tennessee Computer Science Technical Report },
+	number    = {UT-EECS-15-736},
+	month     = {November},
+	year      = {2015},
+	institution={Electrical Engineering and Computer Sciente Department, Knoxville, Tennessee},
+	publisher = {University of Tennessee},
+	keywords  = {Additive Schwarz, HPC Benchmarking, Multigrid smoothing, Preconditioned Conjugate Gradient, Validation and Verification},
+	url       = {http://www.eecs.utk.edu/resources/library/file/1047/ut-eecs-15-736.pdf},
+	annote    = {HPCG is the code base used to test different compression techniques.  This is the paper that describes it as a benchmark.  Nuff said.}
+}
+
+@book{Higham:1996:ErrorBounds,
+	author    = {Higham, Nicholas J.},
+	title     = {Accuracy and Stability of Numerical Algorithms},
+	year      = {1996},
+	isbn      = {0898713552},
+	publisher = {Society for Industrial and Applied Mathematics},
+	address   = {Philadelphia, PA, USA},
+	annote    = {The author takes a detailed look at calculating error bounds
+	             for floating point arithmetic and algorithms.  Additionally,
+	             there is some discussion on how to minimize error in said
+	             algorithms.},
+	alcuinref = {QA297 .H53 1996}
+}
+
+
+@article{Claude-Pierre:2013:improvedErrorBound,
+	author    = {Claude-Pierre Jeannerod and
+	             Siegfried M. Rump},
+	title     = {Improved Error Bounds for Inner Products in Floating-Point Arithmetic},
+	journal   = {SIAM Journal on Matrix Analysis and Applications},
+	volume    = {34},
+	number    = {2},
+	pages     = {338-344},
+	year      = {2013},
+	doi       = {10.1137/120894488},
+	URL       = {http://dx.doi.org/10.1137/120894488},
+	eprint    = {http://dx.doi.org/10.1137/120894488},
+	annote    = {The authors improve on the error bound for inner products from Higham's 
+	             \textit{Accuracy and Stability of Numerical Algorithms}.}
+}
+
+
+@comment{---------------------Mixed Prec Info----------------------------------}
 
 @article{Buttari:2008:mixedPrec,
  author     = {Buttari, Alfredo and
@@ -282,23 +343,7 @@
                solve faster.  The algorithm in question first solved
                the system in single precision then refined it to double
                precision quality.}
-} 
-
-
-
-@book{Higham:1996:ErrorBounds,
- author     = {Higham, Nicholas J.},
- title      = {Accuracy and Stability of Numerical Algorithms},
- year       = {1996},
- isbn       = {0898713552},
- publisher  = {Society for Industrial and Applied Mathematics},
- address    = {Philadelphia, PA, USA},
- annote     = {The author takes a detailed look at calculating error bounds
-               for floating point arithmetic and algorithms.  Additionally,
-               there is some discussion on how to minimize error in said
-               algorithms.},
- alcuinref  = {QA297 .H53 1996}
-} 
+}  
 
 
 @article{Hogg:2010:multiplePasses,
@@ -516,22 +561,6 @@
                arithmetic at little or no performancepenalty.''}
 } 
 
-
-@article{Claude-Pierre:2013:improvedErrorBound,
- author     = {Claude-Pierre Jeannerod and
-               Siegfried M. Rump},
- title      = {Improved Error Bounds for Inner Products in Floating-Point Arithmetic},
- journal    = {SIAM Journal on Matrix Analysis and Applications},
- volume     = {34},
- number     = {2},
- pages      = {338-344},
- year       = {2013},
- doi        = {10.1137/120894488},
- URL        = {http://dx.doi.org/10.1137/120894488},
- eprint     = {http://dx.doi.org/10.1137/120894488},
- annote     = {The authors improve on the error bound for inner products from Higham's 
-               \textit{Accuracy and Stability of Numerical Algorithms}.}
-}
 
 
 @inproceedings{Jenkins:2012:droppedBytes,
