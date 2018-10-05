@@ -1,0 +1,99 @@
+\documentclass{article}
+
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{amsmath}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1cm} 
+		\LARGE{\textbf{\input{title.txt}}}
+		
+		\vspace{0.5cm}
+		\Large{An All-College Thesis}
+		
+		\vspace{2cm}
+		\Large{College of Saint Benedict/Saint John's University}
+		
+		\vspace{2cm}
+		
+		\large{by Neil Lindquist}
+		
+		\large{April 2018}
+		
+	\end{center}
+\end{titlepage}
+
+%Signature page
+\begin{flushleft}
+	\large{\textbf{Project Title:} \input{title.txt}}\\
+	Approved by:\\
+	\vspace{1cm}
+	\hrulefill \\
+	\large{Mike Heroux}\\
+	\small{Scientist in Residence}\\
+	\vspace{1.5cm}
+	\hrulefill \\
+	\large{Robert Hesse}\\
+	\small{Associate Professor of Math}\\
+	\vspace{1.5cm}
+	\hrulefill \\
+	\large{Jeremy Iverson}\\
+	\small{Assistant Professor of Computer Science}\\
+	\vspace{1.5cm}
+	\hrulefill \\
+	\large{Bret Benesh}\\
+	\small{Chair, Department of Mathematics}\\
+	\vspace{1.5cm}
+	\hrulefill \\
+	\large{Imad Rahal}\\
+	\small{Chair, Department of Computer Science}\\
+	\vspace{1.5cm}
+	\hrulefill \\
+	\small{Director, All College Thesis Program}\\
+\end{flushleft}
+
+\clearpage
+
+\vspace*{\fill}
+\begin{abstract}
+	%TODO write
+\end{abstract}
+\vspace*{\fill}
+
+\clearpage
+
+\tableofcontents
+
+\clearpage
+
+\section{Introduction}
+
+%TODO setup problem and importance 
+
+\section{Background}
+
+%TODO discuss background informations
+
+\section{Test Results}
+
+%TODO tables for days
+%TODO conclusions from test results
+%TODO test setup
+
+\section{Conclusions and Future Work}
+
+%TODO conclusions and future work
+
+
+%number the bib as a section
+\patchcmd{\thebibliography}{\section*}{\section}{}{}
+
+\bibliographystyle{plain}
+\bibliography{bibliograph}
+
+\end{document}
