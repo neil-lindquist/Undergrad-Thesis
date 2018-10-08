@@ -69,7 +69,7 @@
 
 \section{Proposal Summary}
 Some scientific and engineering computations require solving sparse, linear systems of equations.
-However, these solver often spend much of their time fetching data from main memory, while the processors are idle~\cite{Goumas:2009:performanceEval}.
+However, these solvers often spend much of their time fetching data from main memory, while the processors are idle~\cite{Goumas:2009:performanceEval}.
 So, this project will attempt to improve the performance of these solvers by using data compression.
 Specifically, various compression techniques will be applied to certain arrays in the main data structures of the conjugate gradient implementation present in the High Performance Conjugate Gradient (HPCG) Benchmark~\cite{Dongarra:2015:HPCG}.
 
@@ -83,7 +83,7 @@ So, by compressing the largest pieces of this data, this project will try to red
 This improvement can allow running important computations more often and with more detail.
 
 As a more detailed description of the computations being improved, a basic description of this type of linear solver follows.
-The specific problem this work focuses on is solving systems of linear equations.
+The specific problem under consideration is solving systems of linear equations.
 A simple example of a system of linear equations is finding values for \(x\) and \(y\) such that
 \begin{align*}
 	5x + 3y &= 10\\
@@ -98,15 +98,15 @@ So, reductions in the amount of memory used to store key components of the probl
 Specifically, data compression schemes with very simple decoding algorithms are being experimented with
 to find the most effective way to store the key data structures of the solvers.
 
-The HPCG benchmark is being used as the codebase to test compression methods with~\cite{Dongarra:2015:HPCG}.
+The HPCG benchmark is being used as the codebase for testing compression methods~\cite{Dongarra:2015:HPCG}.
 This code is modified to utilize different compression methods, then is used to test the compression's performance.
 It provides both a base implementation of a sparse, iterative linear solver (specificly Conjugate Gradient) and measures of performance for both the overall solver as well as the major components.
-Compression techniques being used include single precision floats, SZ compression and ZFP compression for floating point data and Elias Gamma coding, Elias Delta coding, SZ compression, Huffman coding for integers~\cite{Di:2016:SZ,Lindstrom:2014:zfp,Elias:1975:codeword,Huffman:1952:coding}.
+Compression techniques being used include single precision floats, SZ compression and ZFP compression for floating point data and Elias Gamma coding, Elias Delta coding, SZ compression and Huffman coding for integers~\cite{Di:2016:SZ,Lindstrom:2014:zfp,Elias:1975:codeword,Huffman:1952:coding}.
 
 
 \section{Preliminary Outline}
 
-At the highest level, the thesis will have a vary simple outline.
+At the highest level, the thesis will have a very simple outline.
 First, it will provide enough information to understand the goals, test problem, compression methods used and the interactions of these parts of the project.
 Next will be the actual test results and analysis of the results.
 Finally, the paper will present any conclusions discovered in the test results as well as ways the work can be extended in the future.
@@ -117,7 +117,7 @@ including both the computational aspects and the underlying mathematics.
 After that will be a description of the code base used to create the test results.
 Then, a short discussion of data access patterns and restrictions to the compressions will be provided.
 Finally, there will be descriptions of the various compression methods used.
-The other two main sections will be simpler.
+The Test Result and Conclusions sections will be more straight forward.
 The test results will largely contain tables of times and other metrics, but will also contain analysis of the results.
 The concluding section will summarize the results and conclusions of the work as well as propose future projects that builds on these results.
 
