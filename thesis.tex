@@ -3,10 +3,21 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{etoolbox}
 \usepackage{hyperref}
 
+
+%math typeseting
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+
 \begin{document}
+
+%Example environment
+\theoremstyle{definition}
+\newtheorem{example}{Example}
 
 \begin{titlepage}
 	\begin{center}
@@ -72,22 +83,16 @@
 \clearpage
 
 \section{Introduction}
-
-%TODO setup problem and importance 
+\input{sections/1.Introduction.tex}
 
 \section{Background}
-
-%TODO discuss background informations
+\input{sections/2.Background.tex}
 
 \section{Test Results}
-
-%TODO tables for days
-%TODO conclusions from test results
-%TODO test setup
+\input{"sections/3.Test Results.tex"}
 
 \section{Conclusions and Future Work}
-
-%TODO conclusions and future work
+\input{sections/4.Conclusion.tex}
 
 
 %number the bib as a section
