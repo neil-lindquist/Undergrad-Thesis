@@ -1,0 +1,59 @@
+Conjugate Gradient is the iterative solver used by HPCG~\cite{Dongarra:2015:HPCG}.
+Symmetric, positive definite matrices will guarantee the converge of Conjugate Gradient to the correct solution within \(n\) iterations when using exact algebra~\cite{Saad:2003:IterativeMethods}.
+As an iterative method, Conjugate Gradient can provide a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
+%TODO go into more high level details of CG
+
+To understand the Conjugate Gradient, first consider the quadratic form of \(\mat{A}\vec{x} = \vec{b}\).
+The quadratic form is a function \(f:\mathbb{R}^n\to\mathbb{R}\) where
+\begin{equation}
+\label{eq:quad-form}
+	f(\vec{x}) = \frac{1}{2}\vec{x}\cdot\left(\mat{A}\vec{x}\right) - \vec{b}\cdot\vec{x}
+\end{equation}
+for some \(c\in\mathbb{R}\).
+Note that
+\begin{align*}
+	\nabla f\left(\vec{x}\right)
+	&= \nabla \left(\frac{1}{2}\vec{x}\cdot\left(\mat{A}\vec{x}\right) - \vec{b}\cdot\vec{x}\right) \\
+	&= \frac{1}{2}\nabla \left(\vec{x}\cdot\left(\mat{A}\vec{x}\right)\right) - \nabla\left(\vec{b}\cdot\vec{x}\right) \\
+	&= \frac{1}{2}\left(\mat{A}\vec{x}+\mat{A}^T\vec{x}\right)-\vec{b}
+\end{align*}
+Then, when \(\mat{A}\) is symmetric,
+\begin{equation*}
+	\frac{\partial f(\vec{x})}{\partial\vec{x}} = \mat{A}\vec{x} - \vec{b}
+\end{equation*}
+So, the solution to \(\mat{A}\vec{x} = \vec{b}\) is the sole critical point of \(f\).
+%TODO find citation for second derivative test
+Since \(\mat{A}\) is the Hessian matrix of \(f\) at the point, if \(\mat{A}\) is positive definite, then that critical point is a minimum.
+Thus, if \(\mat{A}\) is a symmetric, positive definite matrix, then the minimum of \(f\) is the solution to \(\mat{A}\vec{x} = \vec{b}\)~\cite{Shewchuk:1994:IntroToCG}.
+
+The Method of Steepest Decent is similar to Conjugate Gradient, but simpler to initially understand.
+The method takes an initial \(\vec{x}_0\) and repeatedly computes improved points, \(\vec{x}_1, \vec{x}_2, \dots\), until reaching a point close enough to the minimum of Equation~\ref{eq:quad-form}.
+%TODO cite multi-calc source
+Because the gradient at a point is the direction of maximal increase, \(\vec{x}_{i+1} = \vec{x}_i + \alpha \vec{r}_i\) for some \(\alpha > 0\) and where \(\vec{r}_i = -\nabla f\left(\vec{x}_i\right) = \vec{b} - \mat{A}\vec{x}_i\) is the residual of \(\vec{x}_i\).
+The value for \(\alpha\) that minimizes \(f\left(\vec{x}_{i+1}\right)\) is when 
+\begin{align*}
+	0
+	&= \frac{\partial f\left(\vec{x}_{i+1}\right)}{\partial \alpha} \\
+	&= \frac{\partial f\left(\vec{x}_i + \alpha \vec{r}_i\right)}{\partial \alpha} \\
+	&= \nabla f\left(\vec{x}_i+\alpha\vec{r}_i\right) \cdot \vec{r}_i \\
+	&= \left(\mat{A}\left(\vec{x}_i+\alpha\vec{r}_i\right)-\vec{b}\right)\cdot \vec{r}_i \\
+	&= \left(\mat{A}\vec{x}_i-\vec{b}\right)\cdot \vec{r}_i + \alpha\mat{A}\vec{r}_i\cdot \vec{r}_i\\
+%
+	-\alpha\mat{A}\vec{r}_i\cdot \vec{r}_i
+	&= \left(\mat{A}\vec{x}_i-\vec{b}\right)\cdot \vec{r}_i \\
+%
+	\alpha
+	&= \frac{\vec{r}_i\cdot \vec{r}_i}{\mat{A}\vec{r}_i\cdot\vec{r}_i}.
+\end{align*}
+The resulting steps for the Method of Steepest Decent are
+\begin{align*}
+	\vec{r}_i &= \vec{b} - \mat{A}\vec{x}_i \\
+	\alpha &= \frac{\vec{r}_i\cdot \vec{r}_i}{\mat{A}\vec{r}_i\cdot\vec{r}_i}\\
+	\vec{x}_{i+1} &= \vec{x}_i + \alpha\vec{r}_i
+\end{align*}
+until \(\|\vec{r}_i\|\) is less than some tolerance~\cite{Shewchuk:1994:IntroToCG}.
+
+
+\begin{example}
+	%TODO make example
+\end{example}
