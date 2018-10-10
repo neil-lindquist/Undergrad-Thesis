@@ -69,20 +69,19 @@
 
 \section{Proposal Summary}
 Some scientific and engineering computations require solving sparse, linear systems of equations.
-However, these solvers often spend much of their time fetching data from main memory, while the processors are idle~\cite{Goumas:2009:performanceEval}.
+However, these solver routines often spend much of their time fetching data from main memory, while the processors are idle~\cite{Goumas:2009:performanceEval}.
 So, this project will attempt to improve the performance of these solvers by using data compression.
-Specifically, various compression techniques will be applied to certain arrays in the main data structures of the conjugate gradient implementation present in the High Performance Conjugate Gradient (HPCG) Benchmark~\cite{Dongarra:2015:HPCG}.
+Specifically, various compression techniques will be applied to certain arrays in the main data structures of the conjugate gradient implementation present in the High Performance Conjugate Gradient Benchmark~\cite{Dongarra:2015:HPCG}.
 
 \section{Statement of Purpose}
-The goal of this project is to improve the performance of certain parts
-used in some scientific and engineering computations.
+The goal of this project is to improve the performance of certain codes used in some scientific and engineering computations.
 These calculations include problems such as modeling fluid flow, chemical processes and electromagnetism.
 The specific parts being optimized are iterative solvers for sparse, linear equations.
 The majority of the time spent in these types of solvers is spent moving data from main memory to the processor where the actual arithmetic is done~\cite{Lawlor:2013:compression}.
-So, by compressing the largest pieces of this data, this project will try to reduce the time spent waiting and thus improve the overall efficiency.
-This improvement can allow running important computations more often and with more detail.
+So, by compressing the largest pieces of this data, this project will try to reduce the time spent waiting and thus improve the overall performance of the computation.
+The reduction in time spent on the calculations can allow computations to be run more frequently and with higher detail on a given computer system.
 
-As a more detailed description of the computations being improved, a basic description of this type of linear solver follows.
+A basic description of sparse, iterative linear solvers follows to provide a more detailed description of the computations being improved.
 The specific problem under consideration is solving systems of linear equations.
 A simple example of a system of linear equations is finding values for \(x\) and \(y\) such that
 \begin{align*}
@@ -90,15 +89,15 @@ A simple example of a system of linear equations is finding values for \(x\) and
 	3x + 3y &= 6
 \end{align*}
 are both true.
-Some of the linear system used in real-work problems, such as representing a set of physics equations, can become very large, with possibly hundreds of millions of equations~\cite{Davis:2011:FloridaMatrixCollection}.
+Some of the linear system used in real-world problems, such as representing a set of physics equations, can become very large, with possibly hundreds of millions of equations~\cite{Davis:2011:FloridaMatrixCollection}.
 Not only does this large size result in long times to solve the problem,
 it means that the problem has to be stored in the slow-to-access main memory instead of the quick-to-access caches.
 Accessing main memory can take over 100 times as long as a single arithmetic operation~\cite{Goumas:2009:performanceEval}.
-So, reductions in the amount of memory used to store key components of the problem have the opportunity to provide significant improvements in performance, even if it increases the actual calculations needed.
+So, reductions in the amount of memory used to store key components of the problem have the opportunity to provide significant improvements in performance.
 Specifically, data compression schemes with very simple decoding algorithms are being experimented with
 to find the most effective way to store the key data structures of the solvers.
 
-The HPCG benchmark is being used as the codebase for testing compression methods~\cite{Dongarra:2015:HPCG}.
+The High Performance Conjugate Gradient Benchmark is being used as the codebase for testing compression methods~\cite{Dongarra:2015:HPCG}.
 This code is modified to utilize different compression methods, then is used to test the compression's performance.
 It provides both a base implementation of a sparse, iterative linear solver (specificly Conjugate Gradient) and measures of performance for both the overall solver as well as the major components.
 Compression techniques being used include single precision floats, SZ compression and ZFP compression for floating point data and Elias Gamma coding, Elias Delta coding, SZ compression and Huffman coding for integers~\cite{Di:2016:SZ,Lindstrom:2014:zfp,Elias:1975:codeword,Huffman:1952:coding}.
@@ -106,20 +105,17 @@ Compression techniques being used include single precision floats, SZ compressio
 
 \section{Preliminary Outline}
 
-At the highest level, the thesis will have a very simple outline.
-First, it will provide enough information to understand the goals, test problem, compression methods used and the interactions of these parts of the project.
-Next will be the actual test results and analysis of the results.
-Finally, the paper will present any conclusions discovered in the test results as well as ways the work can be extended in the future.
-The first section will cover a number of relevant topics.
-Firstly, the relevance and goals of this work will be presented.
+The thesis will have three main sections: background information, test results and conclusions.
+The first section will cover a number of relevant topics needed to understand the goals, test problem, compression methods and the interactions of these parts of the project.
+First, the relevance and goals of this work will be presented.
 Next, the current state of the art for this type of computations will be described,
 including both the computational aspects and the underlying mathematics.
 After that will be a description of the code base used to create the test results.
 Then, a short discussion of data access patterns and restrictions to the compressions will be provided.
 Finally, there will be descriptions of the various compression methods used.
 The Test Result and Conclusions sections will be more straight forward.
-The test results will largely contain tables of times and other metrics, but will also contain analysis of the results.
-The concluding section will summarize the results and conclusions of the work as well as propose future projects that builds on these results.
+The test results will largely contain tables of times and other metrics, but will also contain analysis of the results and information to reproduce the results.
+The concluding section will summarize the results and conclusions of the work as well as ways the work can be built on in the future.
 
 
 \nocite{*}
