@@ -19,7 +19,7 @@ Note that
 \end{align*}
 Then, when \(\mat{A}\) is symmetric,
 \begin{equation*}
-	\frac{\partial f(\vec{x})}{\partial\vec{x}} = \mat{A}\vec{x} - \vec{b}
+	\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}
 \end{equation*}
 So, the solution to \(\mat{A}\vec{x} = \vec{b}\) is the sole critical point of \(f\).
 %TODO find citation for second derivative test
@@ -30,28 +30,28 @@ The Method of Steepest Decent is similar to Conjugate Gradient, but simpler to i
 The method takes an initial \(\vec{x}_0\) and repeatedly computes improved points, \(\vec{x}_1, \vec{x}_2, \dots\), until reaching a point close enough to the minimum of Equation~\ref{eq:quad-form}.
 %TODO cite multi-calc source
 Because the gradient at a point is the direction of maximal increase, \(\vec{x}_{i+1} = \vec{x}_i + \alpha \vec{r}_i\) for some \(\alpha > 0\) and where \(\vec{r}_i = -\nabla f\left(\vec{x}_i\right) = \vec{b} - \mat{A}\vec{x}_i\) is the residual of \(\vec{x}_i\).
-The value for \(\alpha\) that minimizes \(f\left(\vec{x}_{i+1}\right)\) is when 
+So, the value for \(\alpha\) that minimizes \(f\left(\vec{x}_{i+1}\right)\) occurs when
 \begin{align*}
 	0
-	&= \frac{\partial f\left(\vec{x}_{i+1}\right)}{\partial \alpha} \\
-	&= \frac{\partial f\left(\vec{x}_i + \alpha \vec{r}_i\right)}{\partial \alpha} \\
+	&= \frac{\mathrm{d}}{\mathrm{d} \alpha} f\left(\vec{x}_{i+1}\right) \\
+	&= \frac{\mathrm{d}}{\mathrm{d} \alpha} f\left(\vec{x}_i + \alpha \vec{r}_i\right) \\
 	&= \nabla f\left(\vec{x}_i+\alpha\vec{r}_i\right) \cdot \vec{r}_i \\
 	&= \left(\mat{A}\left(\vec{x}_i+\alpha\vec{r}_i\right)-\vec{b}\right)\cdot \vec{r}_i \\
 	&= \left(\mat{A}\vec{x}_i-\vec{b}\right)\cdot \vec{r}_i + \alpha\mat{A}\vec{r}_i\cdot \vec{r}_i\\
 %
 	-\alpha\mat{A}\vec{r}_i\cdot \vec{r}_i
-	&= \left(\mat{A}\vec{x}_i-\vec{b}\right)\cdot \vec{r}_i \\
+	&= -\vec{r}_i\cdot \vec{r}_i \\
 %
 	\alpha
-	&= \frac{\vec{r}_i\cdot \vec{r}_i}{\mat{A}\vec{r}_i\cdot\vec{r}_i}.
+	&= \frac{\vec{r}_i\cdot \vec{r}_i}{\vec{r}_i\cdot\mat{A}\vec{r}_i}.
 \end{align*}
 The resulting steps for the Method of Steepest Decent are
 \begin{align*}
 	\vec{r}_i &= \vec{b} - \mat{A}\vec{x}_i \\
-	\alpha &= \frac{\vec{r}_i\cdot \vec{r}_i}{\mat{A}\vec{r}_i\cdot\vec{r}_i}\\
+	\alpha &= \frac{\vec{r}_i\cdot \vec{r}_i}{\vec{r}_i\cdot\mat{A}\vec{r}_i}\\
 	\vec{x}_{i+1} &= \vec{x}_i + \alpha\vec{r}_i
 \end{align*}
-until \(\|\vec{r}_i\|\) is less than some tolerance~\cite{Shewchuk:1994:IntroToCG}.
+until \(\left\|\vec{r}_i\right\|\) is less than some tolerance~\cite{Shewchuk:1994:IntroToCG}.
 
 
 \begin{example}
