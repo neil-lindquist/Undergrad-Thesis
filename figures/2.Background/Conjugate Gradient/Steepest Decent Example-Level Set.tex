@@ -1,0 +1,26 @@
+\begin{figure}
+	
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel=\(x_1\),
+			ylabel=\(x_2\),
+			view={0}{90},
+		]
+			\addplot3 [
+				domain=0:4,
+				domain y=0:4,
+				samples=50,
+				samples y=50,
+				contour gnuplot={
+					levels={-7, -4, -1, 2, 5, 8},
+					labels=false,
+					draw color=black,
+					handler/.style=smooth
+				},
+			] {.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
+		\end{axis}
+	\end{tikzpicture}
+	
+	\caption{Level sets of quadratic function for Example~\ref{ex:CG-SteepestDecent}}
+	\label{fig:CG-steepestDecentExample-LevelSet}
+\end{figure}
