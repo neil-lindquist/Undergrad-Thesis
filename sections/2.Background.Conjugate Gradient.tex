@@ -15,7 +15,6 @@ Note that
 \begin{align*}
 	\nabla f\left(\vec{x}\right)
 	&= \nabla \left(\frac{1}{2}\vec{x}\cdot\left(\mat{A}\vec{x}\right) - \vec{b}\cdot\vec{x}\right) \\
-	&= \frac{1}{2}\nabla \left(\vec{x}\cdot\left(\mat{A}\vec{x}\right)\right) - \nabla\left(\vec{b}\cdot\vec{x}\right) \\
 	&= \frac{1}{2}\left(\mat{A}\vec{x}+\mat{A}^T\vec{x}\right)-\vec{b}
 \end{align*}
 Then, when \(\mat{A}\) is symmetric,
@@ -41,19 +40,16 @@ Thus, choose \(\alpha_i\) such that
 	&= \frac{\mathrm{d}}{\mathrm{d} \alpha_i} f\left(\vec{x}_{i+1}\right) \\
 	&= \frac{\mathrm{d}}{\mathrm{d} \alpha_i} f\left(\vec{x}_i + \alpha \vec{r}_i\right) \\
 	&= \nabla f\left(\vec{x}_i+\alpha_i\vec{r}_i\right) \cdot \vec{r}_i \\
-	&= \left(\mat{A}\left(\vec{x}_i+\alpha_i\vec{r}_i\right)-\vec{b}\right)\cdot \vec{r}_i \\
 	&= \left(\mat{A}\vec{x}_i-\vec{b}\right)\cdot \vec{r}_i + \alpha_i\mat{A}\vec{r}_i\cdot \vec{r}_i\\
-%
-	-\alpha_i\mat{A}\vec{r}_i\cdot \vec{r}_i
-	&= -\vec{r}_i\cdot \vec{r}_i \\
 %
 	\alpha_i
 	&= \frac{\vec{r}_i\cdot \vec{r}_i}{\vec{r}_i\cdot\mat{A}\vec{r}_i}.
 \end{align*}
-Note that by premultiplying both sides of Equation~\ref{eq:cg-xUpdate} by \(-\mat{A}\) then adding \(\vec{b}\), the residual can be computed
+Note that by using Equation~\ref{eq:cg-xUpdate}, we can derive
 \[
-	\vec{r}_{i+1} = \vec{r}_i - \alpha\mat{A}\vec{r}_i
-\].
+	\vec{r}_{i+1} = \vec{r}_i - \alpha\mat{A}\vec{r}_i.
+\]
+Because \(\mat{A}\vec{r}_i\) is already computed to find \(\alpha_i\), one less matrix-vector product is needed per iteration.
 The resulting steps for the Method of Steepest Decent are
 %TODO consider switching to proper algorithm
 \begin{align*}
@@ -151,8 +147,35 @@ This results in the following algorithm for Conjugate Gradient
 \begin{align*}
 	\vec{d}_0 = \vec{r}_0 &= \vec{b} - \mat{A}\vec{x}_0 \\
 	\alpha_i &= \frac{\vec{r}_i\cdot\vec{r}_i}{\vec{d}_i\cdot \mat{A}\vec{d}_i} \\
-	\vec{x}_{i+1} &= \vec{x}_i + \alpha_i\vec{r}_i \\
-	\vec{r}_{i+1} &= \vec{r}_i - \alpha\mat{A}\vec{r}_i \\
+	\vec{x}_{i+1} &= \vec{x}_i + \alpha_i\vec{d}_i \\
+	\vec{r}_{i+1} &= \vec{r}_i - \alpha\mat{A}\vec{d}_i \\
 	\beta_{i+1} &= \frac{\vec{r}_{i+1}\cdot\vec{r}_{i+1}}{\vec{r}_i\cdot\vec{r}_i} \\
-	\vec{d}_{i+1} &= \vec{r}_{i+1} + \beta_{i+1}\vec{d}_i
+	\vec{d}_{i+1} &= \vec{r}_{i+1} + \beta_{i+1}\vec{d}_i,
 \end{align*}
+iterating until \(\left\|\vec{r}_i\right\|\) is less than some tolerance.
+
+% 2 1
+% 1 3
+\begin{example}
+\label{ex:CG-CG}
+Solving the problem from Example~\ref{ex:CG-SteepestDecent} using Conjugate Gradient results in
+\begin{align*}
+	\vec{x}_0 &= \begin{bmatrix}0\\0\end{bmatrix}
+	&\vec{r}_0 &= \begin{bmatrix}5\\5\end{bmatrix}
+	& &
+	& \vec{d}_0 &= \begin{bmatrix}5\\5\end{bmatrix}
+	&\alpha_0 &= 2/7 \\
+	%
+	\vec{x}_1 &= \begin{bmatrix}10/7\\10/7\end{bmatrix}
+	&\vec{r}_1 &= \begin{bmatrix}5/7\\-5/7\end{bmatrix}
+	&\beta_1 &= 1/49
+	&\vec{d}_1 &= \begin{bmatrix}40/49\\-30/49\end{bmatrix}
+	&\alpha_1 &= 7/10 \\
+	%
+	\vec{x}_2 &= \begin{bmatrix}2\\1\end{bmatrix}
+	&\vec{r}_2 &= \begin{bmatrix}0\\0\end{bmatrix}
+\end{align*}
+Note that after two iterations, \(\vec{x}\) reaches the exact solution, compared to the iteration of Steepest Decent.
+The iterations are plotted in Figure~\ref{fig:CG-CGExample-Iterations}
+\input{"figures/2.Background/Conjugate Gradient/CG Example-Iterations.tex"}
+\end{example}
