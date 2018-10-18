@@ -11,10 +11,13 @@ The matrix's diagonal consists of the value 26, and -1's fill the entries for th
 The right hand side of the equation has a value of 14 for corner points, 12 for edge points, 9 for side points and 0 for interior points~\cite{Kincaid:2009:Numerical}.
 The solution vector consists of all 1's.
 
+%TODO discuss MPI setup
+
 % HPCG's solve details
 HPCG uses an implementation of Conjugate Gradient algorithm with a multigrid preconditioner variant~\cite{Dongarra:2015:HPCG}.
 As HPCG is designed to emulate the performance characteristics of real world problems with out needing to be a robust solver, it only uses 3 levels of grid coarseness with only a since smoother pass at the coarsest grid level.
-The multigrid uses a symmetric Gauss-Seidel step as the smoother.
+%TODO does this note need to be exteneded
+The smoother used by the multigrid is based on a symmetric Gauss-Seidel step, however each process uses the old value for entries located on other processes.
 %TODO improve wording
 The restriction operation simply samples half the points in dimension, resulting in a reduction of grid size by a factor of eight in each level of coarseness.
 To prolong the coarse grids, each coarse point is added to the fine point in was sampled from.

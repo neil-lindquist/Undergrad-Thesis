@@ -103,7 +103,7 @@ When starting at the origin, the iteration of Method of Steepest Decent becomes
 	%
 	&\vdots &&\vdots &&\vdots
 \end{align*}
-The \(\vec{x}_i\)'s are plotted with a contour graph of the quadratic form in Figure~\ref{fig:CG-steepestDecentExample-Iterations}.
+The \(\vec{x}_i\)'s are plotted with a contour graph of the quadratic form in Figure~\ref{fig:CG-steepestDecentExample-Iterations}. \qed
 \input{"figures/2.Background/Conjugate Gradient/Steepest Decent Example-Iterations.tex"}
 \end{example}
 
@@ -181,6 +181,29 @@ The result of applying Conjugate Gradient is
 	&\vec{r}_2 &= \begin{bmatrix}0\\0\end{bmatrix}
 \end{align*}
 Note that after two iterations, \(\vec{x}\) reaches the exact solution, compared to the iterations of Steepest Decent in Example~\ref{ex:CG-SteepestDecent}.
-Figure~\ref{fig:CG-CGExample-Iterations} shows the values of \(\vec{x}\) with the contour graph of the quadratic function.
+Figure~\ref{fig:CG-CGExample-Iterations} shows the values of \(\vec{x}\) with the contour graph of the quadratic function. \qed
 \input{"figures/2.Background/Conjugate Gradient/CG Example-Iterations.tex"}
 \end{example}
+
+One way to improve the Conjugate Gradient method is to precondition the system~\cite{Saad:2003:IterativeMethods}.
+Instead of solving the original system, \(\mat{A}\vec{x} = \vec{b}\), Conjugate Gradient solves \(\mat{M}^{-1}\left(\mat{A}\vec{x} - \vec{b}\right) = 0\) instead, where \(\mat{M}^{-1}\) is the preconditioner.
+Note that \(\mat{M}\) should be similar to \(\mat{A}\), but \(\mat{M}^{-1}\) should be easier to compute than \(\mat{A}^{-1}\).
+Algorithm~\ref{alg:bg-cg-alg-pcg} shows the preconditioned variant of the Conjugate Gradient.
+\begin{algorithm}[tb]
+	\begin{algorithmic}
+		\STATE \(\vec{r}_0 \gets \vec{b} - \mat{A}\vec{x}_0\)
+		\STATE \(\vec{z}_0 \gets \mat{M}^{-1}\vec{r}_0\)
+		\STATE \(\vec{d}_0 \gets \vec{z}_0\)
+		\FOR{\(i = 0, 1, \dots\) \textbf{until} \(\left\|\vec{r}_i\right\| \leq \epsilon\)}
+		\STATE \(\alpha_i \gets \frac{\vec{r}_i\cdot\vec{z}_i}{\vec{d}_i\cdot\mat{A}\vec{d}_i}\)
+		\STATE \(\vec{x}_{i+1} \gets \vec{x}_i + \alpha_i\vec{d}_i\)
+		\STATE \(\vec{r}_{i+1} \gets \vec{r}_i + \alpha_i\mat{A}\vec{d}_i\)
+		\STATE \(\vec{z}_{i+1} \gets \mat{M}^{-1}\vec{r}_{i+1}\)
+		\STATE \(\beta_{i+1} \gets \frac{\vec{r}_{i+1}\cdot\vec{z}_{i+1}}{\vec{r}_i\cdot\vec{z}_i}\)
+		\STATE \(\vec{d}_{i+1} \gets \vec{z}_{i+1} + \beta_{i+1}\vec{d}_i\)
+		\ENDFOR
+	\end{algorithmic}
+	
+	\caption{Preconditioned Conjugate Gradient~\cite{Saad:2003:IterativeMethods}}
+	\label{alg:bg-cg-alg-pcg}
+\end{algorithm}
