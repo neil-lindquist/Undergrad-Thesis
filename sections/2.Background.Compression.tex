@@ -22,7 +22,12 @@ Similarly, a sequential compression method can be used on the matrix information
 %TODO figure out best order to discussion compressions
 
 \subsubsection{Single and Mixed Precision Floating Point Numbers}
-%TODO single & mixed proc
+The most obvious compression of floating point data is using single precision representation instead of double precision representation.
+While it only has a compression rate of 1:2, it allows the compression and decompression of values using at most 1 extra hardware operation.
+Additionally, it provides the same data access properties as the double prevision version.
+For the matrix values, single precision representation is lossless in the test problem, since each matrix value is an integer.
+However, for the vector values, using single precision floats resulted in a large increase of Conjugate Gradient iterations due to the loss of precision.
+So, by making only select vectors single precision, a compromise can be found where vectors that need high precision can keep that precision and vectors that do not need as much precision can get improved performance.
 
 \subsubsection{1 bit Compression}
 \label{sec:bg-comp-1bit}
@@ -100,6 +105,22 @@ Additionally, because decoding a delta encoded value requires decoding a gamma e
 
 \subsubsection{Op-Code Compression}
 %TODO opcode compression
+Opcode compression is based on the index compression used in Compressed Column Index (CCI) matrices~\cite{Lawlor:2013:compression}.
+Note that this integer compression is never given it's own name in the original description and so is referred to as opcode compression in this paper.
+Opcode compression is inspired by CPU instruction encodings which are seperated into an "opcode" portion and a data portion (hence the name).
+To read each value, the first few bits are read to determine the number of bits used for the data portion, which stores the encoded value.
+Like Gamma and Delta coding, opcode compression reduces the number of leading 0's stored, and similarly is utilized by encoding the difference from the preceding index.
+If some opcodes are used significantly, that opcode can be shorted to save bits.
+This shortened opcode can be handled in a lookup table by placing the opcode's information at every location that begins with the opcode.
+For example, if 0, 10 and 11 are the possible opcodes, then the information for opcode 0 is located at the indices of 00 and 01.
+
+The description of CCI matrix format uses a fixed decode table.
+However, when using a lookup table, it is possible to use custom decode tables to adjust the compression for the specific matrix's sparsity pattern.
+%TODO look at implementing a proper hard coded decode table
+Table~\ref{tab:bg-comp-opcode-CCIdecodeTable} shows the opcodes used for CCI format.
+%TODO should some of the decode tables used be listed?
+
+\input{figures/2.Background/Compression/opcode-CCIdecodeTable.tex}
 
 \subsubsection{Huffman Coding}
 \label{sec:bg-comp-huffman}
