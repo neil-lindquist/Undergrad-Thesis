@@ -4,19 +4,19 @@ In HPCG, a multigrid solver with high tolerance is used as the preconditioner~\c
 Because the solver provides an approximation to \(\mat{A}^-1\), the preconditioned matrix is an approximation of \(\mat{A}^{-1}\mat{A} = \mat{I}\).
 This reduces the condition number of the linear system, and so, reduces the number of iterations needed for Conjugate Gradient to converge~\cite{Saad:2003:IterativeMethods}.
 
-%TODO reword this first sentence
-The multigrid method works by using meshes of different sizes to allow a relaxation style iterative solver to make the best progress at different levels of meshes~\cite{Saad:2003:IterativeMethods}.
+The multigrid method uses meshes of different sizes to improve performance of a relaxation style iterative solver~\cite{Saad:2003:IterativeMethods}.
 Most relaxation type iterative solvers are able to quickly reduce the components of the residual in the direction of eigenvectors associated with large eigenvalues for the iteration matrix.
 Such eigenvectors are called high frequency modes.
 The other components, in the direction of eigenvectors called low frequency modes, are difficult to reduce with standard relaxation.
 However on a courser mesh, many of these low frequency modes are mapped to high frequency modes~\cite{Saad:2003:IterativeMethods}.
 Thus, by applying a relaxation type iterative solver at various mesh sizes, the various components of the residual can be reduced quickly.
 
-In HPCG, a symmetric Gauss-Seidel iteration is used as the relaxation iteration solver at each level of coarseness~\cite{Dongarra:2015:HPCG}.
+In HPCG, a symmetric Gauss-Seidel iteration is used by the multigrid as the relaxation iteration solver at each level of coarseness~\cite{Dongarra:2015:HPCG}.
 The symmetric Gauss-Seidel iteration consists of a forward Gauss-Seidel iteration followed by a backward Gauss-Seidel iteration.
-Letting \(\mat{A} = \mat{L}+\mat{D}+\mat{U}\) where \(\mat{L}\) is strictly lower triangular, \(\mat{D}\) is diagonal and \(\mat{U}\) is strictly upper case, the iteration can be represented by
+Letting \(\mat{A} = \mat{L}+\mat{D}+\mat{U}\) where \(\mat{L}\) is strictly lower triangular, \(\mat{D}\) is diagonal and \(\mat{U}\) is strictly upper triangular, the iteration can be represented by
 \begin{align*}
 	\vec{x}^*_i   &= \mat{D}^{-1}\left(\vec{b} - \mat{L}\vec{x}^*_i - \mat{U}\vec{x}_i\right) \\
-	\vec{x}_{i+1} &= \mat{D}^{-1}\left(\vec{b} - \mat{U}\vec{x}_{i+1} - \mat{L}\vec{x}^*_i\right).
+	\vec{x}_{i+1} &= \mat{D}^{-1}\left(\vec{b} - \mat{U}\vec{x}_{i+1} - \mat{L}\vec{x}^*_i\right)
 \end{align*}
+with \(\vec{x}_i^*\) representing an intermediate vector.
 Note that while \(\vec{x}^*_i\) and \(\vec{x}_{i+1}\) are on both sides of the equation where they are respectively computed, they can be computed with this formulation by computing the entries in order as they become available for the product with \(L\) and \(U\) respectively.

@@ -1,9 +1,7 @@
 Conjugate Gradient is the iterative solver used by HPCG~\cite{Dongarra:2015:HPCG}.
 Symmetric, positive definite matrices will guarantee the converge of Conjugate Gradient to the correct solution within \(n\) iterations, where \(n\) is the number of dimensions, when using exact algebra~\cite{Saad:2003:IterativeMethods}.
-More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
+More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, \(\epsilon\), after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
 %TODO go into more high level details of CG
-
-%TODO discuss preconditioned CG
 
 %Steepest Decent
 To understand the Conjugate Gradient, first consider the quadratic form of \(\mat{A}\vec{x} = \vec{b}\).
@@ -50,15 +48,20 @@ Note that by using Equation~\ref{eq:cg-xUpdate}, we can derive
 	\vec{r}_{i+1} = \vec{r}_i - \alpha\mat{A}\vec{r}_i.
 \end{equation}
 Because \(\mat{A}\vec{r}_i\) is already computed to find \(\alpha_i\), using Equation~\ref{eq:CG-improvedResidual} to compute the residual results in one less matrix-vector product per iteration.
-The steps for the Method of Steepest Decent are
-%TODO consider switching to proper algorithm
-\begin{align*}
-	\vec{r}_0 &= \vec{b} - \mat{A}\vec{x}_0 \\
-	\alpha_i &= \frac{\vec{r}_i\cdot \vec{r}_i}{\vec{r}_i\cdot\mat{A}\vec{r}_i}\\
-	\vec{x}_{i+1} &= \vec{x}_i + \alpha_i\vec{r}_i\\
-	\vec{r}_{i+1} &= \vec{r}_i - \alpha\mat{A}\vec{r}_i
-\end{align*}
-until \(\left\|\vec{r}_i\right\|\) is less than some tolerance~\cite{Shewchuk:1994:IntroToCG}.
+Algorithm~\ref{alg:bg-cg-alg-steepestDecent} shows the resulting algorithm.
+\begin{algorithm}[tb]
+	\begin{algorithmic}
+		\STATE \(\vec{r}_0 \gets \vec{b} - \mat{A}\vec{x}_0\)
+		\FOR{\(i = 0, 1, \dots\) \textbf{until} \(\left\|\vec{r}_i\right\| \leq \epsilon\)}
+			\STATE \(\alpha_i \gets \frac{\vec{r}_i\cdot \vec{r}_i}{\vec{r}_i\cdot\mat{A}\vec{r}_i}\)
+			\STATE \(\vec{x}_{i+1} = \vec{x}_i + \alpha_i\vec{r}_i\)
+			\STATE \(\vec{r}_{i+1} = \vec{r}_i - \alpha\mat{A}\vec{r}_i\)
+		\ENDFOR
+	\end{algorithmic}
+	
+	\caption{Steepest Decent~\cite{Shewchuk:1994:IntroToCG}}
+	\label{alg:bg-cg-alg-steepestDecent}
+\end{algorithm}
 
 
 \begin{example}
@@ -122,7 +125,7 @@ The computation of \(\alpha_i\) changes to find the minimal value along \(\vec{d
 
 %Conjugate Gradient proper
 %TODO cite Intro to CG more aggressively
-Conjugate Gradient is a form of Conjugate Directions where the residuals are made to be \(\mat{A}\)-orthogonal to each other.
+Conjugate Gradient is a form of Conjugate Directions where the residuals are made to be \(\mat{A}\)-orthogonal to each other~\cite{Shewchuk:1994:IntroToCG}.
 This is done using the Conjugate Gram-Schmidt Process.
 To do this, each search direction, \(\vec{d}_i\) is computed by taking \(\vec{r}_i\) and removing any components that are not \(\mat{A}\)-orthogonal to the previous \(\vec{d}\)'s.
 So, let \(\vec{d}_0 = \vec{r}_0\) and for \(i > 0\) let
@@ -142,16 +145,26 @@ So, each new search direction can then be computed by
 \[
 	\vec{d}_i = \vec{r}_i + \beta_i\vec{d}_{i-1}.
 \]
-This results in the following steps for Conjugate Gradient
-\begin{align*}
-	\vec{d}_0 = \vec{r}_0 &= \vec{b} - \mat{A}\vec{x}_0 \\
-	\alpha_i &= \frac{\vec{r}_i\cdot\vec{r}_i}{\vec{d}_i\cdot \mat{A}\vec{d}_i} \\
-	\vec{x}_{i+1} &= \vec{x}_i + \alpha_i\vec{d}_i \\
-	\vec{r}_{i+1} &= \vec{r}_i - \alpha\mat{A}\vec{d}_i \\
-	\beta_{i+1} &= \frac{\vec{r}_{i+1}\cdot\vec{r}_{i+1}}{\vec{r}_i\cdot\vec{r}_i} \\
-	\vec{d}_{i+1} &= \vec{r}_{i+1} + \beta_{i+1}\vec{d}_i
-\end{align*}
-continuing the iteration until \(\left\|\vec{r}_i\right\|\) is less than the specified tolerance.
+Algorithm~\ref{alg:bg-cg-alg-cg} shows the final Conjugate Gradient algorithm.
+
+\begin{algorithm}[tb]
+	\begin{algorithmic}
+		\STATE \(\vec{r}_0 \gets \vec{b} - \mat{A}\vec{x}_0\)
+		\STATE \(\vec{d}_0 \gets \vec{r}_0\)
+		\FOR{\(i = 0, 1, \dots\) \textbf{until} \(\left\|\vec{r}_i\right\| \leq \epsilon\)}
+			\STATE \(\alpha_i \gets \frac{\vec{r}_i\cdot\vec{r}_i}{\vec{d}_i\cdot \mat{A}\vec{d}_i}\)
+			
+			\STATE \(\vec{x}_{i+1} \gets \vec{x}_i + \alpha_i\vec{d}_i\)
+			\STATE \(\vec{r}_{i+1} \gets \vec{r}_i + \alpha_i\mat{A}\vec{d}_i\)
+			\STATE \(\beta_{i+1} \gets \frac{\vec{r}_{i+1}\cdot\vec{r}_{i+1}}{\vec{r}_i\cdot\vec{r}_i}\)
+			\STATE \(\vec{r}_{i+1} + \beta_{i+1}\vec{d}_i\)
+		\ENDFOR
+	\end{algorithmic}
+	
+	\caption{Conjugate Gradient~\cite{Saad:2003:IterativeMethods}}
+	\label{alg:bg-cg-alg-cg}
+\end{algorithm}
+
 
 % 2 1
 % 1 3
@@ -195,12 +208,12 @@ Algorithm~\ref{alg:bg-cg-alg-pcg} shows the preconditioned variant of the Conjug
 		\STATE \(\vec{z}_0 \gets \mat{M}^{-1}\vec{r}_0\)
 		\STATE \(\vec{d}_0 \gets \vec{z}_0\)
 		\FOR{\(i = 0, 1, \dots\) \textbf{until} \(\left\|\vec{r}_i\right\| \leq \epsilon\)}
-		\STATE \(\alpha_i \gets \frac{\vec{r}_i\cdot\vec{z}_i}{\vec{d}_i\cdot\mat{A}\vec{d}_i}\)
-		\STATE \(\vec{x}_{i+1} \gets \vec{x}_i + \alpha_i\vec{d}_i\)
-		\STATE \(\vec{r}_{i+1} \gets \vec{r}_i + \alpha_i\mat{A}\vec{d}_i\)
-		\STATE \(\vec{z}_{i+1} \gets \mat{M}^{-1}\vec{r}_{i+1}\)
-		\STATE \(\beta_{i+1} \gets \frac{\vec{r}_{i+1}\cdot\vec{z}_{i+1}}{\vec{r}_i\cdot\vec{z}_i}\)
-		\STATE \(\vec{d}_{i+1} \gets \vec{z}_{i+1} + \beta_{i+1}\vec{d}_i\)
+			\STATE \(\alpha_i \gets \frac{\vec{r}_i\cdot\vec{z}_i}{\vec{d}_i\cdot\mat{A}\vec{d}_i}\)
+			\STATE \(\vec{x}_{i+1} \gets \vec{x}_i + \alpha_i\vec{d}_i\)
+			\STATE \(\vec{r}_{i+1} \gets \vec{r}_i + \alpha_i\mat{A}\vec{d}_i\)
+			\STATE \(\vec{z}_{i+1} \gets \mat{M}^{-1}\vec{r}_{i+1}\)
+			\STATE \(\beta_{i+1} \gets \frac{\vec{r}_{i+1}\cdot\vec{z}_{i+1}}{\vec{r}_i\cdot\vec{z}_i}\)
+			\STATE \(\vec{d}_{i+1} \gets \vec{z}_{i+1} + \beta_{i+1}\vec{d}_i\)
 		\ENDFOR
 	\end{algorithmic}
 	
