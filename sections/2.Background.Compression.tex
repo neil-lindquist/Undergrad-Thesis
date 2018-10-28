@@ -114,7 +114,7 @@ This shortened opcode can be handled in a lookup table by placing the opcode's i
 For example, if 0, 10 and 11 are the possible opcodes, then the information for opcode 0 is located at the indices of 00 and 01.
 
 The description of CCI matrix format uses a fixed decode table.
-However, when using a lookup table, it is possible to use custom decode tables to adjust the compression for the specific matrix's sparsity pattern.
+However, when using a lookup table, using custom decode tables to adjust the compression for the specific matrix's sparsity pattern will not have a significant performance penalty to decoding.
 %TODO look at implementing a proper hard coded decode table
 Table~\ref{tab:bg-comp-opcode-CCIdecodeTable} shows the opcodes used for CCI format.
 %TODO should some of the decode tables used be listed?
@@ -136,4 +136,4 @@ Thus, only matrix indices were tested with Huffman coding.
 \label{sec:bg-comp-combined}
 In addition to compressing a single data structure at a time, compression strategies which compress multiple data structures were tried.
 This provided the opportunity to achieve an overall reduction in data that could not be achieved by compressing a single data structure.
-Additionally, as shown by the bound on performance improvement found in Section~\ref{sec:results-bounds}, compressing matrix values alone cannot provide performance improvement.
+Additionally, as discussed in Section~\ref{sec:bg-da} and as shown in Section~\ref{sec:results-bounds}, compressing matrix values alone cannot provide performance improvement.

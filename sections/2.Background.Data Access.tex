@@ -7,7 +7,10 @@ The low level functions used in the timed section of the code can be viewed toge
 For the matrices, the matrices do not need to be mutable, the rows need to be readable in both a forward and backwards iteration, the data for a given row has no restriction on its read order, and the diagonal for a given row must be accessible.
 The vectors, on the other hand, need both random read and write access, with the writes being immediately accessible to future reads.
 
-%TODO discuss processor level parallellism stuff
+In addition to the restrictions on usable compression schemes imposed by the data access patterns, they have an effect on the effectiveness of compression schemes.
+Note that in the inner loop of both the sparse matrix vector product and the symmetric Gauss-Seidel step do not have a data dependency between matrix values and the vector values; however the vector values are dependent on the matrix indices.
+So, the matrix values can be fetched in parallel to the matrix indices and vector values~\cite{Patterson:1990:ComputerArchitecture}.
+This will result in ineffective compression when just compressing one part of the problem, as discussed in Section~\ref{sec:bg-comp-combined}.
 
 % zero and copy vector
 Copying a vector and setting a vector to zero provide the least data access requirements.
