@@ -1,12 +1,11 @@
 %TODO General information
 Numerous compression strategies were considered for this project.
 Figure~\ref{fig:comp-overview} lists the compressions tried for each main data structure.
-Note that most compression methods were only used with one or two of the data types, even if able to be reasonably used within the constraints of additional data.
+Note that most compression methods were only used with one or two of the data types, even if able to be reasonably used within the constraints of other types of data.
 
 \input{"figures/2.Background/Compression/Strategies Overview.tex"}
 
 \subsubsection{Restrictions on Compression Strategies}
-%TODO compression restrictions
 The restrictions on usable compression strategies primarily come from the data access requirements described in Section~\ref{sec:bg-da}.
 These requirements were that matrix rows need to be readable in both a forward and backwards iteration, the diagonal for a given row must be accessible, and the vectors have both random read access and random, immediate write access.
 Due to the highly regular nature of the particular matrix used and the existence of solvers specially optimized for solving this type of problem, the requirement that all compression techniques are able to handle any sparse matrix was added to increase the usefulness of this work~\cite{Saad:2003:IterativeMethods}.
@@ -124,9 +123,17 @@ Table~\ref{tab:bg-comp-opcode-CCIdecodeTable} shows the opcodes used for CCI for
 
 \subsubsection{Huffman Coding}
 \label{sec:bg-comp-huffman}
-%TODO huffman coding
+Huffman coding is an optimal prefix code usable for lossless compression~\cite{Huffman:1952:coding}.
+A prefix code is a coding where each representable value is assigned a unique coding such that no code is the beginning of another code.
+However, Huffman coding does not take advantage of local patterns in the data, just the overall frequencies of each value.
+Additionally, Huffman coding can only be decoded sequentially, due to the variable length of storage for each value.
+So, while it can compress matrix values and indices, it is unable to meet the requirements to compress vector values.
+Note that the Huffman coding of the matrix values in the test problem is equivalent to the 1-bit coding described in Section~\ref{sec:bg-comp-1bit}.
+Thus, only matrix indices were tested with Huffman coding.
+%TODO consider implementing huffman coded matrix values (ie a 1-bit compressed lookup table?)
 
 \subsubsection{Combined Compression Strategies}
 \label{sec:bg-comp-combined}
-%TODO combined compression
-
+In addition to compressing a single data structure at a time, compression strategies which compress multiple data structures were tried.
+This provided the opportunity to achieve an overall reduction in data that could not be achieved by compressing a single data structure.
+Additionally, as shown by the bound on performance improvement found in Section~\ref{sec:results-bounds}, compressing matrix values alone cannot provide performance improvement.
