@@ -265,11 +265,7 @@ n
  keywords   = {Linear systems, floating point, iterative refinement,
                precision},
  annote     = {The authors tried using both single and double precision
-               in an iterative refinement algorithms to try to increase
-               speed while retaining accuracy.  The algorithms were
-               modified to call a single precision linear solver to
-               solve \(Ac = r\) where \(c\) in amount to increment \(x\).
-               PCG and GMRES were both modified in this way.}
+               in an iterative refinement algorithms to try to increase speed while retaining accuracy.  The algorithms were modified to use a single precision preconditioner in a double precision iterative solver.}
 } 
 
 
@@ -329,12 +325,12 @@ n
  annote     = {The authors studied performance of iterative linear algebra
                solvers by doing the first few refinement passes with single
                precision floats, before using double precision to get the
-               final awnser.  They found that doing the first passes with
+               final answer.  They found that doing the first passes with
                single precision floats was significantly faster than using
                only double precision.}
 }
 
-@article{Buttari:2007:mixedPrec,
+@article{Buttari:2007:coursePass,
  author     = {Buttari, Alfredo and
                Dongarra, Jack and
                Langou, Julie and
@@ -357,8 +353,7 @@ n
  acmid      = {1297653},
  publisher  = {Sage Publications, Inc.},
  address    = {Thousand Oaks, CA, USA},
- keywords   = {Cholesky factorization, LU, iterative, mixed-precision,
-               refinement},
+ keywords   = {Cholesky factorization, LU, iterative, mixed-precision, refinement},
  annote     = {The authors compared using strictly double precision to
                using mixed single and double precision in iterative
                linear equation solvers with dense matrices.  Except for

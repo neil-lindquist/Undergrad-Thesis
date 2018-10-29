@@ -1,1 +1,20 @@
-%TODO setup problem and importance
+Solving large, sparse linear systems of equations plays an important role in certain scientific computations.
+For example, the finite element method uses the solution to a system of linear equations to solve partial differential equations~\cite{Saad:2003:IterativeMethods}.
+These problems can be large, with possibly millions of variables~\cite{Davis:2011:FloridaMatrixCollection}.
+So, solving these problems efficiently requires a fast linear solver.
+
+The particular class of linear systems being looked at are sparse, meaning that they have a high proportion of zero coefficients.
+Iterative solvers are often used to solve these large, sparse systems.
+These solvers take an initial guess then improve it until it is within some tolerance~\cite{Saad:2003:IterativeMethods}.
+On modern computers these solvers often spent significantly most of their time fetching data from main memory to the processor where the actual computation is done~\cite{Lawlor:2013:compression}.
+This work tries to improve the performance of these types of solvers by compressing the data to reduce the time spent accessing main memory.
+
+\subsection{Previous Work}
+Much work has been done on various aspects of utilizing single precision floating point numbers, while retaining the accuracy of double precision numbers.
+One such approach uses the fact that iterative solvers can take an initial guess of the solution to jump start progress.
+So, many iterations can be done at the cheaper single precision, then double precision iterations refine the solution to sufficient accuracy~\cite{Babolin:2008:coursePass, Buttari:2007:coursePass}.
+Another main approach is to applying the preconditioner using single precision, while otherwise using double precision, which result in similar accuracy unless the matrix is poorly conditioned~\cite{Buttari:2008:mixedPrec, Hogg:2010:multiplePasses}.
+
+Another effort at compressing large, sparse Linear Systems is Compressed Column Index (CCI) format to store matrices~\cite{Lawlor:2013:compression}.
+This format is based of Compressed Sparse Row (CSR) matrix format except uses a compressed representation of the column indices.
+This project generalizes CCI matrix format by trying compression with additional data structures and by trying additional compression schemes.
