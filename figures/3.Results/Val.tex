@@ -1,0 +1,22 @@
+\begin{table}
+	\centering
+	\begin{tabular}{l|S|r|c}
+		Compression & GFLOPs & Iterations & Compression Rate\\
+		\hline
+		Baseline & 15.3654 & 50 & 1:1 \\
+		Single Precision & 12.6331 & 50 & 1:2 \\
+		1-bit & 15.1743 & 50 & 1:64 \\ %cond op timing
+		SZ & & & \\
+		%TODO ensure description of SZ varients are clear
+		%TODO get timings for other SZ versions
+		%TODO need a comment mentioning how SZ's error bound is irrelavent for matVals & matInds
+		\hspace{3mm} 1 mode & 13.5037 & 50 & \\
+		\hspace{3mm} 2 modes & 13.8195 & 50 & \\
+		%TODO get 3 modes setup
+		%\hspace{3mm} 3 modes & & & \\
+		ZFP & 0.817469 & 50 & \\ %TODO test other two zfp branchs (matrix-1dzfp-contig  matrix-1dzfp-low)
+	\end{tabular}
+	\caption{Results of Compressing Matrix Values}
+	\label{tab:results-val}
+\end{table}
+%TODO fill in table

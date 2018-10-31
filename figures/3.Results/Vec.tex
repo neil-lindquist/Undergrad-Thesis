@@ -1,0 +1,44 @@
+\begin{table}
+	\centering
+	\begin{tabular}{l|S|r|c}
+		Compression & {GFLOP Rating} & Iterations & Compression Rate\\
+		\hline
+		Baseline & 15.3654 & 50 & 1:1 \\ %using mixed prec "all doubles" time
+		Single Precision & 7.02301 & 115 & 1:2 \\
+		Mixed Precision & & & \\ %b, x, d, Ad, r, z
+		%TODO compute compression rates
+		\hspace{3mm} \(\vec{d}\) & 5.18476 & 150 & 11:12 \\
+		\hspace{3mm} \(\vec{b}, \vec{x}\) & 15.3701 & 50 & 5:6 \\
+		\hspace{3mm} \(\vec{b}, \vec{x}, \mat{A}\vec{d}\) & 15.0428 & 51 & 3:4 \\
+		\hspace{3mm} \(\vec{b}, \vec{x}, \vec{d}\) & 5.20832 & 150 & 3:4 \\ %using floats:b,x,d version
+		\hspace{3mm} \(\vec{b}, \vec{x}, \vec{d}, \mat{A}\vec{d}\) & 5.23208 & 150 & 2:3 \\
+		\hspace{3mm} \(\vec{b}, \vec{x}, \vec{d}, \mat{A}\vec{d}, \vec{z}\) & 6.95894 & 115 & 7:12 \\
+		\hspace{3mm} \(\vec{b}, \vec{x}, \vec{d}, \vec{z}\) & 6.91343 & 115 & 2:3 \\
+		\hspace{3mm} \(\vec{b}, \vec{x}, \vec{z}\) & 12.2146 & 64 & 3:4 \\
+		%TODO consider adding half prec timings
+		%TODO consider the single x fine compressions
+		ZFP & & & \\
+		\hspace{3mm} 1d & & & \\
+			\hspace{6mm} 16 bits/value & 0.690138 & 51 & 1:4 \\
+			\hspace{6mm} 32 bits/value & 0.39397 & 50 & 1:2 \\
+		\hspace{3mm} 3d & & & \\
+			\hspace{6mm} 16 bits/value & 2.72078 & 51 & 1:4 \\
+			\hspace{6mm} 32 bits/value & 2.17639 & 50 & 1:2 \\
+			\hspace{6mm} 48 bits/value & & & 3:4 \\
+		SZ & & & \\
+		%All timings have error setting of 1e-10 abs and 1e-10 rel
+		%TODO figure out where to do an analysis on the optimal level of error bounding
+		%TODO make a note that SZ comp rate is partially based on cache lines accessed
+		\hspace{3mm} 7 values/block & 5.89138 & 57 & 8:7 \\
+		\hspace{3mm} 8 values/block & 5.78711 & 57 & 1:1 to 2:1 \\
+		\hspace{3mm} 12 values/block & 4.98536 & 57 & 2:3 to 4:3 \\
+		\hspace{3mm} 15 values/block & 4.51594 & 57 & 8:15 to 16:15 \\
+		\hspace{3mm} 16 values/block & 4.53536 & 57 & 1:2 to 3:2 \\
+		\hspace{3mm} 24 values/block & 3.67748 & 57 & 1:3 to 4:3\\
+		\hspace{3mm} 32 values/block & 3.1735 & 57 & 1:4 to 5:4\\
+	\end{tabular}
+	\caption{Results of Compressing Vector Values}
+	\label{tab:results-vec}
+\end{table}
+
+%TODO finish filling in table
