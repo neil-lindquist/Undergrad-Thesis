@@ -2,10 +2,14 @@
 %TODO conclusions from test results
 
 Tables~\ref{tab:results-vec}, \ref{tab:results-val} and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values and matrix indices respectively.
+Note that some compression strategies had multiple variations that were tested.
+The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
 
 \input{figures/3.Results/Vec.tex}
 \input{figures/3.Results/Val.tex}
 \input{figures/3.Results/Ind.tex}
+
+%TODO add discussion of combined compression
 
 \subsection{Performance Improvement Bounds}
 \label{sec:results-bounds}
@@ -13,6 +17,7 @@ Note that Table~\ref{tab:results-val} shows 1 bit compression under performing t
 This demonstrates that compressing the matrix values alone in unable to improve performance.
 For the vector values, note that the single precision implementation has a 2.3 times increase in iterations to convergence over the baseline implementation and that the GFLOPs rating of the single precision implementation is reduced by a factor of approximately 2.19 from the baseline implementation.
 This hints that, even without increasing the number of Conjugate Gradient iterations, compressing the vectors will provide a limited improvement in performance at best.
+This analysis is supported by the fact that no compression strategies that only compressed a single strategy was able to out perform the baseline implementation.
 
 \subsection{Compiler Settings Analysis}
 %TODO discuss why compiler settings don't have a significant affect on things
