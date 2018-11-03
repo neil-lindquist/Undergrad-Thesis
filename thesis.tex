@@ -20,6 +20,9 @@
 
 \pgfplotsset{compat=1.16}
 
+%number the bib as a section
+\patchcmd{\thebibliography}{\section*}{\section}{}{}
+
 \begin{document}
 
 %Example environment
@@ -46,6 +49,7 @@
 	\end{center}
 \end{titlepage}
 
+% textidote: ignore begin
 %Signature page
 \begin{flushleft}
 	\large{\textbf{Project Title:} \input{title.txt}}\\
@@ -74,6 +78,7 @@
 	\hrulefill \\
 	\small{Director, All College Thesis Program}\\
 \end{flushleft}
+% textidote: ignore end
 
 \clearpage
 
@@ -100,10 +105,6 @@
 
 \section{Conclusions and Future Work}
 \input{sections/4.Conclusion.tex}
-
-
-%number the bib as a section
-\patchcmd{\thebibliography}{\section*}{\section}{}{}
 
 \bibliographystyle{plain}
 \bibliography{bibliograph}

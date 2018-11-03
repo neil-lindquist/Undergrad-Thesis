@@ -106,7 +106,7 @@ Additionally, because decoding a delta encoded value requires decoding a gamma e
 %TODO opcode compression
 Opcode compression is based on the index compression used in Compressed Column Index (CCI) matrices~\cite{Lawlor:2013:compression}.
 Note that this integer compression is never given it's own name in the original description and so is referred to as opcode compression in this paper.
-Opcode compression is inspired by CPU instruction encodings which are seperated into an "opcode" portion and a data portion (hence the name).
+Opcode compression is inspired by CPU instruction encodings which are seperated into an ``opcode'' portion and a data portion (hence the name).
 To read each value, the first few bits are read to determine the number of bits used for the data portion, which stores the encoded value.
 Like Gamma and Delta coding, opcode compression reduces the number of leading 0's stored, and similarly is utilized by encoding the difference from the preceding index.
 If some opcodes are used significantly, that opcode can be shorted to save bits.
