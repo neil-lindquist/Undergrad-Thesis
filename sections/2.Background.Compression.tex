@@ -54,11 +54,13 @@ The compression rate is
 	\frac{ps+\ceil{\log_2(n)}}{s}
 \]
 where \(s\) be the number of bits used by an uncompressed value, \(p\) be the percent of values that are compressed and \(n\) be the number of curves available.
+Note that due to the granularity of the matrix values and indices, bounding the error to be less than one results in an effective error bound of 0.
+Thus, when compressing those data structure, only an error bound of 0 is used.
 
 \input{figures/2.Background/Compression/SZ-modes.tex}
 
 The curves available are selected based on the nature of the data being compressed.
-Note that the word curve is used loosely here to refer to any predictive function.
+Note that the term ``curve'' is used loosely here to refer to any predictive function.
 Figure~\ref{fig:comp-sz-modes} shows all of the curve fitting function that were used.
 For compressing vector values, the Neighbor, Linear and Quadratic curves were used.
 Because the vector values represent a value at each grid point, these curves attempted to capture smooth changes and relations in the data.

@@ -1,6 +1,3 @@
-%TODO tables for days
-%TODO conclusions from test results
-
 Tables~\ref{tab:results-vec}, \ref{tab:results-val} and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values and matrix indices respectively.
 These tables contain the rating measured by HPCG, the number of iterations needed for convergence and the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
 Note that some compression strategies had multiple variations that were tested.
@@ -10,7 +7,13 @@ The compression of just one data structure fails to outperform the baseline impl
 \input{figures/3.Results/Val.tex}
 \input{figures/3.Results/Ind.tex}
 
-%TODO add discussion of combined compression
+Next, combined compression schemes were tried, using SZ and single precision compression for the matrix values and using SZ, gamma and delta compression for the matrix indices.
+Table~\ref{tab:results-combined} shows the results of these combined schemes.
+Like the single compression tables, this table contains the rating measure by HPCG, the number of iterations needed for convergence and the cache line compression rate.
+The combined scheme with the best performance used SZ compression for both values and indices.
+The only other approach that outperformed the baseline implementation used 32 bit compression for the values and gamma compression for the indices.
+
+\input{figures/3.Results/Combined.tex}
 
 \subsection{Performance Improvement Bounds}
 \label{sec:results-bounds}
@@ -39,6 +42,8 @@ The pointwise relative error is the absolute error divided by the actual value.
 Table~\ref{tab:results-vec} contains results for various block sizes with both an absolute error bound of \(10^{-10}\) and a pointwise relative error bound of \(10^{-10}\).
 Table~\ref{tab:results-vec-SZ} contains an comparison of various error bounds for a block size of 8 values per block.
 %TODO get timings with another block size (12 val blocks?)
+Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 iterations.
+%TODO is this note useful?
 
 \input{figures/3.Results/Vec-SZ.tex}
 
