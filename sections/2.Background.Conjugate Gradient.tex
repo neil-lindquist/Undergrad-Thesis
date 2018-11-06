@@ -59,7 +59,7 @@ Algorithm~\ref{alg:bg-cg-alg-steepestDecent} shows the resulting algorithm.
 		\ENDFOR
 	\end{algorithmic}
 	
-	\caption{Steepest Decent~\cite{Shewchuk:1994:IntroToCG}}
+	\caption{Steepest Decent~\cite{Shewchuk:1994:IntroToCG}.}
 	\label{alg:bg-cg-alg-steepestDecent}
 \end{algorithm}
 
@@ -130,17 +130,17 @@ This is done using the Conjugate Gram-Schmidt Process.
 To do this, each search direction, \(\vec{d}_i\) is computed by taking \(\vec{r}_i\) and removing any components that are not \(\mat{A}\)-orthogonal to the previous \(\vec{d}\)'s.
 So, let \(\vec{d}_0 = \vec{r}_0\) and for \(i > 0\) let
 \[
-	\vec{d}_i = \vec{r}_i + \sum_{k=0}^{i-1} \beta_{(i,k)}\vec{d}_k
+	\vec{d}_i = \vec{r}_i + \sum_{k=0}^{i-1} \beta_{(i, k)}\vec{d}_k
 \]
-with \(\beta_{(i,k)}\) defined for \(i > k\).
-Then, solving for \(\beta_{(i,k)}\) gives
+with \(\beta_{(i, k)}\) defined for \(i > k\).
+Then, solving for \(\beta_{(i, k)}\) gives
 \[
-	\beta_{(i,k)} = -\frac{\vec{r}_i\cdot\mat{A}\vec{d}_i}{\vec{d}_j\cdot\mat{A}\vec{d}_j}.
+	\beta_{(i, k)} = -\frac{\vec{r}_i\cdot\mat{A}\vec{d}_i}{\vec{d}_j\cdot\mat{A}\vec{d}_j}.
 \]
 Note that each residual is orthogonal to the previous search directions, and thus the previous residuals.
 So, it can be shown that \(\vec{r}_{i+1}\) is \(\mat{A}\)-orthogonal to all previous search directions, except \(\vec{d}_i\)~\cite{Shewchuk:1994:IntroToCG}.
-Then, \(\beta_{(i,k)} = 0\) for \(i-1 \neq k\).
-To simplify notation, let \(\beta_i = \beta_{(i,i-1)}\).
+Then, \(\beta_{(i, k)} = 0\) for \(i-1 \neq k\).
+To simplify notation, let \(\beta_i = \beta_{(i, i-1)}\).
 So, each new search direction can then be computed by
 \[
 	\vec{d}_i = \vec{r}_i + \beta_i\vec{d}_{i-1}.
@@ -161,7 +161,7 @@ Algorithm~\ref{alg:bg-cg-alg-cg} shows the final Conjugate Gradient algorithm.
 		\ENDFOR
 	\end{algorithmic}
 	
-	\caption{Conjugate Gradient~\cite{Saad:2003:IterativeMethods}}
+	\caption{Conjugate Gradient~\cite{Saad:2003:IterativeMethods}.}
 	\label{alg:bg-cg-alg-cg}
 \end{algorithm}
 
@@ -217,6 +217,6 @@ Algorithm~\ref{alg:bg-cg-alg-pcg} shows the preconditioned variant of the Conjug
 		\ENDFOR
 	\end{algorithmic}
 	
-	\caption{Preconditioned Conjugate Gradient~\cite{Saad:2003:IterativeMethods}}
+	\caption{Preconditioned Conjugate Gradient~\cite{Saad:2003:IterativeMethods}.}
 	\label{alg:bg-cg-alg-pcg}
 \end{algorithm}
