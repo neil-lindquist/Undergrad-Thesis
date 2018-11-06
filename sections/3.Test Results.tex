@@ -2,6 +2,7 @@
 %TODO conclusions from test results
 
 Tables~\ref{tab:results-vec}, \ref{tab:results-val} and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values and matrix indices respectively.
+These tables contain the rating measured by HPCG, the number of iterations needed for convergence and the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
 Note that some compression strategies had multiple variations that were tested.
 The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
 
@@ -16,8 +17,30 @@ The compression of just one data structure fails to outperform the baseline impl
 Note that Table~\ref{tab:results-val} shows 1 bit compression under performing the baseline implementation, even though it has a significant compression rate.
 This demonstrates that compressing the matrix values alone in unable to improve performance.
 For the vector values, note that the single precision implementation has a 2.3 times increase in iterations to convergence over the baseline implementation and that the GFLOPs rating of the single precision implementation is reduced by a factor of approximately 2.19 from the baseline implementation.
-This hints that, even without increasing the number of Conjugate Gradient iterations, compressing the vectors will provide a limited improvement in performance at best.
-This analysis is supported by the fact that no compression strategies that only compressed a single strategy was able to out perform the baseline implementation.
+This hints that, even without increasing the number of Conjugate Gradient iterations, compressing the vectors requires a compression rate better than 1:2 to provide much of an improvement in performance.
+This analysis is supported by the fact that none of the compression strategies tried that only compressed a single strategy where able to out perform the baseline implementation.
+
+\subsection{Vector Compression}
+%TODO start off with general info
+As shown in Table~\ref{tab:results-vec}, vector compression was not successfully used to improve performance.
+Section~\ref{sec:results-bounds} discusses why performance improvement is likely limited.
+However, vector compression is able to make improvements when combined with other compression.
+%TODO get a table reference on this, prolly the table with vec-mix+vals-SZ+inds-SZ
+
+ZFP had poor performance when compressing vector information.
+Note that 1 dimensional ZFP compression has a 16 bit granularity, and 3 dimensional ZFP compression has a 1 bit granularity~\cite{Lindstrom:2014:zfp}.
+These granularity restrictions and the resulting iterations needed were used to select the tested compression rates.
+
+SZ compression has two main configurable settings, the number of values in each block and the error bound.
+There were two measures of error that were considered, absolute error and pointwise relative error.
+The performance was tested with both a single error being bounded and both errors being bounded.
+Absolute error is the absolute value of the difference between predicted and actual.
+The pointwise relative error is the absolute error divided by the actual value.
+Table~\ref{tab:results-vec} contains results for various block sizes with both an absolute error bound of \(10^{-10}\) and a pointwise relative error bound of \(10^{-10}\).
+Table~\ref{tab:results-vec-SZ} contains an comparison of various error bounds for a block size of 8 values per block.
+%TODO get timings with another block size (12 val blocks?)
+
+\input{figures/3.Results/Vec-SZ.tex}
 
 \subsection{Compiler Settings Analysis}
 %TODO discuss why compiler settings don't have a significant affect on things
