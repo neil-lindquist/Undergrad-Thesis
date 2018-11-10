@@ -6,7 +6,7 @@ So, solving these problems efficiently requires a fast linear solver.
 The particular class of linear systems being looked at are sparse, meaning that they have a high proportion of zero coefficients.
 Iterative solvers are often used to solve these large, sparse systems.
 These solvers take an initial guess then improve it until it is within some tolerance~\cite{Saad:2003:IterativeMethods}.
-On modern computers these solvers often spent significantly most of their time fetching data from main memory to the processor where the actual computation is done~\cite{Lawlor:2013:compression}.
+On modern computers, these solvers often spend significantly most of their time fetching data from main memory to the processor where the actual computation is done~\cite{Lawlor:2013:compression}.
 This work tries to improve the performance of these types of solvers by compressing the data to reduce the time spent accessing main memory.
 
 \subsection{Previous Work}

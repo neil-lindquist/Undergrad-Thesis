@@ -1,4 +1,3 @@
-The way the matrix and vector data is accessed can provide limitations on attempts to compress the data.
 The Conjugate Gradient and Multigrid implementations in HPCG do not directly access the matrix and vector values, but instead use low level functions to actually manipulate the data structures~\cite{Dongarra:2015:HPCG}.
 These low level functions include copying a vector, setting a vector to zero, the dot product, a scaled vector sum, the matrix vector product, the symmetric Gauss-Seidel step, the multigrid restriction and the multigrid prolongation.
 Further data accessing functions exist in HPCG, however, they are not part of the timing.
@@ -9,7 +8,7 @@ The vectors, on the other hand, need both random read and write access, with the
 
 In addition to the restrictions on usable compression schemes imposed by the data access patterns, they have an effect on the effectiveness of compression schemes.
 Note that in the inner loop of both the sparse matrix vector product and the symmetric Gauss-Seidel step do not have a data dependency between matrix values and the vector values; however the vector values are dependent on the matrix indices.
-So, the matrix values can be fetched in parallel to the matrix indices and vector values~\cite{Patterson:1990:ComputerArchitecture}.
+So, the matrix values can be fetched in parallel to the matrix indices and vector values~\cite{Hennessy:1990:ComputerArchitecture}.
 This will result in ineffective compression when just compressing one part of the problem, as discussed in Section~\ref{sec:bg-comp-combined}.
 
 % zero and copy vector

@@ -8,9 +8,11 @@
 \usepackage{etoolbox}
 \usepackage{hyperref}
 \usepackage{ifdraft}
+\usepackage{listings}
 \usepackage{mathtools}
 \usepackage{pgfplots}
 \usepackage{siunitx}
+\usepackage{subcaption}
 
 
 %math typeseting
@@ -100,6 +102,9 @@
 \section{Background}
 \input{sections/2.Background.tex}
 
+\section{Performance Models}
+\input{"sections/2b.Performance Models.tex"}
+
 \section{Test Results}
 \input{"sections/3.Test Results.tex"}
 
@@ -108,5 +113,12 @@
 
 \bibliographystyle{plain}
 \bibliography{bibliograph}
+
+\appendix
+
+\section{Parallel Decode Model Source}
+\label{app:decode-model-source}
+\input{appendices/modelSource.tex}
+ 
 
 \end{document}
