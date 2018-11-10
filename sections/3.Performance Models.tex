@@ -18,7 +18,7 @@ The following variables represent the relevant compression characteristics in th
 	\mathrm{matValBytes} &= \text{the number of bytes per matrix value}
 \end{align*}
 
-\input{figures/2b.Models/baseLatencies}
+\input{figures/3.Models/baseLatencies}
 
 \subsection{Analytical Model}
 
@@ -68,7 +68,7 @@ Lastly, the model was only worked with using integral values for the bytes and d
 The model then takes the same compression properties as the first model and computes the time to fetch and decode the values and encode the result value over 10 matrix rows with 27 entries per row.
 Appendix~\ref{app:decode-model-source} contains source code for this model.
 
-\input{figures/2b.Models/dataDependacies}
+\input{figures/3.Models/dataDependacies}
 
 The bounds on outperforming the baseline implementation were hard to determine for the parallel model due to the nature of the model as a sum of maximizations.
 However, some boundaries were computed.
@@ -83,6 +83,6 @@ These compression bounds appear to be significantly related to the frequency at 
 
 %TODO figure out a way to think about/work with multiple compressions at once
 
-\input{figures/2b.Models/singleCompMatrixTimings}
+\input{figures/3.Models/singleCompMatrixTimings}
 
 

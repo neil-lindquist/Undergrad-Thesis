@@ -3,9 +3,9 @@ These tables contain the rating measured by HPCG, the number of iterations neede
 Note that some compression strategies had multiple variations that were tested.
 The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
 
-\input{figures/3.Results/Vec.tex}
-\input{figures/3.Results/Val.tex}
-\input{figures/3.Results/Ind.tex}
+\input{figures/4.Results/Vec.tex}
+\input{figures/4.Results/Val.tex}
+\input{figures/4.Results/Ind.tex}
 
 Next, combined compression schemes were tried, using SZ and single precision compression for the matrix values and using SZ, gamma and delta compression for the matrix indices.
 Table~\ref{tab:results-combined} shows the results of these combined schemes.
@@ -13,7 +13,7 @@ Like the single compression tables, this table contains the rating measure by HP
 The combined scheme with the best performance used SZ compression for both values and indices.
 The only other approach that outperformed the baseline implementation used 32 bit compression for the values and gamma compression for the indices.
 
-\input{figures/3.Results/Combined.tex}
+\input{figures/4.Results/Combined.tex}
 
 \subsection{Performance Improvement Bounds}
 \label{sec:results-bounds}
@@ -45,7 +45,7 @@ Table~\ref{tab:results-vec-SZ} contains an comparison of various error bounds fo
 Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 iterations.
 %TODO is this note useful?
 
-\input{figures/3.Results/Vec-SZ.tex}
+\input{figures/4.Results/Vec-SZ.tex}
 
 \subsection{Compiler Settings Analysis}
 %TODO discuss why compiler settings don't have a significant affect on things
