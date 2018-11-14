@@ -1,19 +1,32 @@
 Tables~\ref{tab:results-vec}, \ref{tab:results-val} and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values and matrix indices respectively.
 These tables contain the rating measured by HPCG, the number of iterations needed for convergence and the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
 Note that some compression strategies had multiple variations that were tested.
+Section~\ref{sec:results-vec} contains information on variations used in vector compression.
 The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
+
+%TODO considering using rating w/out optimization overhead also/instead
+%TODO make sure that the results shown don't need to be cut down to be understandable
 
 \input{figures/4.Results/Vec.tex}
 \input{figures/4.Results/Val.tex}
 \input{figures/4.Results/Ind.tex}
 
 Next, combined compression schemes were tried, using SZ and single precision compression for the matrix values and using SZ, gamma and delta compression for the matrix indices.
-Table~\ref{tab:results-combined} shows the results of these combined schemes.
-Like the single compression tables, this table contains the rating measure by HPCG, the number of iterations needed for convergence and the cache line compression rate.
+Table~\ref{tab:results-combined-mat} shows the results of these combined schemes.
+Like the single compression tables, this table contains the GFLOP rating measure by HPCG and the number of iterations needed for convergence.
 The combined scheme with the best performance used SZ compression for both values and indices.
 The only other approach that outperformed the baseline implementation used 32 bit compression for the values and gamma compression for the indices.
 
-\input{figures/4.Results/Combined.tex}
+\input{figures/4.Results/Combined-mat.tex}
+
+Finally, vector compression was combined with the successful combined matrix compression.
+Due to the poor performance of SZ and ZFP vector compression, only the better versions of mixed precision vector compression were used.
+Table~\ref{tab:results-combined-vec+mat} shows the results for these compression strategies.
+The first column indicates which vectors were stored in 32bit; the rest of the columns correspond to their counter parts in Table~\ref{tab:results-combined-mat}.
+Note that vector compression improved the performance of the SZ compressed matrices, but reduced the performance of the gamma compressed matrices.
+So, the best implementation for the test problem uses mixed precision vectors with \(\vec{b}, \vec{x}\) and \(\mat{A}\vec{d}\) stored in single precision, and sz compressed matrix values and indices.
+
+\input{figures/4.Results/Combined-vec+mat.tex}
 
 \subsection{Performance Improvement Bounds}
 \label{sec:results-bounds}
@@ -24,11 +37,11 @@ This hints that, even without increasing the number of Conjugate Gradient iterat
 This analysis is supported by the fact that none of the compression strategies tried that only compressed a single strategy where able to out perform the baseline implementation.
 
 \subsection{Vector Compression}
+\label{sec:results-vec}
 %TODO start off with general info
 As shown in Table~\ref{tab:results-vec}, vector compression was not successfully used to improve performance.
 Section~\ref{sec:results-bounds} discusses why performance improvement is likely limited.
-However, vector compression is able to make improvements when combined with other compression.
-%TODO get a table reference on this, prolly the table with vec-mix+vals-SZ+inds-SZ
+However, vector compression is able to make improvements when combined with other compressions, as shown in Table~\ref{tab:results-combined-vec+mat}.
 
 ZFP had poor performance when compressing vector information.
 Note that 1 dimensional ZFP compression has a 16 bit granularity, and 3 dimensional ZFP compression has a 1 bit granularity~\cite{Lindstrom:2014:zfp}.
@@ -49,6 +62,9 @@ Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 ite
 
 \subsection{Compiler Settings Analysis}
 %TODO discuss why compiler settings don't have a significant affect on things
+
+\subsection{Consistency of GFLOP Ratings}
+%TODO look at consistancy of metric
 
 \subsection{Testing Environment}
 %TODO test setup
