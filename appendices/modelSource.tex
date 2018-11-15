@@ -1,6 +1,7 @@
-Below is the implementation of the simulation performance model.
-The model was implemented using Common Lisp, being used with Steel Bank Common Lisp version 1.4.
+Below is the implementation of the simulation based performance model.
+The model was implemented in Common Lisp and used with Steel Bank Common Lisp version 1.4.
 
+%TODO out of date
 \begin{lstlisting}[language=Lisp,
 					showstringspaces=false,
 					numbers=left,
@@ -13,7 +14,7 @@ The model was implemented using Common Lisp, being used with Steel Bank Common L
 (defparameter *main-mem-time* 1656/10)
 
 ; Model parameters
-(defparameter *rows-to-check* 10)
+(defparameter *rows-to-check* 128)
 
 ; Default compression settings
 (defparameter *bytes-per-mat-ind* 4)
@@ -33,38 +34,48 @@ The model was implemented using Common Lisp, being used with Steel Bank Common L
           (floor (* i *bytes-per-mat-ind*) 64))
     *main-mem-time*
     *l1-time*))
+
 (defmethod fetch ((obj (eql :mat-vals)) (i integer))
   "Computes the cost of fetching the ith matrix value"
   (if (/= (floor (* (1- i) *bytes-per-mat-val*) 64)
-         (floor (* i *bytes-per-mat-val*) 64))
+          (floor (* i *bytes-per-mat-val*) 64))
     *main-mem-time*
     *l1-time*))
+
 (defmethod fetch ((obj (eql :vect)) (i integer))
   "Computes the code of fetching the ith vector value"
   (cond
-    ((> (mod i 3) 0) *l1-time*)
+    ; 2/3rds of values were used by the previous index
+    ((/= (mod i 3) 2) *l1-time*)
+    ; 2/9ths of values were used by y-1
     ((< (/ i 3) 6) *l2-time*)
-    (t (+ (* (/ *bytes-per-vect* 64) *main-mem-time*)
-          *l1-time*
-          (* (/ *bytes-per-vect* -64) *l1-time*)))))
+    ; 1/9th of values are being used for the first time
+    (t (if (/= (floor (* (1- (/ i 27)) *bytes-per-vect*)
+                      64)
+               (floor (* (/ i 27) *bytes-per-vect*)
+                      64))
+         *main-mem-time*
+         *l1-time*))))
+
 
 (defun 1-row ()
   "Computings the average cost to load a row.
    *rows-to-check* provides the number of rows to use"
-  (+
-    (/ (loop :for i :from 0 :below (* *rows-to-check* 27)
-               :for inds-fetch-time = (fetch :mat-inds i)
-               :for vals-fetch-time = (fetch :mat-vals i)
-               :for vect-fetch-time = (fetch :vect i)
-               :for vals-time = (+ vals-fetch-time
-                                   *vals-decode-time*)
-               :for vect-time = (+ inds-fetch-time
-                                   *inds-decode-time*
-                                   vect-fetch-time
-                                   *vect-decode-time*)
-          :summing (min vals-time vect-time))
-      *rows-to-check*)
-    *vect-encode-time*))
+  (+ (/ (loop
+          :for i :from 0 :below (* *rows-to-check* 27)
+          :for inds-fetch-time = (fetch :mat-inds i)
+          :for vals-fetch-time = (fetch :mat-vals i)
+          :for vect-fetch-time = (fetch :vect i)
+          :for total-vals-time = (+ vals-fetch-time
+                                    *vals-decode-time*)
+          :for total-vect-time = (+ inds-fetch-time
+                                    *inds-decode-time*
+                                    vect-fetch-time
+                                    *vect-decode-time*)
+          :summing (min total-vals-time total-vect-time))
+        *rows-to-check*)
+     *vect-encode-time*))
+
 
 (defun 1-row-with-props (ind-size val-size vect-size
                          ind-decode val-decode
@@ -78,5 +89,6 @@ The model was implemented using Common Lisp, being used with Steel Bank Common L
         (*vect-decode-time* vect-decode)
         (*vect-encode-time* vect-encode))
     (1-row)))
+
 
 \end{lstlisting}

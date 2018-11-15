@@ -66,25 +66,22 @@ The parallel model attempts to estimate the performance required to outperform t
 Figure~\ref{fig:models-dataDeps} shows the dependencies used by each model.
 Note that this model assumes that the compiler and processor can fully parallelize any operations without data dependencies, while, at the absolute minimum, the instructions must be read serially~\cite{Hennessy:1990:ComputerArchitecture}.
 Additionally, the model assumes that the bytes for each compressed value is constant, which is not true for most matrix compression and for some vector compression.
-Lastly, the model was only worked with using integral values for the bytes and decode/encode times.
+Lastly, the model was only worked with using integral values for the bytes, decode times and encode times.
 The model then takes the same compression properties as the first model and computes the time to fetch and decode the values and encode the result value over 10 matrix rows with 27 entries per row.
 Appendix~\ref{app:decode-model-source} contains source code for this model.
 
 \input{figures/3.Models/dataDependacies}
 
-The bounds on outperforming the baseline implementation were hard to determine for the parallel model due to the nature of the model as a sum of maximizations.
+The bounds on outperforming the baseline implementation were hard to determine for the simulation model due to the nature of the model as a sum of maximizations.
 However, some boundaries were computed.
-When only compressing vectors, the compression needs to perform such that
-\[
-	8 \geq \mathrm{vectBytes} + \tfrac{7}{6}\cdot \mathrm{vectDecode} + \tfrac{2}{3} \cdot \mathrm{vectEncode}.
-\]
-This model allows for a slightly less efficient decoding step than the analytical model, however encoding vectors must be more efficient for this model.
-The bounds on matrix compression are less intuitive.
-Table~\ref{tab:models-singleCompMatrix} shows the maximum decode times for matrix indices and values respectively.
+%
+%
+Table~\ref{tab:models-singleComp} shows the restrictions when compressing only a single data structure.
+The matrix index and value columns contain the maximum time to decode a value, in clocks.
+The vector column contains equations that restrict the decode and encode time, with values in clocks.
+Note that the vector limits are not the only way to compute the restriction.
 These compression bounds appear to be significantly related to the frequency at which multiple values are fetched from main memory.
 
 %TODO figure out a way to think about/work with multiple compressions at once
 
-\input{figures/3.Models/singleCompMatrixTimings}
-
-
+\input{figures/3.Models/singleCompTimings}
