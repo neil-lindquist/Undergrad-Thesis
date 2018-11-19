@@ -4,6 +4,9 @@ Note that some compression strategies had multiple variations that were tested.
 Section~\ref{sec:results-vec} contains information on variations used in vector compression.
 The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
 
+%TODO make note of consistancy results (10 runs of baseline had the range of ratings equal to .6128)
+%TODO discuss why compiler settings don't have a significant affect on things
+	%Consider putting consistancy with compiler settings, both about why these results are good enough
 %TODO considering using rating w/out optimization overhead also/instead
 %TODO make sure that the results shown don't need to be cut down to be understandable
 
@@ -38,7 +41,6 @@ This analysis is supported by the fact that none of the compression strategies t
 
 \subsection{Vector Compression}
 \label{sec:results-vec}
-%TODO start off with general info
 As shown in Table~\ref{tab:results-vec}, vector compression was not successfully used to improve performance.
 Section~\ref{sec:results-bounds} discusses why performance improvement is likely limited.
 However, vector compression is able to make improvements when combined with other compressions, as shown in Table~\ref{tab:results-combined-vec+mat}.
@@ -60,12 +62,12 @@ Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 ite
 
 \input{figures/4.Results/Vec-SZ.tex}
 
-\subsection{Compiler Settings Analysis}
-%TODO discuss why compiler settings don't have a significant affect on things
-
-\subsection{Consistency of GFLOP Ratings}
-%TODO look at consistancy of metric
-
 \subsection{Testing Environment}
-%TODO test setup
-Timings measured with a problem of size \(96^3\) with 60 processes on the walbert cluster.
+The timings presented were obtained when using a problem size of \(96^3\) matrix rows.
+The cluster used for timings had a 20 core, 2.2 GHz Intel Xeon E5-2698 v4 head node and an additional five 8 core, 1.7GHz Intel Xeon E5-2605 nodes.
+One process was created for each core, with a single OMP thread per process.
+
+The code was implemented using version 3.0.0 of the HPCG benchmark~\cite{Dongarra:2015:HPCG}.
+The code was compiled with the OpenMPI cxx wrapper using GCC version 4.8.5.
+OpenMPI 3.2 was used for the compiler wrapper and MPI runtime.
+The O3 and fopenmp flags were used for compilation, in addition to a selection of warning flags and the std flag as necessary.
