@@ -1,16 +1,16 @@
 \begin{table}
 	\centering
-	\begin{tabular}{l|l|S|r}
-		\multicolumn{2}{c|}{Compression} & & \\
-		Value & Index & GFLOPs & Iterations \\
+	\begin{tabular}{l|l|S[table-format=2.6]|S[table-format=2.6]|r}
+		\multicolumn{2}{c|}{Compression} & {HPCG} & {GFLOPs} & \\
+		Value    &   Index               & {Rating} & {Rating}   & Iterations \\
 		\hline
-		\multicolumn{2}{c|}{Baseline} & 15.3654 & 50 \\
-		SZ & SZ & 18.9702 & 50 \\
-		SZ & Gamma & 13.661 & 51 \\
-		SZ & Delta & 10.9903 & 50 \\
-		32 bit & SZ & 14.1796 & 51 \\
-		32 bit & Gamma & 17.6676& 51 \\
-		32 bit & Delta & 12.56 & 51 \\
+		\multicolumn{2}{c|}{Baseline} & 15.3654 & 15.7394 & 50 \\
+		SZ & SZ & 18.9702 & 19.5759 & 50 \\
+		SZ & Gamma & 13.661 & 13.9794 & 51 \\
+		SZ & Delta & 10.9903 & 11.1961 & 50 \\
+		32 bit & SZ & 14.1796 & 14.5156 & 51 \\
+		32 bit & Gamma & 17.6676 & 18.1835 & 51 \\
+		32 bit & Delta & 12.56 & 12.8181 & 51 \\
 	\end{tabular}
 	\caption{Results of Combined Matrix Value and Index Compression Schemes.}
 	\label{tab:results-combined-mat}

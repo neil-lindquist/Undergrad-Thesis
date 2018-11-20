@@ -1,5 +1,5 @@
 Tables~\ref{tab:results-vec}, \ref{tab:results-val} and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values and matrix indices respectively.
-These tables contain the rating measured by HPCG, the number of iterations needed for convergence and the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
+These tables, and all following tables of test results, contain the rating measured by HPCG, the GFLOP rating with convergance overhead, the number of iterations needed for convergence and, where computed, the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
 Note that some compression strategies had multiple variations that were tested.
 Section~\ref{sec:results-vec} contains information on variations used in vector compression.
 The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
@@ -16,7 +16,6 @@ The compression of just one data structure fails to outperform the baseline impl
 
 Next, combined compression schemes were tried, using SZ and single precision compression for the matrix values and using SZ, gamma and delta compression for the matrix indices.
 Table~\ref{tab:results-combined-mat} shows the results of these combined schemes.
-Like the single compression tables, this table contains the GFLOP rating measure by HPCG and the number of iterations needed for convergence.
 The combined scheme with the best performance used SZ compression for both values and indices.
 The only other approach that outperformed the baseline implementation used 32 bit compression for the values and gamma compression for the indices.
 
@@ -46,6 +45,7 @@ Section~\ref{sec:results-bounds} discusses why performance improvement is likely
 However, vector compression is able to make improvements when combined with other compressions, as shown in Table~\ref{tab:results-combined-vec+mat}.
 
 ZFP had poor performance when compressing vector information.
+The high level array API was used to provide the necessary random access.
 Note that 1 dimensional ZFP compression has a 16 bit granularity, and 3 dimensional ZFP compression has a 1 bit granularity~\cite{Lindstrom:2014:zfp}.
 These granularity restrictions and the resulting iterations needed were used to select the tested compression rates.
 
