@@ -4,10 +4,11 @@ Note that some compression strategies had multiple variations that were tested.
 Section~\ref{sec:results-vec} contains information on variations used in vector compression.
 The compression of just one data structure fails to outperform the baseline implementation; Section~\ref{sec:results-bounds} discusses this further.
 
-%TODO make note of consistancy results (10 runs of baseline had the range of ratings equal to .6128)
-%TODO discuss why compiler settings don't have a significant affect on things
-	%Consider putting consistancy with compiler settings, both about why these results are good enough
-%TODO considering using rating w/out optimization overhead also/instead
+Note that for comparing times, ten runs of the baseline implementation on the standard test settings had a range of 0.6128 and a standard deviation of 0.1846 for the HPCG rating.
+For the effective GFLOPs, there was a range of 0.4629 and a standard deviation of 0.1504.
+Thus, when comparing similar values, it should be noted that the values may vary by a few tenths of a GFLOP between runs.
+%TODO wording
+
 %TODO make sure that the results shown don't need to be cut down to be understandable
 
 \input{figures/4.Results/Vec.tex}
@@ -68,6 +69,8 @@ The cluster used for timings had a 20 core, 2.2 GHz Intel Xeon E5-2698 v4 head n
 One process was created for each core, with a single OMP thread per process.
 
 The code was implemented using version 3.0.0 of the HPCG benchmark~\cite{Dongarra:2015:HPCG}.
+The test measurements were taking using an unmodified version of HPCG's timing and FLOP counter implementation.
 The code was compiled with the OpenMPI cxx wrapper using GCC version 4.8.5.
 OpenMPI 3.2 was used for the compiler wrapper and MPI runtime.
 The O3 and fopenmp flags were used for compilation, in addition to a selection of warning flags and the std flag as necessary.
+No \texttt{HPCG\_OPTS} flags were enabled.

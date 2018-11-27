@@ -45,11 +45,14 @@ This model utilizes a few facts.
 Firstly, the number of bytes per value divided by 64 provides the percent of values that will require fetching a cacheline from main memory or higher caches, while 1 minus this values is the percent of values that will be able to only need to access L1 cache.
 Secondly, due the matrix sparsity pattern, two thirds of vector values will always be in L1 cache and two thirds of the remaining values will be in L2 cache.
 The model was only studied using the performance characteristics shown in Table~\ref{tab:models-baseLatencies}.
-Outperforming the baseline implementation in this model requires meeting the approximate bounds
+This model was used to create approximate bounds that need to be meet to outperform the baseline implementation.
+The model can be simplified by letting
 \begin{align*}
 \mathrm{decode} =& \mathrm{vectDecode} + \mathrm{matValDecode} + \mathrm{matIndDecode} \\
-\mathrm{matBytes} =& \mathrm{matValBytes} + \mathrm{matIndBytes}\\
-\\
+\mathrm{matBytes} =& \mathrm{matValBytes} + \mathrm{matIndBytes}.
+\end{align*}
+Then, the performance bounds are, approximately,
+\begin{align*}
 \mathrm{vectEncode} <& 878.513 \\
 \mathrm{decode} <& 32.5375 - 0.037037\cdot\mathrm{vectEncode} \\
 \mathrm{matBytes} <& 12.9664 - 0.398506\cdot\mathrm{decode}- 0.0147595\cdot\mathrm{vectEncode}\\
