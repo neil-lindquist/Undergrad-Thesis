@@ -69,7 +69,7 @@ The cluster used for timings had a 20 core, 2.2 GHz Intel Xeon E5-2698 v4 head n
 One process was created for each core, with a single OMP thread per process.
 
 The code was implemented using version 3.0.0 of the HPCG benchmark~\cite{Dongarra:2015:HPCG}.
-The test measurements were taking using an unmodified version of HPCG's timing and FLOP counter implementation.
+Many of the implementations with timings listed in this paper can be found at \url{https://github.com/Collegeville/HPCG-ZFP}~\cite{Lindquist:2018:projectGithub}.
 The code was compiled with the OpenMPI cxx wrapper using GCC version 4.8.5.
 OpenMPI 3.2 was used for the compiler wrapper and MPI runtime.
 The O3 and fopenmp flags were used for compilation, in addition to a selection of warning flags and the std flag as necessary.
