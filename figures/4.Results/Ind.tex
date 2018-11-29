@@ -5,22 +5,22 @@
 		Compression & {Rating} & {Rating} & Iterations & Rate \\
 		\hline
 		Baseline & 15.3654 & 15.7394 & 50 & 1:1 \\ %using mixed prec "all doubles" time
-		SZ & 14.9322 & 15.2964 & 50 & \\
-		Gamma & 14.6553 & 15.0062 & 50 & \\ %TODO consider using single alloc measure
-		Delta & 14.3036 & 14.6485 & 51 & \\
+		SZ & 14.9322 & 15.2964 & 50 & \({\sim}1\):2 \\
+		Gamma & 14.6553 & 15.0062 & 50 & \({\sim}1\):9 \\ %TODO consider using single alloc measure
+		Delta & 14.3036 & 14.6485 & 51 & \({\sim}1\):8 \\
 		Huffman & & & & \\
 		\hspace{3mm}No First Index & & & & \\
 		%TODO explain that No First Index/First Index is whether the first index is compressed
 		%TODO explain meaning of "window"
-			\hspace{6mm}4 bit window & 10.654 & 10.8548 & 51 & \\
-			\hspace{6mm}6 bit window & 10.7666 & 10.9715 & 51 & \\
-			\hspace{6mm}8 bit window & 10.8941 & 11.1043 & 51 & \\
-			\hspace{6mm}10 bit window & 10.8156 & 11.024 & 51 & \\
-			\hspace{6mm}12 bit window & 10.8158 & 11.0251 & 51 & \\
+			\hspace{6mm}4 bit window & 10.654 & 10.8548 & 51 & \({\sim}1\):9 \\
+			\hspace{6mm}6 bit window & 10.7666 & 10.9715 & 51 &  \({\sim}1\):9 \\
+			\hspace{6mm}8 bit window & 10.8941 & 11.1043 & 51 & \({\sim}1\):9 \\
+			\hspace{6mm}10 bit window & 10.8156 & 11.024 & 51 & \({\sim}3\):10 \\
+			\hspace{6mm}12 bit window & 10.8158 & 11.0251 & 51 & \({\sim}1\):8 \\
 		\hspace{3mm}First Index & & & & \\
-			\hspace{6mm}4 bit window & 10.9359 & 11.148 & 51 & \\
-			\hspace{6mm}8 bit window & 11.1134 & 11.3336 & 51 & \\
-			\hspace{6mm}16 bit window & 10.3323 & 10.5819 & 51 & \\
+			\hspace{6mm}4 bit window & 10.9359 & 11.148 & 51 & \({\sim}1\):9 \\
+			\hspace{6mm}8 bit window & 11.1134 & 11.3336 & 51 & \({\sim}1\):9 \\
+			\hspace{6mm}16 bit window & 10.3323 & 10.5819 & 51 & \({\sim}20\):11 \\
 		%TODO add single table timings
 		%TODO add cont alloc timings (?)
 		Op Code & & & & \\
