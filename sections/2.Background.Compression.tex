@@ -21,6 +21,7 @@ Similarly, a sequential compression method can be used on the matrix information
 %TODO figure out best order to discussion compressions
 
 \subsubsection{Single and Mixed Precision Floating Point Numbers}
+\label{sec:bg-comp-floatPrec}
 The most obvious compression of floating point data is using single precision representation instead of double precision representation.
 While it only has a compression rate of 1:2, it allows the compression and decompression of values using at most 1 extra hardware operation.
 Additionally, it provides the same data access properties as the double prevision version.
@@ -106,6 +107,7 @@ Additionally, because decoding a delta encoded value requires decoding a gamma e
 
 
 \subsubsection{Op-Code Compression}
+\label{sec:bg-comp-opcode}
 %TODO opcode compression
 Opcode compression is based on the index compression used in Compressed Column Index (CCI) matrices~\cite{Lawlor:2013:compression}.
 Note that this integer compression is never given it's own name in the original description and so is referred to as opcode compression in this paper.
