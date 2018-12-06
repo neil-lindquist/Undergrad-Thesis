@@ -32,6 +32,7 @@ So, the best implementation for the test problem uses mixed precision vectors wi
 \input{figures/4.Results/Combined-vec+mat.tex}
 
 \subsection{Performance Improvement Bounds}
+%TODO figure out if this should be it's own section, or combined with data structure specific sections
 \label{sec:results-bounds}
 Note that Table~\ref{tab:results-val} shows 1 bit compression under performing the baseline implementation, even though it has a significant compression rate.
 This demonstrates that compressing the matrix values alone in unable to improve performance.
@@ -62,6 +63,29 @@ Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 ite
 %TODO is this note useful?
 
 \input{figures/4.Results/Vec-SZ.tex}
+
+\subsection{Matrix Value Compression}
+Like vector compression, matrix value compression alone was unable to outperform the baseline implementation.
+As discussed in Section~\ref{sec:results-bounds}, 1-bit compression was unable to outperform the baseline implementation, which show that a reduction in the size of matrix values alone provides little benefit.
+Both SZ compression and single precision compression were not significantly under the baseline, indicating that they may be usable in conjunction with other compression techniques.
+On the other hand, ZFP compression performed over a magnitude slower than the baseline, making it unlikely that it could improve performance, even when combined with other techniques.
+
+As mentioned in Section~\ref{sec:bg-comp-sz}, there were two possible sets of curves that could be used for matrix value compression.
+One setup uses only the Neighbor curve, and the other setup uses both the Neighbor and Neighbor's Neighbor curve.
+%TODO double check compression rates, then compare compression rates of the different modes
+Both setups performed similarly, with the 2 curve version performing slightly better.
+%TODO need justification why both weren't tested in combined compression
+The one curve version was used when combining with other compression methods.
+
+%TODO look at the level of effort applied to ZFP
+%Should probably reimplement ZFP matVal versions to be variable rate encoded w/ a forward and backward iterations
+%Or just drop ZFP matVals b/c technically not designed for the type of data that is being compressed
+ZFP compression had multiple configurations that could be used.
+However, the possible configurations were not fully experimented with since the matrix values lacks the spacial relations that ZFP is designed for and ZFP performs poorly on the configurations that are tested, for both vector and matrix value compression.
+First, unlike ZFP vector compression, only the 1 dimensional codec was tested because the data does not have spacial patterns, let alone multiple dimensions of them.
+Second, due to the simple access pattern for matrix values, both the high level array API and the low level API were tried.
+The compression rate was kept at 32 bits per value.
+None of the configurations tests were able to provide even mediocre performance, so ZFP compression was not tested further for matrix compression.
 
 \subsection{Testing Environment}
 The timings presented were obtained when using a problem size of \(96^3\) matrix rows.

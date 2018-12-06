@@ -38,6 +38,7 @@ Note that the upper bound provided for 1 bit compression is only an upper bound 
 The importance of compressing multiple structures, as described in Section~\ref{sec:bg-comp-combined}, is shown using 1 bit compression.
 
 \subsubsection{Squeeze (SZ) Compression}
+\label{sec:bg-comp-sz}
 %TODO review wording of "curve", probably need to use "predictor" or something
 Squeeze (SZ) compression is a group of compression strategies based on using curve fitting and can be used for both integers and floating point values.
 The compression strategy referred to as SZ compression in this paper deviates from the original description by using a generalization of the core approach of the original implementation of SZ compression~\cite{Di:2016:SZ}.
@@ -66,7 +67,7 @@ For compressing vector values, the Neighbor, Linear and Quadratic curves were us
 Because the vector values represent a value at each grid point, these curves attempted to capture smooth changes and relations in the data.
 The matrix indices were compressed using only the increment compression mode, since approximately two thirds of the indices fit that pattern.
 The matrix values were compressed with a few different combinations of curves.
-These combinations were Neighbor alone, Neighbor and Neighbor's Neighbor, and Neighbor, Neighbor's Neighbor and Last Uncompressed.
+These combinations were Neighbor alone, then Neighbor and Neighbor's Neighbor.
 These curves were chosen to find the best way to compress a series of -1's with occasional 26's.
 
 \subsubsection{ZFP Compression}
