@@ -10,14 +10,14 @@ On modern computers, these solvers often spend significantly most of their time 
 This work tries to improve the performance of these types of solvers by compressing the data to reduce the time spent accessing main memory.
 
 To avoid needing to build a sparse linear solver to test, the High Performance Conjugate Gradient (HPCG) benchmark was used as the initial codebase for the project~\cite{Dongarra:2015:HPCG}.
-This benchmark is designed to measure the performance of computing systems when processing sparse solvers, and does so by solving one such test problem.
+This benchmark is designed to measure the performance of computing systems when processing sparse solvers and does so by solving one such test problem.
 In addition, as a benchmark, HPCG has built in measurements of elapsed time, solver iterations and the number of floating point operations that needed to be computed.
 These factors all make the HPCG codebase a natural starting point for developing improvements to sparse, iterative linear solvers.
 
 %TODO look at paragraph's flow
 %tries to match whole paper's flow
 There are three main data structures that were experimented with in this project, the vector values, the matrix value and the matrix indices.
-For each data structure, a selection of compression methods were found that were able to fulfill the necessary access requirements.
+For each data structure, compression methods were found that were able to fulfill the necessary access requirements.
 Additionally, two models were constructed in an attempt to estimate the minimum performance a compression method would need to outperform the baseline.
 Both models indicated that vector values must be decoded with only a few instructions but that matrix values can be decoded around an order of magnitude slower.
 In the actual tests, a couple of configurations were found to be able to outperform the baseline implementation, with an increase in performance of up to 85\%.
@@ -27,7 +27,7 @@ Much work has been done on various aspects of utilizing single precision floatin
 %TODO this coarse approx isn't really used anywhere in this project
 One such approach uses the fact that iterative solvers can take an initial guess of the solution to jump start progress.
 So, performance can be improved by computing an approximate solution in single precision, then using double precision to refine the solution to sufficient accuracy~\cite{Babolin:2008:coursePass, Buttari:2007:coursePass}.
-Another main approach is to applying the preconditioner using single precision, while otherwise using double precision, which result in similar accuracy unless the matrix is poorly conditioned~\cite{Buttari:2008:mixedPrec, Hogg:2010:multiplePasses}.
+Another main approach is to apply the preconditioner using single precision, while otherwise using double precision, which result in similar accuracy unless the matrix is poorly conditioned~\cite{Buttari:2008:mixedPrec, Hogg:2010:multiplePasses}.
 This use of multiple precisions in the same kernel is similar to the approach used when mixing precision of vector values, as described in Section~\ref{sec:bg-comp-floatPrec}.
 
 Another effort at compressing large, sparse Linear Systems is Compressed Column Index (CCI) format to store matrices~\cite{Lawlor:2013:compression}.

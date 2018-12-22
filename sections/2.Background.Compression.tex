@@ -31,7 +31,7 @@ So, by making only select vectors single precision, a compromise can be found wh
 
 \subsubsection{1 bit Compression}
 \label{sec:bg-comp-1bit}
-To provide a estimated upper bound on improvements in performance from matrix value compression, 1 bit compression was devised.
+To provide an estimated upper bound on improvements in performance from matrix value compression, 1 bit compression was devised.
 This scheme uses the fact that the matrix values in the test matrix are all either -1 or 26.
 Note that as implemented, this scheme has very limited number of matrices that can be compressed with in.
 However, certain compression schemes that modify the compression based on the data being compressed, such as Huffman coding described in Section~\ref{sec:bg-comp-huffman}, can achieve the same compression for the test matrix.
@@ -55,7 +55,7 @@ The compression rate is
 \[
 	\frac{ps+\ceil{\log_2(n)}}{s}
 \]
-where \(s\) be the number of bits used by an uncompressed value, \(p\) be the percent of values that are compressed and \(n\) be the number of curves available.
+where \(s\) be the number of bits used by an uncompressed value, \(p\) be the percent of values that are compressed, and \(n\) be the number of curves available.
 Note that due to the granularity of the matrix values and indices, bounding the error to be less than one results in an effective error bound of 0.
 Thus, when compressing those data structure, only an error bound of 0 is used.
 
@@ -74,8 +74,8 @@ These curves were chosen to find the best way to compress a series of -1's with 
 \subsubsection{ZFP Compression}
 ZFP compression is a lossy floating point compression scheme designed for spacial correlated data~\cite{Lindstrom:2014:zfp}.
 ZFP compression is designed to take advantage of spacial relations for data up to 4 dimensions.
-Note that the matrix values were compressed with ZFP, in spite of the fact that there is no spacial relation between points.
-Because the vectors represent points in 3 dimensions, 1 and 3 dimension compression was tried.
+Note that the matrix values were compressed with ZFP, even though there is no spacial relation between points.
+Because the vectors represent points in 3 dimensions, 1- and 3- dimension compression was tried.
 The matrix values were only compressed with 1 dimension.
 ZFP compresses its values by grouping the data into blocks of \(4^d\) elements, where \(d\) is the number of dimensions compressing with~\cite{Lindstrom:2014:zfp}.
 When random access is required, each block is compressed at a fixed size to allow access to arbitrary blocks.
@@ -85,7 +85,7 @@ Both the high- and low-level interfaces were tried for the vector compression.
 
 \subsubsection{Elias Gamma Coding and Delta Coding}
 Elias Gamma and Delta codings are a pair of similar compression methods that are designed to compress positive integers by not storing extra leading 0's~\cite{Elias:1975:codeword}.
-Because these schemes are able to better compress smaller numbers, the matrix indices were stored as the offset from the preceding value.
+Because these schemes are better at compressing smaller numbers, the matrix indices were stored as the offset from the preceding value.
 Then, because these codings are only able to compress positive integers, the indices of each row must be sorted in acceding order.
 Finally, the first index in each row is stored as the offset from -1, to ensure an index of 0 is properly encoded.
 
@@ -110,8 +110,8 @@ Additionally, because decoding a delta encoded value requires decoding a gamma e
 \label{sec:bg-comp-opcode}
 %TODO opcode compression
 Opcode compression is based on the index compression used in Compressed Column Index (CCI) matrices~\cite{Lawlor:2013:compression}.
-Note that this integer compression is never given it's own name in the original description and so is referred to as opcode compression in this paper.
-Opcode compression is inspired by CPU instruction encodings which are seperated into an ``opcode'' portion and a data portion (hence the name).
+Note that this integer compression is never given its own name in the original description and so is referred to as opcode compression in this paper.
+Opcode compression is inspired by CPU instruction encodings which are separated into an ``opcode'' portion and a data portion (hence the name).
 To read each value, the first few bits are read to determine the number of bits used for the data portion, which stores the encoded value.
 Like Gamma and Delta coding, opcode compression reduces the number of leading 0's stored, and similarly is utilized by encoding the difference from the preceding index.
 If some opcodes are used significantly, that opcode can be shorted to save bits.

@@ -1,5 +1,5 @@
 %problem and discresionization
-The problem used to create the linear system used by HPCG, and thus by this project, is a three dimensional partial differential equation (PDE) model~\cite{Dongarra:2015:HPCG}.
+The problem used to create the linear system used by HPCG, and thus by this project, is a three-dimensional partial differential equation (PDE) model~\cite{Dongarra:2015:HPCG}.
 This problem is approximating the function \(u(x, y, z)\) over the three dimensional rectangular region \(\Omega\in\mathbb{R}^3\) such that
 \[
 	\Delta u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} = 0,
@@ -8,14 +8,14 @@ Note that the solution is \(u(x, y, z) = 1\) over \(\Omega\).
 The linear system is created by using the finite difference method with a 27-point stencil on the PDE over a rectangular grid with nodes of fixed distance.
 The matrix's diagonal consists of the value 26, and -1's fill the entries for the row's 26 grid neighbors.
 %TODO should this be described in more detail, sum of the adjacent points on the boundary
-The right hand side of the equation has a value of 14 for corner points, 12 for edge points, 9 for side points and 0 for interior points~\cite{Kincaid:2009:Numerical}.
+The right-hand side of the equation has a value of 14 for corner points, 12 for edge points, 9 for side points and 0 for interior points~\cite{Kincaid:2009:Numerical}.
 The solution vector consists of all 1's.
 
 %TODO discuss MPI setup
 
 % HPCG's solve details
 HPCG uses an implementation of Conjugate Gradient algorithm with a multigrid preconditioner variant~\cite{Dongarra:2015:HPCG}.
-As HPCG is designed to emulate the performance characteristics of real world problems with out needing to be a robust solver, it only uses 3 levels of grid coarseness with only a since smoother pass at the coarsest grid level.
+As HPCG is designed to emulate the performance characteristics of real world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a since smoother pass at the coarsest grid level.
 %TODO does this note need to be exteneded
 The smoother used by the multigrid is based on a symmetric Gauss-Seidel step, however each process uses the old value for entries located on other processes.
 %TODO improve wording

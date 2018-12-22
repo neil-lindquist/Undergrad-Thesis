@@ -19,7 +19,7 @@ In addition to extensions to this project, work could be done to use this idea o
 
 Note that the stencil matrix used by HPCG is very consistent and has a large amount of repetition; this makes it easy to compress.
 So, experimenting with other matrices could provide a more general idea of the performance.
-The SuiteSparse Matrix Collection provides a number of linear systems that could be used for such a project~\cite{Davis:2011:FloridaMatrixCollection}.
+The SuiteSparse Matrix Collection provides linear systems that could be used for such a project~\cite{Davis:2011:FloridaMatrixCollection}.
 However, note that the HPCG implementation makes some assumptions about the matrix in the problem setup, so some of the setup sections would need to be rewritten~\cite{Dongarra:2015:HPCG}.
 
 Another aspect that could be further experimented with is the solver used.
@@ -27,7 +27,7 @@ Other solvers and preconditioner likely have different data access patterns than
 These differences may change the available compression strategies, have different precision requirements or have different ratios of memory fetches to arithmetic.
 So, different solvers may have better optimal compression strategies.
 
-The last area this work could be extended would be trying different compression methods or varients of the compression methods used in this project.
+The last area this work could be extended would be trying different compression methods or variants of the compression methods used in this project.
 On such topic would be look at using different error tolerances for different vectors, like what is done with single precision compression.
 Another possible variation would be to compress additional data structures, such as the matrix diagonals.
 Finally, totally new compression strategies could be used.
