@@ -1,5 +1,3 @@
-%TODO conclusions
-
 Data compression was able to successfully increase the performance of the sparse linear solver in HPCG~\cite{Dongarra:2015:HPCG}.
 The best performance increase came from using SZ compression on the matrix indices and values and using single precision values for select vectors with an increase in the effective GFLOPs of about 84\%.
 However, there are only a few compression strategies that outperforms the baseline.
@@ -26,6 +24,7 @@ Another aspect that could be further experimented with is the solver used.
 Other solvers and preconditioner likely have different data access patterns than the solver used in HPCG.
 These differences may change the available compression strategies, have different precision requirements or have different ratios of memory fetches to arithmetic.
 So, different solvers may have better optimal compression strategies.
+%TODO mention heterogenuous solver implementation
 
 The last area this work could be extended would be trying different compression methods or variants of the compression methods used in this project.
 On such topic would be look at using different error tolerances for different vectors, like what is done with single precision compression.

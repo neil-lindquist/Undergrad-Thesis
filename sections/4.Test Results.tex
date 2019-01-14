@@ -42,14 +42,20 @@ This analysis is supported by the fact that none of the compression strategies t
 
 \subsection{Vector Compression}
 \label{sec:results-vec}
-As shown in Table~\ref{tab:results-vec}, vector compression was not successfully used to improve performance.
-Section~\ref{sec:results-bounds} discusses why performance improvement is likely limited.
-However, vector compression is able to make improvements when combined with other compressions, as shown in Table~\ref{tab:results-combined-vec+mat}.
+As shown in Table~\ref{tab:results-vec} and discussed in Section~\ref{sec:results-bounds}, vector compression was not successfully used to improve performance.
+However, certain combinations of single and double precision vector values were able to perform close to the baseline performance.
+These compression combinations were able to make improvements when combined with other compressions, as shown in Table~\ref{tab:results-combined-vec+mat}.
 
 ZFP had poor performance when compressing vector information.
-The high-level array API was used to provide the necessary random access.
-Note that 1-dimensional ZFP compression has a 16 bit granularity, and 3-dimensional ZFP compression has a 1 bit granularity~\cite{Lindstrom:2014:zfp}.
+The high level array API was used to provide the necessary random access.
+That API provides an adjustable cache for decoded values.
+Figure~\ref{fig:results-zfp-cache} shows the performance of 1d ZFP compression versus the cache size.
+Note that the two large jumps occur when the values only need to be decoded once per matrix-vector product and when the values can be left permanently decoded.
+The results in Table~\ref{tab:results-vec} use the default cache size of 2 blocks for 1 dimensional compression and \({2\cdot\ceil{nz/2}\cdot\ceil{ny/2}}\) blocks for 3 dimensional compression.
+The array API also allows selecting the compression rate, with a 16 bit granularity for 1-dimensional compression and a 1 bit granularity for 3-dimensional compression~\cite{Lindstrom:2014:zfp}.
 These granularity restrictions and the resulting iterations needed were used to select the tested compression rates.
+
+\input{figures/4.Results/Vec-zfp-cache.tex}
 
 SZ compression has two main configurable settings, the number of values in each block and the error bound.
 There were two measures of error that were considered, absolute error and pointwise relative error.
