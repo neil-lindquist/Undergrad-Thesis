@@ -5,10 +5,10 @@ Because the solver provides an approximation to \(\mat{A}^-1\), the precondition
 This reduces the condition number of the linear system, and so, reduces the number of iterations needed for Conjugate Gradient to converge~\cite{Saad:2003:IterativeMethods}.
 
 The multigrid method uses meshes of different sizes to improve performance of a relaxation style iterative solver~\cite{Saad:2003:IterativeMethods}.
-Most relaxation type iterative solvers are able to quickly reduce the components of the residual in the direction of eigenvectors associated with large eigenvalues for the iteration matrix.
+Most relaxation type iterative solvers are able to quickly reduce the components of the residual in the direction of eigenvectors associated with large eigenvalues of the iteration matrix.
 Such eigenvectors are called high frequency modes.
 The other components, in the direction of eigenvectors called low frequency modes, are difficult to reduce with standard relaxation.
-However, on a courser mesh, many of these low frequency modes are mapped to high frequency modes~\cite{Saad:2003:IterativeMethods}.
+However, on a coarser mesh, many of these low frequency modes are mapped to high frequency modes~\cite{Saad:2003:IterativeMethods}.
 Thus, by applying a relaxation type iterative solver at various mesh sizes, the various components of the residual can be reduced quickly.
 
 In HPCG, a symmetric Gauss-Seidel iteration is used by the multigrid as the relaxation iteration solver at each level of coarseness~\cite{Dongarra:2015:HPCG}.

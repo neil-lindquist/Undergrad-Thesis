@@ -1,16 +1,15 @@
 Solving large, sparse linear systems of equations plays an important role in certain scientific computations.
-For example, the finite element method solves a system of linear equations in order to approximate the solution to certain partial differential equations~\cite{Saad:2003:IterativeMethods}.
+For example, the finite element method solves a system of linear equations to approximate the solution to certain partial differential equations~\cite{Saad:2003:IterativeMethods}.
 These problems can be large, with possibly millions of variables~\cite{Davis:2011:FloridaMatrixCollection}.
 So, solving these problems efficiently requires a fast linear solver.
 
-The particular class of linear systems being looked at are sparse, meaning that they have a high proportion of zero coefficients.
 Iterative solvers are often used to solve these large, sparse systems.
 These solvers take an initial guess then improve it until it is within some tolerance~\cite{Saad:2003:IterativeMethods}.
-On modern computers, these solvers often spend significantly most of their time fetching data from main memory to the processor where the actual computation is done~\cite{Lawlor:2013:compression}.
+On modern computers, these solvers often spend most of their time fetching data from main memory to the processor where the actual computation is done~\cite{Lawlor:2013:compression}.
 This work tries to improve the performance of these types of solvers by compressing the data to reduce the time spent accessing main memory.
 
-To avoid needing to build a sparse linear solver to test, the High Performance Conjugate Gradient (HPCG) benchmark was used as the initial codebase for the project~\cite{Dongarra:2015:HPCG}.
-This benchmark is designed to measure the performance of computing systems when processing sparse solvers and does so by solving one such test problem.
+To avoid creating an entire sparse linear solver, the High Performance Conjugate Gradient (HPCG) benchmark was used as the initial codebase for the project~\cite{Dongarra:2015:HPCG}.
+The HPCG benchmark is designed to measure the performance of computing systems when processing sparse solvers and does so by solving one such test problem.
 In addition, as a benchmark, HPCG has built in measurements of elapsed time, solver iterations and the number of floating point operations that needed to be computed.
 These factors all make the HPCG codebase a natural starting point for developing improvements to sparse, iterative linear solvers.
 
@@ -19,7 +18,7 @@ These factors all make the HPCG codebase a natural starting point for developing
 There are three main data structures that were experimented with in this project, the vector values, the matrix value and the matrix indices.
 For each data structure, compression methods were found that were able to fulfill the necessary access requirements.
 Additionally, two models were constructed in an attempt to estimate the minimum performance a compression method would need to outperform the baseline.
-Both models indicated that vector values must be decoded with only a few instructions but that matrix values can be decoded around an order of magnitude slower.
+Both models indicated that vector values must be decoded with only a few instructions, but that matrix values can be decoded around an order of magnitude slower.
 In the actual tests, a couple of configurations were found to be able to outperform the baseline implementation, with an increase in performance of up to 85\%.
 
 \subsection{Previous Work}
@@ -31,7 +30,7 @@ Another main approach is to apply the preconditioner using single precision, whi
 This use of multiple precisions in the same kernel is similar to the approach used when mixing precision of vector values, as described in Section~\ref{sec:bg-comp-floatPrec}.
 
 Another effort at compressing large, sparse Linear Systems is Compressed Column Index (CCI) format to store matrices~\cite{Lawlor:2013:compression}.
-This format is based of Compressed Sparse Row (CSR) matrix format except uses compression to reduce the size of the matrix indices.
+This format is based on Compressed Sparse Row (CSR) matrix format except uses compression to reduce the size of the matrix indices.
 The index compression is described in Section~\ref{sec:bg-comp-opcode}.
 This project generalizes the approach of CCI matrices, both by compressing additional data structures and using additional compression methods.
 However, only a single matrix is tested for this project, as opposed to the suite of matrices used to look at the performance of CCI matrices.

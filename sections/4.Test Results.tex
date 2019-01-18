@@ -10,7 +10,7 @@ The compression of just one data structure fails to outperform the baseline impl
 \input{figures/4.Results/Val.tex}
 \input{figures/4.Results/Ind.tex}
 
-Note that for comparing times, ten runs of the baseline implementation on the standard test settings had a range of 0.6128 and a standard deviation of 0.1846 for the HPCG rating.
+Note that for comparing times, ten runs of the baseline implementation with the standard test settings had a range of 0.6128 and a standard deviation of 0.1846 for the HPCG rating.
 For the effective GFLOPs, there was a range of 0.4629 and a standard deviation of 0.1504.
 Thus, when comparing similar values, it should be noted that the values may vary by a few tenths of a GFLOP between runs.
 %TODO wording
@@ -25,7 +25,7 @@ The only other approach that outperformed the baseline implementation used 32-bi
 Finally, vector compression was combined with the successful combined matrix compression.
 Due to the poor performance of SZ and ZFP vector compression, only the better versions of mixed precision vector compression were used.
 Table~\ref{tab:results-combined-vec+mat} shows the results for these compression strategies.
-The first column indicates which vectors were stored in 32bit; the rest of the columns correspond to their counter parts in Table~\ref{tab:results-combined-mat}.
+The first column indicates which vectors were stored in 32bit; the rest of the columns correspond to their counterparts in Table~\ref{tab:results-combined-mat}.
 Note that vector compression improved the performance of the SZ compressed matrices but reduced the performance of the gamma compressed matrices.
 So, the best implementation for the test problem uses mixed precision vectors with \(\vec{b}, \vec{x}\) and \(\mat{A}\vec{d}\) stored in single precision, and sz compressed matrix values and indices.
 
@@ -36,7 +36,7 @@ So, the best implementation for the test problem uses mixed precision vectors wi
 \label{sec:results-bounds}
 Note that Table~\ref{tab:results-val} shows 1-bit compression underperforming the baseline implementation, even though it has a significant compression rate.
 This demonstrates that compressing the matrix values alone in unable to improve performance.
-For the vector values, note that the single precision implementation has a 2.3 times increase in iterations to convergence over the baseline implementation and that the GFLOPs rating of the single precision implementation is reduced by a factor of approximately 2.19 from the baseline implementation.
+For the vector values, note that the single precision implementation has a 2.3 times increase in iterations to converge over the baseline implementation and that the GFLOPs rating of the single precision implementation is reduced by a factor of approximately 2.19 from the baseline implementation.
 This hints that, even without increasing the number of Conjugate Gradient iterations, vector compression requires a compression rate better than 1:2 to provide much of an improvement in performance.
 This analysis is supported by the fact that none of the compression strategies tried that only compressed a single strategy were able to outperform the baseline implementation.
 
@@ -96,8 +96,8 @@ The one curve version was used when combining with other compression methods.
 %Should probably reimplement ZFP matVal versions to be variable rate encoded w/ a forward and backward iterations
 %Or just drop ZFP matVals b/c technically not designed for the type of data that is being compressed
 ZFP compression had multiple configurations that could be used.
-However, the possible configurations were not fully experimented with since the matrix values lacks the spacial relations that ZFP is designed for and ZFP performs poorly on the configurations that are tested, for both vector and matrix value compression.
-First, unlike ZFP vector compression, only the 1-dimensional codec was tested because the data does not have spacial patterns, let alone multiple dimensions of them.
+However, the possible configurations were not fully experimented with since the matrix values lacks the spatial relations that ZFP is designed for and ZFP performs poorly on the configurations that were tested, for both vector and matrix value compression.
+First, unlike ZFP vector compression, only the 1-dimensional codec was tested because the data does not have spatial patterns, let alone multiple dimensions of them.
 Second, due to the simple access pattern for matrix values, both the high-level array API and the low level API were tried.
 The compression rate was kept at 32 bits per value.
 None of the configurations tests were able to provide even mediocre performance, so ZFP compression was not tested further for matrix compression.

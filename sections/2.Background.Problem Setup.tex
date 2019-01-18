@@ -14,8 +14,8 @@ The solution vector consists of all 1's.
 %TODO discuss MPI setup
 
 % HPCG's solve details
-HPCG uses an implementation of Conjugate Gradient algorithm with a multigrid preconditioner variant~\cite{Dongarra:2015:HPCG}.
-As HPCG is designed to emulate the performance characteristics of real world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a since smoother pass at the coarsest grid level.
+HPCG uses an implementation of the Conjugate Gradient algorithm with a multigrid preconditioner variant~\cite{Dongarra:2015:HPCG}.
+As HPCG is designed to emulate the performance characteristics of real world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a smoothing pass at the coarsest grid level.
 %TODO does this note need to be exteneded
 The smoother used by the multigrid is based on a symmetric Gauss-Seidel step, however each process uses the old value for entries located on other processes.
 %TODO improve wording

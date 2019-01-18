@@ -3,7 +3,7 @@ These low level functions include copying a vector, setting a vector to zero, th
 Further data accessing functions exist in HPCG, however, they are not part of the timing.
 So, any additionally restrictions can be overcome by converting to an uncompressed format, applying the function, then recompressing.
 The low level functions used in the timed section of the code can be viewed together to produce the overall data access requirements,
-For the matrices, the matrices do not need to be mutable, the rows need to be readable in both a forward and backwards iteration, the data for a given row has no restriction on its read order, and the diagonal for a given row must be accessible.
+For the matrices, the matrices do not need to be mutable, the rows need to be readable in both a forward and backward iteration, the data for a given row has no restriction on its read order, and the diagonal for a given row must be accessible.
 The vectors, on the other hand, need both random read and write access, with the writes being immediately accessible to future reads.
 
 In addition to the restrictions on usable compression schemes imposed by the data access patterns, they influence the effectiveness of compression schemes.
@@ -15,7 +15,7 @@ This will result in ineffective compression when just compressing one part of th
 Copying a vector and setting a vector to zero provide the least data access requirements.
 Note that a vector's content can by copied by transferring the current representation of the values without any processing.
 Setting a vector to zero merely requires the ability to write vector values.
-Both of these functions add little to the data access requirements and are both simple to reimplement with alternative vector representation.
+Both of these functions add little to the data access requirements and are both simple to implement with alternative vector representation.
 
 % Dot product and WAXPBY
 The dot product and sum of scaled vectors are both straightforward functions.
@@ -28,7 +28,7 @@ Thus, both of these functions can be arbitrarily parallelized or have their iter
 % SPMV
 The matrix vector product iterates once over the rows and for each row sums the nonzero entries times the vectors corresponding entries~\cite{Dongarra:2015:HPCG}.
 Both the rows and the sum in each row may be iterated in any order or in parallel.
-Thus, the matrix information can be compressed for any iteration order of rows and any iteration order for the values in each row.
+Thus, the matrix information can be compressed for any iteration order of rows and any iteration order of the values in each row.
 However, the vector information must be able to be read at an arbitrary index.
 For each iteration, the matrix information is read only once, and the vector entries are read for each nonzero value in the corresponding column (8 to 27 times for the matrix described in Section~\ref{sec:bg-setup}).
 So, assuming the problem is too large for the matrix to fit entirely in the memory caches, the matrix data will always need to be read from main memory, while vector data will be able to utilize caches, resulting in up to 27-fold fewer reads than the matrix data.
