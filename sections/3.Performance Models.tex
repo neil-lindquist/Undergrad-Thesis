@@ -20,7 +20,11 @@ The following variables represent the relevant compression characteristics in th
 
 \input{figures/3.Models/baseLatencies}
 
-%TODO add a section summary
+%TODO improve section summary
+Both models indicate that vector decoding must be incredibly efficient to see overall performance improvement, while matrix decoding can be less efficient.
+This implies matrix compression has greater potential for overall performance improvement.
+However, both models make significant assumptions and simplifications that limit the accuracy of these results.
+%TODO review differences in results
 
 \subsection{Analytical Model}
 
@@ -40,10 +44,9 @@ where
 	\mathrm{L2Time} &= \text{the access latency for L2 cache} \\
 	\mathrm{RAMTime} &= \text{the access latency for main memory.} \\
 \end{align*}
-This model utilizes a few facts.
-%TODO add nessaccery caveats about problem size
+This model utilizes a few facts and assumptions.
 Firstly, the number of bytes per value divided by 64 provides the percent of values that will require fetching a cacheline from main memory or higher caches, while 1 minus this value is the percent of values that will be able to only need to access L1 cache.
-Secondly, due the matrix sparsity pattern, two thirds of vector values will always be in L1 cache and two thirds of the remaining values will be in L2 cache.
+Secondly, due to the matrix sparcity pattern, two thirds of vector readers will always be in L1 cache and, assuming there are \(96^3\) rows per process, two thirds of the remaining values will be in L2 cache.
 The model was only studied using the performance characteristics shown in Table~\ref{tab:models-baseLatencies}.
 This model was used to create approximate bounds that need to be met to outperform the baseline implementation.
 The model can be simplified by letting

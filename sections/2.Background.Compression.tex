@@ -1,4 +1,3 @@
-%TODO General information
 Numerous compression strategies were considered for this project.
 Figure~\ref{fig:comp-overview} lists the compressions tried for each of the main data structures.
 Note that most compression methods were only used with one or two of the data types, even if able to be reasonably used within the constraints of other types of data.
@@ -17,8 +16,6 @@ By compressing the data in small blocks, sequential compression strategies can b
 Then, at most, the individual block needs to be decompressed or recompressed for a single read or write.
 Similarly, a sequential compression method can be used on the matrix information by compressing the data twice, once for forward iteration and once for backwards iteration.
 
-
-%TODO figure out best order to discussion compressions
 
 \subsubsection{Single and Mixed Precision Floating Point Numbers}
 \label{sec:bg-comp-floatPrec}
@@ -40,36 +37,34 @@ The importance of compressing multiple structures, as described in Section~\ref{
 
 \subsubsection{Squeeze (SZ) Compression}
 \label{sec:bg-comp-sz}
-%TODO review wording of "curve", probably need to use "predictor" or something
 Squeeze (SZ) compression is a group of compression strategies based on using curve fitting and can be used for both integers and floating point values.
 The compression strategy referred to as SZ compression in this paper deviates from the original description by using a generalization of the core approach of the original implementation of SZ compression~\cite{Di:2016:SZ}.
 SZ compression allows for string bounds to be placed on the compression error.
 
-The compressed data is stored in two arrays, one storing the curve each value is compressed with and the other storing values that could not be fit by any curve.
-To compress each value, the error between the prediction made by each curve is compared.
-If the smallest error is within the user supplied tolerance, the associated curve is stored.
-Otherwise, the value is appended to the list of uncompressed values and the curve is stored as uncompressed.
-Because only the compressed value is available when decompressing, those values are used during compression when computing the value produced by each curve.
+The compressed data is stored in two arrays, one storing the predictor each value is compressed with and the other storing values that could not be predicted within tolerance.
+To compress each value, the error between the prediction made by each predictor is compared.
+If the smallest error is within the user supplied tolerance, the associated predictor is stored.
+Otherwise, the value is appended to the list of uncompressed values and the predictor is stored as uncompressed.
+Because only the compressed value is available when decompressing, those values are used during compression when computing the value produced by each predictor.
 This allows error requirements to be met.
 The compression rate is
 \[
 	\frac{ps+\ceil{\log_2(n)}}{s}
 \]
-where \(s\) be the number of bits used by an uncompressed value, \(p\) be the percent of values that are compressed, and \(n\) be the number of curves available.
+where \(s\) be the number of bits used by an uncompressed value, \(p\) be the percent of values that are compressed, and \(n\) be the number of predictors available.
 Note that due to the granularity of the matrix values and indices, bounding the error to be less than one results in an effective error bound of 0.
 Thus, when compressing those data structure, only an error bound of 0 is used.
 
 \input{figures/2.Background/Compression/SZ-modes.tex}
 
-The curves available are selected based on the nature of the data being compressed.
-Note that the term ``curve'' is used loosely here to refer to any predictive function.
-Figure~\ref{fig:comp-sz-modes} shows all of the curve fitting functions that were used.
-For compressing vector values, the Neighbor, Linear and Quadratic curves were used.
-Because the vector values represent a value at each grid point, these curves attempted to capture smooth changes and relations in the data.
+The predictors available are selected based on the nature of the data being compressed.
+Figure~\ref{fig:comp-sz-modes} shows all of the predictor functions that were used.
+For compressing vector values, the Neighbor, Linear and Quadratic predictors were used.
+Because the vector values represent a value at each grid point, these predictors attempted to capture smooth changes and relations in the data.
 The matrix indices were compressed using only the increment compression mode, since approximately two thirds of the indices fit that pattern.
-The matrix values were compressed with a few different combinations of curves.
+The matrix values were compressed with a few different combinations of predictors.
 These combinations were Neighbor alone, then Neighbor and Neighbor's Neighbor.
-These curves were chosen to find the best way to compress a series of -1's with occasional 26's.
+These predictors were chosen to find the best way to compress a series of -1's with occasional 26's.
 
 \subsubsection{ZFP Compression}
 ZFP compression is a lossy floating point compression scheme designed for spatial correlated data~\cite{Lindstrom:2014:zfp}.
@@ -134,7 +129,6 @@ Additionally, Huffman coding can only be decoded sequentially, due to the variab
 So, while it can compress matrix values and indices, it is unable to meet the requirements to compress vector values.
 Note that the Huffman coding of the matrix values in the test problem is equivalent to the 1-bit coding described in Section~\ref{sec:bg-comp-1bit}.
 Thus, only matrix indices were tested with Huffman coding.
-%TODO consider implementing huffman coded matrix values (ie a 1-bit compressed lookup table?)
 
 \subsubsection{Combined Compression Strategies}
 \label{sec:bg-comp-combined}

@@ -7,18 +7,18 @@ This problem is approximating the function \(u(x, y, z)\) over the three dimensi
 Note that the solution is \(u(x, y, z) = 1\) over \(\Omega\).
 The linear system is created by using the finite difference method with a 27-point stencil on the PDE over a rectangular grid with nodes of fixed distance.
 The matrix's diagonal consists of the value 26, and -1's fill the entries for the row's 26 grid neighbors.
-%TODO should this be described in more detail, sum of the adjacent points on the boundary
 The right-hand side of the equation has a value of 14 for corner points, 12 for edge points, 9 for side points and 0 for interior points~\cite{Kincaid:2009:Numerical}.
 The solution vector consists of all 1's.
 
-%TODO discuss MPI setup
+%TODO improve MPI setup discussion
+The problem is distributed over a number of processes, each with a cubic subproblem 96 nodes per side.
+The processors are distributed in a rectangular prism of size 5 by 4 by 3 processors.
+MPI is used for interprocess communication.
 
 % HPCG's solve details
 HPCG uses an implementation of the Conjugate Gradient algorithm with a multigrid preconditioner variant~\cite{Dongarra:2015:HPCG}.
-As HPCG is designed to emulate the performance characteristics of real world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a smoothing pass at the coarsest grid level.
-%TODO does this note need to be exteneded
-The smoother used by the multigrid is based on a symmetric Gauss-Seidel step, however each process uses the old value for entries located on other processes.
-%TODO improve wording
+As HPCG is designed to emulate the performance characteristics of real world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a single smoother iteration at the coarsest grid level.
+The smoother used by the multigrid is based on a symmetric Gauss-Seidel step, however values are not synchronized between processors during the step.
 The restriction operation simply samples half the points in dimension, resulting in a reduction of grid size by a factor of eight in each level of coarseness.
 To prolong the coarse grids, each coarse point is added to the fine point it was sampled from.
 The zero vector is used as the overall initial guess for \(x\), as well as the initial guess for each grid level in the multigrid cycle.

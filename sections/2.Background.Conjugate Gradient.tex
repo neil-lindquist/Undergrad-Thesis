@@ -1,7 +1,7 @@
 Conjugate Gradient is the iterative solver used by HPCG~\cite{Dongarra:2015:HPCG}.
 Symmetric, positive definite matrices will guarantee the converge of Conjugate Gradient to the correct solution within \(n\) iterations, where \(n\) is the number of dimensions, when using exact algebra~\cite{Saad:2003:IterativeMethods}.
-More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, \(\epsilon\), after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
-%TODO go into more high level details of CG
+More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
+As an iterative method, Conjugate Gradient forms update directions from Krylov subspaces of the form \(\mathcal{K}_n(\vec{r}_0,\mat{A})=\text{span}(\vec{r}_0, \mat{A}\vec{r}_0, \mat{A}^2\vec{r}_0,\dots, \mat{A}^n\vec{r}_0)\), where \(\vec{r}=\vec{b}-\mat{A}\vec{x}_0\).
 
 %Steepest Decent
 To understand the Conjugate Gradient, first consider the quadratic form of \(\mat{A}\vec{x} = \vec{b}\).
@@ -124,10 +124,9 @@ The computation of \(\alpha_i\) changes to find the minimal value along \(\vec{d
 \]
 
 %Conjugate Gradient proper
-%TODO cite Intro to CG more aggressively
 Conjugate Gradient is a form of Conjugate Directions where the residuals are made to be \(\mat{A}\)-orthogonal to each other~\cite{Shewchuk:1994:IntroToCG}.
 This is done using the Conjugate Gram-Schmidt Process.
-To do this, each search direction, \(\vec{d}_i\) is computed by taking \(\vec{r}_i\) and removing any components that are not \(\mat{A}\)-orthogonal to the previous \(\vec{d}\)'s.
+To do this, each search direction, \(\vec{d}_i\) is computed by taking \(\vec{r}_i\) and removing any components that are not \(\mat{A}\)-orthogonal to the previous \(\vec{d}\)'s~\cite{Shewchuk:1994:IntroToCG}.
 So, let \(\vec{d}_0 = \vec{r}_0\) and for \(i > 0\) let
 \[
 	\vec{d}_i = \vec{r}_i + \sum_{k=0}^{i-1} \beta_{(i, k)}\vec{d}_k

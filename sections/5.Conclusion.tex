@@ -24,7 +24,7 @@ Another aspect that could be further experimented with is the solver used.
 Other solvers and preconditioner likely have different data access patterns than the solver used in HPCG.
 These differences may change the available compression strategies, have different precision requirements or have different ratios of memory fetches to arithmetic.
 So, different solvers may have better optimal compression strategies.
-%TODO mention heterogenuous solver implementation
+Additionally, GPU accelerated solvers may differ due to the differences in GPU execution and performance.
 
 The last area this work could be extended would be trying different compression methods or variants of the compression methods used in this project.
 On such topic would be looking at using different error tolerances for different vectors, like what is done with single precision compression.

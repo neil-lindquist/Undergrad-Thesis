@@ -38,11 +38,10 @@ This hints that the compressing matrix information is more likely to provide an 
 The symmetric Gauss-Seidel step is similar to the sparse matrix-vector product, with added complications.
 First, the step has two iterations, one forward and one backward.
 Instead of simply summing the row-vector product, each row does the following calculation
-%TODO add proper description of variable meanings to this EQ
 \[
 	x_i \gets b_i - \frac{1}{a_{ii}}\sum_{j=1}^{n}a_{ij}x_j
 \]
-with the terms containing nonzero matrix entries removed~\cite{Dongarra:2015:HPCG}.
+where only terms with nonzero \(a_{ij}\) are computed, \(x_i, b_i\) are the ith elements of \(\vec{x},\vec{b}\) respectively and \(a_{ij}\) is the entry of \(\mat{A}\) in the ith row and jth column~\cite{Dongarra:2015:HPCG}.
 Note that each \(x_i\) is used immediately in the subsequent rows, this means that any deviation from the base row iteration order or any parallelization of the rows may reduce the effectiveness of the step.
 Because any delay in writing the new values to \(\vec{x}\) results in effectively parallelizing the iteration of the rows, the vector values must be written immediately or within a few iterations.
 Additionally, the Gauss-Seidel step has the additional requirement that the matrix diagonal of the current row must be accessible.
