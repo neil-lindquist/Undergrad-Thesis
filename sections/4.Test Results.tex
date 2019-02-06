@@ -101,6 +101,29 @@ Second, due to the simple access pattern for matrix values, both the high-level 
 The compression rate was kept at 32 bits per value.
 None of the configurations tests were able to provide even mediocre performance, so ZFP compression was not tested further for matrix compression.
 
+\subsection{Matrix Index Compression}
+Like vector compression, matrix value compression alone was unable to outperform the baseline implementation.
+Both SZ compression and the Elias codings were able to perform in the ballpark of the baseline implementation.
+Neither Huffman coding nor Op Code compression were able to perform close to the performance of baseline implementation.
+
+%TODO is there anything that needs to be written about SZ, Gamma or Delta coding?
+
+Multiple implementations of Huffman coding were tried, due to some variations that may improve performance.
+First, because of the regularity of the matrix structure, compressing the first index of each row requires the ability to encode many additional values.
+So, Huffman coding was tried with both the first index compressed and the first index left uncompressed.
+Second, decoding was implemented using chaining of lookup tables.
+Decoding is done by looking up \(n\) bits at a time, were \(n\) is the window size.
+Each lookup will either provide the value and number of bits used, or a further table to check the next \(n\) bits on.
+So, the optimal window size is a trade off between the memory needed to store the tables and the amount of table lookups needed per value.
+%TODO citation
+
+Although Op Code compression has outperformed uncompressed values in some settings, it was unable to perform well in this code base~\cite{Lawlor:2013:compression}.
+A number of sets of opcodes were tried, including the original showing in Figure~\ref{tab:bg-comp-opcode-CCIdecodeTable}.
+The opcodes with the best performance are showing in Figure~\ref{tab:results-opcode-decodeTable}; it was designed for the best performance on the matrices used.
+The difference in success of the CCI opcodes likely comes from a difference in the data access patterns, cache sizes or decoding implementation.
+
+\input{figures/4.Results/opcode-decodeTable}
+
 \subsection{Testing Environment}
 The timings presented were obtained when using a problem size of \(96^3\) matrix rows.
 The cluster used for timings had a 20-core, 2.2 GHz, Intel Xeon E5-2698 v4 head node and an additional five 8-core, 1.7GHz, Intel Xeon E5-2605 nodes.

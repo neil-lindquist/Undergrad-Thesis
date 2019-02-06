@@ -100,6 +100,15 @@ Additionally, because decoding a delta encoded value requires decoding a gamma e
 
 \input{figures/2.Background/Compression/Delta-Ex.tex}
 
+\subsubsection{Huffman Coding}
+\label{sec:bg-comp-huffman}
+Huffman coding is an optimal prefix code usable for lossless compression~\cite{Huffman:1952:coding}.
+A prefix code is a coding where each representable value is assigned a unique coding such that no code is the beginning of another code.
+However, Huffman coding does not take advantage of local patterns in the data, just the overall frequencies of each value.
+Additionally, Huffman coding can only be decoded sequentially, due to the variable length of storage for each value.
+So, while it can compress matrix values and indices, it is unable to meet the requirements to compress vector values.
+Note that the Huffman coding of the matrix values in the test problem is equivalent to the 1-bit coding described in Section~\ref{sec:bg-comp-1bit}.
+Thus, only matrix indices were tested with Huffman coding.
 
 \subsubsection{Op-Code Compression}
 \label{sec:bg-comp-opcode}
@@ -119,16 +128,6 @@ Table~\ref{tab:bg-comp-opcode-CCIdecodeTable} shows the opcodes used for CCI for
 %TODO should some of the decode tables used be listed?
 
 \input{figures/2.Background/Compression/opcode-CCIdecodeTable.tex}
-
-\subsubsection{Huffman Coding}
-\label{sec:bg-comp-huffman}
-Huffman coding is an optimal prefix code usable for lossless compression~\cite{Huffman:1952:coding}.
-A prefix code is a coding where each representable value is assigned a unique coding such that no code is the beginning of another code.
-However, Huffman coding does not take advantage of local patterns in the data, just the overall frequencies of each value.
-Additionally, Huffman coding can only be decoded sequentially, due to the variable length of storage for each value.
-So, while it can compress matrix values and indices, it is unable to meet the requirements to compress vector values.
-Note that the Huffman coding of the matrix values in the test problem is equivalent to the 1-bit coding described in Section~\ref{sec:bg-comp-1bit}.
-Thus, only matrix indices were tested with Huffman coding.
 
 \subsubsection{Combined Compression Strategies}
 \label{sec:bg-comp-combined}
