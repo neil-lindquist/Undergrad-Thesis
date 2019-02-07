@@ -20,11 +20,10 @@ The following variables represent the relevant compression characteristics in th
 
 \input{figures/3.Models/baseLatencies}
 
-%TODO improve section summary
+\change{Improve section summary, including adding a comparison of the models' results}
 Both models indicate that vector decoding must be incredibly efficient to see overall performance improvement, while matrix decoding can be less efficient.
 This implies matrix compression has greater potential for overall performance improvement.
 However, both models make significant assumptions and simplifications that limit the accuracy of these results.
-%TODO review differences in results
 
 \subsection{Analytical Model}
 
@@ -88,6 +87,6 @@ The vector column contains equations that restrict the decode and encode time, w
 Note that the vector limits are not the only way to compute the restriction.
 These compression bounds appear to be significantly related to the frequency at which multiple values are fetched from main memory.
 
-%TODO figure out a way to think about/work with multiple compressions at once
+\review{Is there a way to look at combined compression results? Size variables are too strange to be able to do a set of equations}
 
 \input{figures/3.Models/singleCompTimings}

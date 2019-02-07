@@ -13,6 +13,7 @@
 \usepackage{pgfplots}
 \usepackage{siunitx}
 \usepackage{subcaption}
+\usepackage[obeyFinal]{todonotes}
 
 
 %math typeseting
@@ -24,6 +25,13 @@
 
 %number the bib as a section
 \patchcmd{\thebibliography}{\section*}{\section}{}{}
+
+
+%
+%note TODO notes are hidden in draft mode to improve compile times
+\newcommand{\review}[1]{\ifdraft{}{\todo[linecolor=yellow,backgroundcolor=yellow!25,bordercolor=yellow]{REVIEW: #1}}}
+\newcommand{\change}[1]{\ifdraft{}{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red]{TODO: #1}}}
+\newcommand{\info}[1]{\ifdraft{}{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue]{INFO: #1}}}
 
 \begin{document}
 
@@ -90,7 +98,7 @@
 	However, these solvers usually spend most of their time fetching data from main memory.
 	To improve the performance of these solvers, this work explores using data compression to reduce memory accesses.
 	Some compression methods were found that improve the performance of the solver and problem found in the HPCG benchmark by up to 85\%.
-	%TODO improve
+	\change{This seems too short}
 \end{abstract}
 \vspace*{\fill}
 
@@ -104,8 +112,7 @@
 \input{sections/1.Introduction.tex}
 
 \section{Background}
-%TODO review if "Background" is the best name for this section
-%should some of the proper BG stuff go in intro and this is methodology or something?
+\review{Should this be reorganized, with proper background going in the introduction and making laying out requirements and compression a methodology section or something?}
 \input{sections/2.Background.tex}
 
 \section{Performance Models}

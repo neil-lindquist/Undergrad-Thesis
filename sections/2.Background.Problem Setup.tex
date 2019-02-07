@@ -10,7 +10,7 @@ The matrix's diagonal consists of the value 26, and -1's fill the entries for th
 The right-hand side of the equation has a value of 14 for corner points, 12 for edge points, 9 for side points and 0 for interior points~\cite{Kincaid:2009:Numerical}.
 The solution vector consists of all 1's.
 
-%TODO improve MPI setup discussion
+\review{Is more info on MPI needed?}
 The problem is distributed over a number of processes, each with a cubic subproblem 96 nodes per side.
 The processors are distributed in a rectangular prism of size 5 by 4 by 3 processors.
 MPI is used for interprocess communication.
