@@ -21,8 +21,7 @@ In the actual tests, a couple of configurations were found to be able to outperf
 
 \subsection{Previous Work}
 Much work has been done on various aspects of utilizing single precision floating point numbers, while retaining the accuracy of double precision numbers.
-\review{wording}
-One approach that this work draws inspiration from is to apply the preconditioner using single precision, while otherwise using double precision, which result in similar accuracy unless the matrix is poorly conditioned~\cite{Buttari:2008:mixedPrec, Hogg:2010:multiplePasses}.
+One approach, that this work draws inspiration from, is to apply the preconditioner using single precision, while otherwise using double precision, which result in similar accuracy unless the matrix is poorly conditioned~\cite{Buttari:2008:mixedPrec, Hogg:2010:multiplePasses}.
 This strategy of used mixing floating point precision for different parts of the solver algorithm leads to the use of making certain vectors single precision, as described in Section~\ref{sec:bg-comp-floatPrec}.
 
 Another effort at compressing large, sparse Linear Systems is Compressed Column Index (CCI) format to store matrices~\cite{Lawlor:2013:compression}.

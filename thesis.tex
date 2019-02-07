@@ -27,8 +27,8 @@
 \patchcmd{\thebibliography}{\section*}{\section}{}{}
 
 
-%
-%note TODO notes are hidden in draft mode to improve compile times
+%setup todo notes
+%note that notes are hidden in draft mode to improve compile times
 \newcommand{\review}[1]{\ifdraft{}{\todo[linecolor=yellow,backgroundcolor=yellow!25,bordercolor=yellow]{REVIEW: #1}}}
 \newcommand{\change}[1]{\ifdraft{}{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red]{TODO: #1}}}
 \newcommand{\info}[1]{\ifdraft{}{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue]{INFO: #1}}}

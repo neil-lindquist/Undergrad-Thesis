@@ -20,10 +20,11 @@ The following variables represent the relevant compression characteristics in th
 
 \input{figures/3.Models/baseLatencies}
 
-\change{Improve section summary, including adding a comparison of the models' results}
 Both models indicate that vector decoding must be incredibly efficient to see overall performance improvement, while matrix decoding can be less efficient.
 This implies matrix compression has greater potential for overall performance improvement.
 However, both models make significant assumptions and simplifications that limit the accuracy of these results.
+Additionally, the models provide slightly different results.
+For example, the analytical model indicates vector encoding time is negligible while the simulation model puts vector encoding time half the factor of vector decoding.
 
 \subsection{Analytical Model}
 

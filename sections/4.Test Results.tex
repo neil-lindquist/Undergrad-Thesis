@@ -65,7 +65,6 @@ Absolute error is the absolute value of the difference between predicted and act
 The pointwise relative error is the absolute error divided by the actual value.
 Table~\ref{tab:results-vec} contains results for various block sizes with both an absolute error bound of \(10^{-10}\) and a pointwise relative error bound of \(10^{-10}\).
 Table~\ref{tab:results-vec-SZ} contains a comparison of various error bounds for a block size of 8 values per block.
-\review{Is this note useful?}
 Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 iterations.
 
 
@@ -106,10 +105,9 @@ Multiple implementations of Huffman coding were tried, due to some variations th
 First, because of the regularity of the matrix structure, compressing the first index of each row requires the ability to encode many additional values.
 So, Huffman coding was tried with both the first index compressed and the first index left uncompressed.
 Second, decoding was implemented using chaining of lookup tables.
-Decoding is done by looking up \(n\) bits at a time, were \(n\) is the window size.
+Decoding is done by looking up \(n\) bits at a time, were \(n\) is the window size~\cite{Schindler:1998:huffman-decode}.
 Each lookup will either provide the value and number of bits used, or a further table to check the next \(n\) bits on.
 So, the optimal window size is a trade off between the memory needed to store the tables and the amount of table lookups needed per value.
-%TODO citation
 
 Although Op Code compression has outperformed uncompressed values in some settings, it was unable to perform well in this code base~\cite{Lawlor:2013:compression}.
 A number of sets of opcodes were tried, including the original showing in Figure~\ref{tab:bg-comp-opcode-CCIdecodeTable}.

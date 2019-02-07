@@ -1,7 +1,7 @@
 Conjugate Gradient is the iterative solver used by HPCG~\cite{Dongarra:2015:HPCG}.
 Symmetric, positive definite matrices will guarantee the converge of Conjugate Gradient to the correct solution within \(n\) iterations, where \(n\) is the number of dimensions, when using exact algebra~\cite{Saad:2003:IterativeMethods}.
 More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
-As an iterative method, Conjugate Gradient forms update directions from Krylov subspaces of the form \(\mathcal{K}_n(\vec{r}_0,\mat{A})=\text{span}(\vec{r}_0, \mat{A}\vec{r}_0, \mat{A}^2\vec{r}_0,\dots, \mat{A}^n\vec{r}_0)\), where \(\vec{r}=\vec{b}-\mat{A}\vec{x}_0\).
+As an iterative method, Conjugate Gradient forms update directions from Krylov subspaces of the form \(\mathcal{K}_n(\vec{r}_0, \mat{A})=\text{span}(\vec{r}_0, \mat{A}\vec{r}_0, \mat{A}^2\vec{r}_0, \dots, \mat{A}^n\vec{r}_0)\), where \(\vec{r}=\vec{b}-\mat{A}\vec{x}_0\).
 
 %Steepest Decent
 To understand the Conjugate Gradient, first consider the quadratic form of \(\mat{A}\vec{x} = \vec{b}\).
