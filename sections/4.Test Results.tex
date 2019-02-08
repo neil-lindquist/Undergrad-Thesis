@@ -95,29 +95,31 @@ None of the configurations tests were able to provide even mediocre performance,
 
 \subsection{Matrix Index Compression}
 \label{sec:results-inds}
-Like vector compression, matrix value compression alone was unable to outperform the baseline implementation.
+Matrix index compression was unable to outperform the baseline implementation.
 Both SZ compression and the Elias codings were able to perform in the ballpark of the baseline implementation.
 Neither Huffman coding nor Op Code compression were able to perform close to the performance of baseline implementation.
 
 \review{Does there need to be stuff written about SZ, Gamma or Delta compression?}
 
-Multiple implementations of Huffman coding were tried, due to some variations that may improve performance.
-First, because of the regularity of the matrix structure, compressing the first index of each row requires the ability to encode many additional values.
-So, Huffman coding was tried with both the first index compressed and the first index left uncompressed.
+Variations of the Huffman coding implementation were experimented with to find the best set of parameters.
+The first parameter was whether to compress the first index or to leave it uncompressed.
+Because Huffman coding needs a codeword for each represented value, compressing the first index will reduce the memory of that value but reduce the efficiency of compressing the rest of the values~\cite{Huffman:1952:coding}.
+Since neither version was obviously better, both were tried.
+The second parameter was how many bits to view at a time when decoding.
 Second, decoding was implemented using chaining of lookup tables.
-Decoding is done by looking up \(n\) bits at a time, were \(n\) is the window size~\cite{Schindler:1998:huffman-decode}.
-Each lookup will either provide the value and number of bits used, or a further table to check the next \(n\) bits on.
-So, the optimal window size is a trade off between the memory needed to store the tables and the amount of table lookups needed per value.
+Decoding is implemented using chained lookup tables.
+So, each lookup checked the next \texttt{window\_size} bits, which either provided the value and number of bits consumed or a further table to check the next \texttt{window\_size} bits on~\cite{Schindler:1998:huffman-decode}.
+So, a higher window size increases the memory needed, but reduces the total number of lookups to do, providing a trade off between the amount of cache space used up and the average time to decode each value.
 
-Although Op Code compression has outperformed uncompressed values in some settings, it was unable to perform well in this code base~\cite{Lawlor:2013:compression}.
+Although Opcode compression has outperformed uncompressed values in some settings, it was unable to perform well in this code base~\cite{Lawlor:2013:compression}.
 A number of sets of opcodes were tried, including the original showing in Figure~\ref{tab:bg-comp-opcode-CCIdecodeTable}.
-The opcodes with the best performance are showing in Figure~\ref{tab:results-opcode-decodeTable}; it was designed for the best performance on the matrices used.
-The difference in success of the CCI opcodes likely comes from a difference in the data access patterns, cache sizes or decoding implementation.
+The set of opcodes with the best performance is showing in Figure~\ref{tab:results-opcode-decodeTable}; it was designed for the best performance on the matrices used.
+The difference in success of the CCI opcodes from previous works likely comes from a difference in the data access patterns, cache sizes or decoding implementation.
 
 \input{figures/4.Results/opcode-decodeTable}
 
 \subsection{Testing Environment}
-The timings presented were obtained when using a problem size of \(96^3\) matrix rows.
+The timings presented were obtained when using a per-process problem size of \(96^3\) matrix rows across 60 processes, as described in Section~\ref{sec:bg-setup}.
 The cluster used for timings had a 20-core, 2.2 GHz, Intel Xeon E5-2698 v4 head node and an additional five 8-core, 1.7GHz, Intel Xeon E5-2605 nodes.
 One process was created for each core, with a single OMP thread per process.
 
