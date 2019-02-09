@@ -1,6 +1,6 @@
 Conjugate Gradient is the iterative solver used by HPCG~\cite{Dongarra:2015:HPCG}.
-Symmetric, positive definite matrices will guarantee the converge of Conjugate Gradient to the correct solution within \(n\) iterations, where \(n\) is the number of dimensions, when using exact algebra~\cite{Saad:2003:IterativeMethods}.
-More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where even \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
+Symmetric, positive definite matrices will guarantee the converge of Conjugate Gradient to the correct solution within \(n\) iterations, where \(n\) is the rows of the matrix, when using exact algebra~\cite{Saad:2003:IterativeMethods}.
+More importantly, Conjugate Gradient can be used as in iterative method, providing a solution, \(\vec{x}\), where \(\left\|\mat{A}\vec{x}-\vec{b}\right\|\) is within some tolerance, after significantly fewer than \(n\) iterations, allowing it to find solutions to problems where computing \(n\) iterations is infeasible~\cite{Shewchuk:1994:IntroToCG}.
 As an iterative method, Conjugate Gradient forms update directions from Krylov subspaces of the form \(\mathcal{K}_n(\vec{r}_0, \mat{A})=\text{span}(\vec{r}_0, \mat{A}\vec{r}_0, \mat{A}^2\vec{r}_0, \dots, \mat{A}^n\vec{r}_0)\), where \(\vec{r}=\vec{b}-\mat{A}\vec{x}_0\).
 
 %Steepest Decent
@@ -106,17 +106,17 @@ When starting at the origin, the iteration of Method of Steepest Decent becomes
 	%
 	&\vdots &&\vdots &&\vdots
 \end{align*}
-The \(\vec{x}_i\)'s are plotted with a contour graph of the quadratic form in Figure~\ref{fig:CG-steepestDecentExample-Iterations}. \qed
+The \(\vec{x}_i\)s are plotted with a contour graph of the quadratic form in Figure~\ref{fig:CG-steepestDecentExample-Iterations}. \qed
 \input{"figures/2.Background/Conjugate Gradient/Steepest Decent Example-Iterations.tex"}
 \end{example}
 
 %Conjugate Directions
 The Conjugate Directions family of linear solvers, of which Conjugate Gradient is a member of, attempts to improve on the number of iterations needed by Steepest Decent.~\cite{Shewchuk:1994:IntroToCG}.
 Note that, in Example~\ref{ex:CG-SteepestDecent}, the directions of \(\vec{r}_0\) and \(\vec{r}_2\) are the same and the directions of \(\vec{r}_1\) and \(\vec{r}_3\) are the same.
-Thus, the same direction has to be traversed multiple times.
+Thus, the same direction is traversed multiple times.
 Additionally, note that the two sets of residual directions are perpendicular to each other.
 Conjugate Directions attempts to improve on this, by making the search directions, \(\vec{d}_0, \vec{d}_1, \dots\), \(\mat{A}\)-orthogonal to each other and only moving \(\vec{x}\) once in each search direction.
-Two vectors, \(\vec{u}, \vec{v}\) are \(\mat{A}\)-orthogonal, or conjugate, if \(\vec{u}^T\mat{A}\vec{v}=0\).
+Two vectors, \(\vec{u}, \vec{v}\), are \(\mat{A}\)-orthogonal, or conjugate, if \(\vec{u}^T\mat{A}\vec{v}=0\).
 The requirement for Conjugate Directions is to make \(\vec{e}_{i+1}\) \(\mat{A}\)-orthogonal to \(\vec{d}_i\), where \(\vec{e}_i = \vec{x}_i - \mat{A}^{-1}\vec{b}\) is the error of \(\vec{x}_i\).
 The computation of \(\alpha_i\) changes to find the minimal value along \(\vec{d}_i\) instead of \(\vec{r}_i\).
 \[

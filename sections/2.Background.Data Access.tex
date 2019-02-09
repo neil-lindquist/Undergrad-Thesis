@@ -1,8 +1,8 @@
-The Conjugate Gradient and Multigrid implementations in HPCG do not directly access the matrix and vector values, but instead use low level functions to manipulate the data structures~\cite{Dongarra:2015:HPCG}.
-These low level functions include copying a vector, setting a vector to zero, the dot product, a scaled vector sum, the matrix vector product, the symmetric Gauss-Seidel step, the multigrid restriction and the multigrid prolongation.
+The Conjugate Gradient and Multigrid implementations in HPCG do not directly access the matrix and vector values, but instead use low-level functions to manipulate the data structures~\cite{Dongarra:2015:HPCG}.
+These low-level functions include copying a vector, setting a vector to zero, the dot product, a scaled vector sum, the matrix vector product, the symmetric Gauss-Seidel step, the multigrid restriction, and the multigrid prolongation.
 Further data accessing functions exist in HPCG, however, they are not part of the timing.
 So, any additionally restrictions can be overcome by converting to an uncompressed format, applying the function, then recompressing.
-The low level functions used in the timed section of the code can be viewed together to produce the overall data access requirements,
+The low-level functions used in the timed section of the code can be viewed together to produce the overall data access requirements,
 For the matrices, the matrices do not need to be mutable, the rows need to be readable in both a forward and backward iteration, the data for a given row has no restriction on its read order, and the diagonal for a given row must be accessible.
 The vectors, on the other hand, need both random read and write access, with the writes being immediately accessible to future reads.
 
@@ -15,7 +15,7 @@ This will result in ineffective compression when just compressing one part of th
 Copying a vector and setting a vector to zero provide the least data access requirements.
 Note that a vector's content can by copied by transferring the current representation of the values without any processing.
 Setting a vector to zero merely requires the ability to write vector values.
-Both of these functions add little to the data access requirements and are both simple to implement with alternative vector representation.
+These functions add little to the data access requirements and are both simple to implement with alternative vector representation.
 
 % Dot product and WAXPBY
 The dot product and sum of scaled vectors are both straightforward functions.
@@ -23,7 +23,7 @@ Each of them iterates over two or three vectors and applies a few arithmetic ope
 The dot product accumulates the sum of the product of the pair of vector entries across the iterations.
 The sum of scaled vectors computes \(w_i = \alpha x_i + \beta y_i\) for each set of entries.
 Note that the only data iteration between rows in either of these operations is the sum in the dot product, however addition is an associative operation.
-Thus, both of these functions can be arbitrarily parallelized or have their iteration reordered.
+Thus, these functions can be arbitrarily parallelized or have their iteration reordered.
 
 % SPMV
 The matrix vector product iterates once over the rows and for each row sums the nonzero entries times the vectors corresponding entries~\cite{Dongarra:2015:HPCG}.

@@ -1,6 +1,6 @@
 %problem and discresionization
 The problem used to create the linear system used by HPCG, and thus by this project, is a three-dimensional partial differential equation (PDE) model~\cite{Dongarra:2015:HPCG}.
-This problem is approximating the function \(u(x, y, z)\) over the three dimensional rectangular region \(\Omega\in\mathbb{R}^3\) such that
+This problem is approximating the function \(u(x, y, z)\) over the three-dimensional rectangular region \(\Omega\in\mathbb{R}^3\) such that
 \[
 	\Delta u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} = 0,
 \] with \(u(x, y, z) = 1\) along the boundaries of \(\Omega\).
@@ -17,7 +17,7 @@ MPI is used for interprocess communication.
 
 % HPCG's solve details
 HPCG uses an implementation of the Conjugate Gradient algorithm with a multigrid preconditioner variant~\cite{Dongarra:2015:HPCG}.
-As HPCG is designed to emulate the performance characteristics of real world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a single smoother iteration at the coarsest grid level.
+As HPCG is designed to emulate the performance characteristics of real-world problems without needing to be a robust solver, it only uses 3 levels of grid coarseness with only a single smoother iteration at the coarsest grid level.
 The smoother used by the multigrid is based on a symmetric Gauss-Seidel step, however values are not synchronized between processors during the step.
 The restriction operation simply samples half the points in dimension, resulting in a reduction of grid size by a factor of eight in each level of coarseness.
 To prolong the coarse grids, each coarse point is added to the fine point it was sampled from.

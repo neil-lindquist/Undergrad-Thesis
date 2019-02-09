@@ -11,6 +11,7 @@
 \usepackage{listings}
 \usepackage{mathtools}
 \usepackage{pgfplots}
+	\pgfplotsset{compat=1.16}
 \usepackage{siunitx}
 \usepackage{subcaption}
 \usepackage[obeyFinal]{todonotes}
@@ -20,8 +21,6 @@
 \newcommand{\mat}[1]{\mathbf{#1}}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-
-\pgfplotsset{compat=1.16}
 
 
 %setup todo notes
@@ -49,11 +48,11 @@
 \newtheorem{example}{Example}
 
 \begin{abstract}
-	Solving large, sparse systems of linear equations plays an important role in certain scientific computations, such as approximating the solutions of partial differential equations.
+	Solving large, sparse systems of linear equations plays a significant role in certain scientific computations, such as approximating the solutions of partial differential equations.
 	However, solvers for these types of problems usually spend most of their time fetching data from main memory.
 	In an effort to improve the performance of these solvers, this work explores using data compression to reduce the amount of data that needs to be fetched from main memory.
 	Some compression methods were found that improve the performance of the solver and problem found in the HPCG benchmark, with an increase in floating point operations per second of up to 85\%.
-	These results indicate that, if similar improvements can be made with other linear systems, compression could improve the performance of real world solvers.
+	These results indicate that, if similar improvements can be made with other linear systems, compression could improve the performance of real-world solvers.
 \end{abstract}
 
 \maketitle
