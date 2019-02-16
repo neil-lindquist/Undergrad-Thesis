@@ -112,13 +112,20 @@ So, each lookup checked the next \texttt{window\_size} bits, which either provid
 So, a higher window size increases the memory needed, but reduces the total number of lookups to do, providing a tradeoff between the amount of cache space used up and the average time to decode each value.
 
 Although Opcode compression has outperformed uncompressed values in some settings, it was unable to perform well in this code base~\cite{Lawlor:2013:compression}.
-Several sets of opcodes were tried, including the original showing in Figure~\ref{tab:bg-comp-opcode-CCIdecodeTable}.
-The set of opcodes with the best performance is showing in Figure~\ref{tab:results-opcode-decodeTable}; it was designed for the best performance on the matrices used.
+Several sets of opcodes were tried, including the original shown in Figure~\ref{tab:bg-comp-opcode-CCIdecodeTable}.
+The set of opcodes with the best performance is shown in Figure~\ref{tab:results-opcode-decodeTable}; it was designed for the best performance on the matrices used.
 The difference in success of the CCI opcodes from previous works likely comes from a difference in the data access patterns, cache sizes or decoding implementation.
 
 \input{figures/4.Results/opcode-decodeTable}
 
 \subsection{Testing Environment}
+The compression rates were either analytically computed or computed from the compressed size.
+Other numbers were provided by HPCG's benchmark results.
+The HPCG rating is the benchmark's rating, located in the yaml results file as the ``GFLOP/s Summary: Total with convergence and optimization phase overhead'' field.
+The GFLOP/s rating can similarly be found in the ``GFLOP/s Summary: Total with convergence overhead'' field.
+The iteration count was determined using the content of the ``Iteration Count Overhead'' field.
+All results were obtained with a minimum run time of 300 seconds.
+
 The timings presented were obtained when using a per-process problem size of \(96^3\) matrix rows across 60 processes, as described in Section~\ref{sec:bg-setup}.
 The cluster used for timings had a 20-core, 2.2 GHz, Intel Xeon E5-2698 v4 head node and an additional five 8-core, 1.7GHz, Intel Xeon E5-2605 nodes.
 One process was created for each core, with a single OMP thread per process.
