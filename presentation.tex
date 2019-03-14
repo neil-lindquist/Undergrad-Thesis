@@ -1,0 +1,115 @@
+\documentclass{beamer}
+
+% presentation themeing
+\usetheme{Singapore}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+% output configuration
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen=left}
+\hypersetup{pdfpagemode=FullScreen}
+
+% type setting packages
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+
+% title slide
+\title{\input{title.txt}}
+\author{Neil Lindquist}
+\date{April 16th, 2019}
+
+\begin{document}
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% Motivation
+\begin{frame}
+	\frametitle{Goal}
+	\begin{itemize}
+		\item Sparse linear systems used by many scientific computations
+		\item Problems can be large, with over a million variables
+		\item Arithmetic is faster than fetching data from memory
+		%TODO mention cache
+	\end{itemize}
+\end{frame}
+
+% Data access patterns/compression limitations
+\begin{frame}[fragile]
+	\frametitle{Solver Description}
+	\begin{itemize}
+		\item Preconditioned Conjugate Gradient was used for tests
+		\begin{itemize}
+			\item Preconditioned with a 3 level multigrid
+			\item Symmetric Gauss-Seidel step smoother
+		\end{itemize}
+		\item Matrix store in CSR format
+		\begin{itemize}
+			\item Stores the column index and value for each nonzero entry
+		\end{itemize}
+		%TODO mention datastructures that can be compressed
+	\end{itemize}
+\end{frame}
+
+%TODO consider describing test matrix
+
+\begin{frame}
+	\frametitle{Main Data Access Pattern}
+	\begin{algorithmic}
+		\FOR{row in rows}
+			\FOR{nonzero entry in row}
+				\STATE LOAD entry's value
+				\STATE LOAD entry's column index
+				\STATE LOAD vector value for column index
+			\ENDFOR
+			\STATE WRITE vector value for row
+		\ENDFOR
+	\end{algorithmic}
+	
+	\begin{itemize}
+		\item need random vector reads
+		\item need vector writes
+		\item need both forward and backward iteration of matrix rows
+	\end{itemize}
+\end{frame}
+
+% Model results
+
+\begin{frame}
+	\frametitle{Analytical Performance Model}
+	\begin{itemize}
+		\item System of equations that assumes no processor-level parallelism
+		\item Solving for what conditions outperform the baseline gives:
+	\end{itemize}
+	\begin{align*}
+%		\mathrm{vectEncode} <& 878.513 \\
+		\mathrm{totalDecode} <& 32.5375 - 0.037037\cdot\mathrm{vectEncode} \\
+		\mathrm{matBytes} <& 12.9664 - 0.398506\cdot\mathrm{totalDecode} \\
+							&- 0.0147595\cdot\mathrm{vectEncode}\\
+		\mathrm{vectBytes} <& 7.9998 + 8.27835\cdot(12 - \mathrm{matBytes}) \\
+							&- 3.29897\cdot\mathrm{totalDecode}- 0.122184\cdot\mathrm{vectEncode}\\
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulation Performance Model}
+	\begin{itemize}
+		\item Some processor level parallelism
+		\item Conditions for outperforming the baseline:
+	\end{itemize}
+	
+	%TODO consider switching to a graph
+	\input{figures/3.Models/singleCompTimings--table.tex}
+\end{frame}
+
+% Timing results
+
+% Select Compression methods
+
+% Conclusion
+
+
+\end{document}
