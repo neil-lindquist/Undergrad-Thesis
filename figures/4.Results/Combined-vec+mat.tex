@@ -6,15 +6,7 @@
 		Vectors & Value & Index & {Rating} & {Rating} & Iterations \\
 		\hline
 		\multicolumn{3}{c|}{Baseline} & 15.3654 & 15.7394 & 50 \\
-		None & SZ & SZ & 18.9702 & 19.5759 & 50 \\
-		\(\vec{b}, \vec{x}\) & SZ & SZ & 23.967 & 24.9875 & 50 \\
-		\(\vec{b}, \vec{x}, \mat{A}\vec{d}\) & SZ & SZ & 27.5974 & 28.9699 & 50 \\
-		None & 32 bits & Gamma & 17.6676 & 18.1835 & 51 \\
-%I don't think these need to be shown
-%		\(\vec{b}\) & 32 bit & Gamma & 16.4514 & 50 \\
-%		\(\vec{x}\) & 32 bit & Gamma & 16.6688 & 50 \\
-		\(\vec{b}, \vec{x}\) & 32 bits & Gamma & 16.6048 & 17.0684 & 50 \\
-		\(\vec{b}, \vec{x}, \mat{A}\vec{d}\) & 32 bits & Gamma & 16.5665 & 17.0294 & 50 \\
+		\csvreader[head to column names,filter strcmp={\vectp}{Y}]{figures/4.Results/Combined.csv}{}{ \vect & \matind & \matval & \hpcg & \gflops & \iterations \\}
 	\end{tabular}
 	\caption{Results of Combined Vector, Matrix Value and Matrix Index Compression Schemes.}
 	\label{tab:results-combined-vec+mat}

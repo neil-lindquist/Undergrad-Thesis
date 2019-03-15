@@ -4,15 +4,11 @@
 		            & {HPCG}   & {GFLOPs} &            & Compression \\
 		Compression & {Rating} & {Rating} & Iterations & Rate \\
 		\hline
-		Baseline & 15.3654 & 15.7394 & 50 & 1:1 \\ %using mixed prec "all doubles" time
-		Single Precision & 12.6331 & 12.8958 & 50 & 1:2 \\
-		1-bit & 15.1743 & 15.5452 & 50 & 1:64 \\ %cond op timing
+		\csvreader[head to column names,filter strcmp={\type}{}]{figures/4.Results/Val.csv}{}{ \tablename & \hpcg & \gflops & \iterations & \rate \\}
 		SZ & & & & \\
-		\hspace{3mm} 1 mode & 13.5037 & 13.813 & 50 & \(\sim 2\):11 \\
-		\hspace{3mm} 2 modes & 13.8195 & 14.131 & 50 & \(\sim 1\):7 \\
+		\csvreader[head to column names,filter strcmp={\type}{SZ}]{figures/4.Results/Val.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
 		ZFP & & & & \\
-		\hspace{3mm}High Level API & 0.817469 & 0.818857 & 50 & 1:2 \\
-		\hspace{3mm}Low Level API & 0.960338 & 0.962149 & 53 & 1:2 \\
+		\csvreader[head to column names,filter strcmp={\type}{ZFP}]{figures/4.Results/Val.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
 	\end{tabular}
 	\caption{Results of Compressing Matrix Values.}
 	\label{tab:results-val}

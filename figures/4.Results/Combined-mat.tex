@@ -5,13 +5,9 @@
 		Value    &   Index               & {Rating} & {Rating}   & Iterations \\
 		\hline
 		\multicolumn{2}{c|}{Baseline} & 15.3654 & 15.7394 & 50 \\
-		SZ & SZ & 18.9702 & 19.5759 & 50 \\
-		SZ & Gamma & 13.661 & 13.9794 & 51 \\
-		SZ & Delta & 10.9903 & 11.1961 & 50 \\
-		32 bits & SZ & 14.1796 & 14.5156 & 51 \\
-		32 bits & Gamma & 17.6676 & 18.1835 & 51 \\
-		32 bits & Delta & 12.56 & 12.8181 & 51 \\
+		\csvreader[head to column names,filter strcmp={\vectp}{N}]{figures/4.Results/Combined.csv}{}{ \matind & \matval & \hpcg & \gflops & \iterations \\}
 	\end{tabular}
 	\caption{Results of Combined Matrix Value and Index Compression Schemes.}
 	\label{tab:results-combined-mat}
 \end{table}
+
