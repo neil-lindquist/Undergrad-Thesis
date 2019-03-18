@@ -4,16 +4,16 @@
 		            & {HPCG}   & {GFLOPs} &            & Compression \\
 		Compression & {Rating} & {Rating} & Iterations & Rate \\
 		\hline
-		\csvreader[head to column names,filter strcmp={\type}{}]{figures/4.Results/Vec.csv}{}{ \tablename & \hpcg & \gflops & \iterations & \rate \\}
+		\csvreader[head to column names,separator=semicolon,filter strcmp={\type}{}]{figures/4.Results/Vec.csv}{}{ \tablename & \hpcg & \gflops & \iterations & \rate \\}
 		Mixed Precision & & & & \\ %b, x, d, Ad, r, z
-		\csvreader[head to column names,filter strcmp={\type}{mixed}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
+		\csvreader[head to column names,separator=semicolon,filter strcmp={\type}{mixed}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
 		ZFP - 1d & & & & \\
-			\csvreader[head to column names,filter strcmp={\type}{ZFP-1d}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
+			\csvreader[head to column names,separator=semicolon,filter strcmp={\type}{ZFP-1d}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
 		ZFP - 3d & & & & \\
-			\csvreader[head to column names,filter strcmp={\type}{ZFP-3d}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
+			\csvreader[head to column names,separator=semicolon,filter strcmp={\type}{ZFP-3d}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
 		SZ & & & & \\
 		%timings have error setting of 1e-10 abs and 1e-10 rel
-		\csvreader[head to column names,filter strcmp={\type}{SZ}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
+		\csvreader[head to column names,separator=semicolon,filter strcmp={\type}{SZ}]{figures/4.Results/Vec.csv}{}{\hspace{3mm}\tablename & \hpcg & \gflops & \iterations & \rate \\}
 	\end{tabular}
 	\caption{Results of Compressing Vector Values.}
 	\label{tab:results-vec}
