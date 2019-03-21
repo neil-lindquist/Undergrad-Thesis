@@ -4,6 +4,7 @@
 \usetheme{Singapore}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamercovered{again covered={\opaqueness<1->{15}}}
 
 % output configuration
 \usepackage{pgfpages}
@@ -43,29 +44,28 @@ All-College Thesis Defense}
 
 % Motivation
 \begin{frame}
-	\frametitle{Goal}
+	\frametitle{Motivation}
 	\begin{itemize}
 		\item Sparse linear systems used by many scientific computations
-		\item Problems can be large, with over a million variables
+		\item Problems can be large, with millions of variables
 		\item Arithmetic is faster than fetching data from memory
 		%TODO mention cache
 	\end{itemize}
 \end{frame}
 
 % Data access patterns/compression limitations
-\begin{frame}[fragile]
+\begin{frame}
 	\frametitle{Solver Description}
 	\begin{itemize}
-		\item Preconditioned Conjugate Gradient was used for tests
+		\item Preconditioned Conjugate Gradient was used
 		\begin{itemize}
-			\item Preconditioned with a 3 level multigrid
-			\item Symmetric Gauss-Seidel step smoother
+			\item Preconditioned with a 3-level multigrid preconditioner using Symmetric Gauss-Seidel step smoother
 		\end{itemize}
 		\item Matrix store in CSR format
 		\begin{itemize}
 			\item Stores the column index and value for each nonzero entry
 		\end{itemize}
-		3 compressible data structures
+		\item 3 compressible data structures
 		\begin{itemize}
 			\item Vector Values
 			\item Matrix Indices
@@ -96,42 +96,104 @@ All-College Thesis Defense}
 	\end{itemize}
 \end{frame}
 
-% Model results
+%TODO consider adding model results, they don't actually tell that much
+%\begin{frame}
+%	\frametitle{Analytical Performance Model}
+%	\begin{itemize}
+%		\item System of equations that assumes no processor-level parallelism
+%		\item Solving for what conditions outperform the baseline gives:
+%	\end{itemize}
+%	\begin{align*}
+%%		\mathrm{vectEncode} <& 878.513 \\
+%		\mathrm{totalDecode} <& 32.5375 - 0.037037\cdot\mathrm{vectEncode} \\
+%		\mathrm{matBytes} <& 12.9664 - 0.398506\cdot\mathrm{totalDecode} \\
+%							&- 0.0147595\cdot\mathrm{vectEncode}\\
+%		\mathrm{vectBytes} <& 7.9998 + 8.27835\cdot(12 - \mathrm{matBytes}) \\
+%							&- 3.29897\cdot\mathrm{totalDecode}- 0.122184\cdot\mathrm{vectEncode}\\
+%	\end{align*}
+%\end{frame}
 
+%\begin{frame}
+%	\frametitle{Simulation Performance Model}
+%	\begin{itemize}
+%		\item Some processor level parallelism
+%		\item Conditions for outperforming the baseline:
+%	\end{itemize}
+%	
+%	%TODO consider switching to a graph
+%	\input{figures/3.Models/singleCompTimings--table.tex}
+%\end{frame}
+
+% Select Compression methods
 \begin{frame}
-	\frametitle{Analytical Performance Model}
+	\frametitle{Compression Methods}
 	\begin{itemize}
-		\item System of equations that assumes no processor-level parallelism
-		\item Solving for what conditions outperform the baseline gives:
+		\item<1-2> Mixed Floating Point Precision
+		\item<1-2> SZ Compression
+		\item<1-2> Elias Gamma and Delta Codings
+		\item<1> ZFP Compression
+		\item<1> Huffman Coding
+		\item<1> Op Code Compression
 	\end{itemize}
-	\begin{align*}
-%		\mathrm{vectEncode} <& 878.513 \\
-		\mathrm{totalDecode} <& 32.5375 - 0.037037\cdot\mathrm{vectEncode} \\
-		\mathrm{matBytes} <& 12.9664 - 0.398506\cdot\mathrm{totalDecode} \\
-							&- 0.0147595\cdot\mathrm{vectEncode}\\
-		\mathrm{vectBytes} <& 7.9998 + 8.27835\cdot(12 - \mathrm{matBytes}) \\
-							&- 3.29897\cdot\mathrm{totalDecode}- 0.122184\cdot\mathrm{vectEncode}\\
-	\end{align*}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Simulation Performance Model}
+	\frametitle{Mixed Floating Point Precision}
 	\begin{itemize}
-		\item Some processor level parallelism
-		\item Conditions for outperforming the baseline:
+		\item Single Precision takes half the storage space
+		\item But drops from 15-17 significant digits to 6-9 digits
+		\item Certain vectors can be lower precision without slowing convergence
+		\begin{itemize}
+			\item \(\vec{b}, \vec{x}, \mat{A}\vec{d}\)
+		\end{itemize}
 	\end{itemize}
-	
-	%TODO consider switching to a graph
-	\input{figures/3.Models/singleCompTimings--table.tex}
+	%TODO this needs work
+\end{frame}
+
+\begin{frame}
+	\frametitle{Squeeze ``SZ'' Compression}
+	\begin{itemize}
+		\item Tries to predict each value from the previous few
+		\item Enforces a minimum accuracy
+		\item Available prediction functions are chosen based on the type of data
+		\item Compression rate is highly dependent on local patterns in the data
+	\end{itemize}
+\end{frame}
+%TODO consider adding an example
+
+\begin{frame}
+	\frametitle{Elias Gamma Coding}
+	\begin{itemize}
+		\item Positive integers
+		\item For each value, stores the number of bits needed then the data
+		\begin{itemize}
+			\item Very effective for small integers
+			\item Storing the difference from the previous index reduces the size of values
+		\end{itemize}
+		\item Elias Delta Coding is similar, but uses Gamma coding for the length
+		\item Compression rate is only dependent on the magnitude of the values
+	\end{itemize}
 \end{frame}
 
 % Timing results
+\begin{frame}
+	\frametitle{Timing Results}
+	\begin{itemize}
+		\item 60 processes with \(96^3\) rows each
+		\begin{itemize}
+			\item 53,084,160 total rows
+		\end{itemize}
+		\item A 20-core, 2.2GHz, Intel Broadwell head node
+		\item Plus five 8-core, 1.7GHz Intel Broadwell nodes
+	\end{itemize}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Vector Compression}
 	\raggedleft
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
-					xlabel={GFLOP/s},
+					xlabel={Effective GFLOP/s},
 					xmin=0,
 					xmax=30,
 					width=8cm,
@@ -139,7 +201,7 @@ All-College Thesis Defense}
 					ytick style={draw=none},
 					symbolic y coords={{SZ},{ZFP},{Mixed Precision - b,x,z},{Mixed Precision - b,x,d},{Mixed Precision - b,x,Ad},{Mixed Precision - b,x},{Single Precision},{Baseline}},
 					ytick={{SZ},{ZFP},{Mixed Precision - b,x,z},{Mixed Precision - b,x,d},{Mixed Precision - b,x,Ad},{Mixed Precision - b,x},{Single Precision},{Baseline}},
-					yticklabels={{SZ},{ZFP},{Mixed Precision - \(\vec{b}, \vec{x}, \vec{z}\)},{Mixed Precision - \(\vec{b}, \vec{x}, \vec{d}\)},{Mixed Precision - \(\vec{b}, \vec{x}, \vec{d}, \mat{A}\vec{d}\)},{Mixed Precision - \(\vec{b}, \vec{x}\)},{Single Precision},{Baseline}} ]
+					yticklabels={{SZ},{ZFP},{Mixed Precision - \(\vec{b}, \vec{x}, \vec{z}\)},{Mixed Precision - \(\vec{b}, \vec{x}, \vec{d}\)},{Mixed Precision - \(\vec{b}, \vec{x}, \mat{A}\vec{d}\)},{Mixed Precision - \(\vec{b}, \vec{x}\)},{Single Precision},{Baseline}} ]
 			\addplot coordinates{
 				(15.7394,Baseline)
 				(7.10126,Single Precision)
@@ -159,7 +221,7 @@ All-College Thesis Defense}
 	\raggedleft
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
-					xlabel={GFLOP/s},
+					xlabel={Effective GFLOP/s},
 					xmin=0,
 					xmax=30,
 					width=8cm,
@@ -196,26 +258,41 @@ All-College Thesis Defense}
 	\frametitle{Matrix Value and Index Compression}
 	\raggedleft
 	\begin{tikzpicture}[scale=.9]
-		%TODO consider making this a grouped bar graph
 		\begin{axis}[xbar,
-					xlabel={GFLOP/s},
+					xlabel={Effective GFLOP/s},
 					xmin=0,
 					xmax=30,
 					width=8cm,
 					height=9cm,
+					enlarge y limits=0.25,
 					y dir=reverse,
 					ytick style={draw=none},
-					symbolic y coords={{baseline},{sz-sz},{sz-gamma},{sz-delta},{32-sz},{32-gamma},{32-delta}},
-					ytick            ={{baseline},{sz-sz},{sz-gamma},{sz-delta},{32-sz},{32-gamma},{32-delta}},
-					yticklabels={{Baseline},{SZ vals + SZ inds},{SZ vals + Gamma inds},{SZ vals + Delta inds},{32 bit vals + SZ inds},{32 bit vals + Gamma inds},{32 bit vals + Delta inds}} ]
-			\addplot coordinates{
-				(15.7394,{baseline})
-				(19.5759,{sz-sz})
-				(13.9794,{sz-gamma})
-				(11.1961,{sz-delta})
-				(14.5156,{32-sz})
-				(18.1835,{32-gamma})
-				(12.8181,{32-delta})
+					ymax=2.9,
+					ymin=.3,
+					ytick            ={0,1,2,3},
+					yticklabels={{Baseline},{SZ inds},{Gamma inds},{Delta inds}},
+					legend style={
+						anchor=east,
+						at={(axis description cs:-.4,.4)}
+					},
+					legend cell align=left,
+					reverse legend,
+				]
+			\addplot coordinates{% 32 bit vals
+				(14.5156,1)
+				(18.1835,2)
+				(12.8181,3)
+			};
+			\addlegendentry{32 bit vals}
+			\addplot coordinates{% SZ vals
+				(19.5759,1)
+				(13.9794,2)
+				(11.1961,3)
+			};
+			\addlegendentry{SZ vals}
+			%don't add to legend, but use the third bar styling
+			\addplot[forget plot, brown!60!black,fill=brown!30!white,mark=none] coordinates{%baseline
+				(15.7394,.32)
 			};
 		\end{axis}
 	\end{tikzpicture}
@@ -226,7 +303,7 @@ All-College Thesis Defense}
 	\raggedleft
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
-					xlabel={GFLOP/s},
+					xlabel={Effective GFLOP/s},
 					xmin=0,
 					xmax=30,
 					width=8cm,
@@ -262,49 +339,6 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
-\end{frame}
-
-% Select Compression methods
-\begin{frame}
-	\frametitle{Successful Compression Methods}
-	\begin{itemize}
-		\item Mixed Floating Point Precision
-		\item SZ Compression
-		\item Elias Gamma Coding
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Mixed Floating Point Precision}
-	\begin{itemize}
-		\item Single Precision takes half the storage space
-		\item But drops from 15-17 significant digits to 6-9 digits
-		\item Certain vectors can be lower precision without slowing convergence
-	\end{itemize}
-	%TODO this needs work
-\end{frame}
-
-\begin{frame}
-	\frametitle{Squeeze ``SZ'' Compression}
-	\begin{itemize}
-		\item Stores a key for the predictor function with the best accuracy
-		\item If can't be predicted within a minimum accuracy, sorted explicitly in a second list
-		\item Available prediction functions are chosen based on the type of data
-	\end{itemize}
-\end{frame}
-%TODO consider adding an example
-
-\begin{frame}
-	\frametitle{Elias Gamma Coding}
-	\begin{itemize}
-		\item Positive integers
-		\item Stores number of bits needed then the data
-		\item Very effective for small integers
-		\begin{itemize}
-			\item ``1'' takes 1 bit
-		\end{itemize}
-		\item Elias Delta Coding is similar, but Gamma codes the length 
-	\end{itemize}
 \end{frame}
 
 % Conclusion
