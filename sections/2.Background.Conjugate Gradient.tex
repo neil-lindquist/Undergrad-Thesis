@@ -198,8 +198,9 @@ Figure~\ref{fig:CG-CGExample-Iterations} shows the values of \(\vec{x}\) with th
 \end{example}
 
 One way to improve the Conjugate Gradient method is to precondition the system~\cite{Saad:2003:IterativeMethods}.
-Instead of solving the original system, \(\mat{A}\vec{x} = \vec{b}\), Conjugate Gradient solves \(\mat{M}^{-1}\left(\mat{A}\vec{x} - \vec{b}\right) = 0\) instead, where \(\mat{M}^{-1}\) is the preconditioner.
+Instead of solving the original system, \(\mat{A}\vec{x} = \vec{b}\), a Preconditioned Conjugate Gradient solves \(\mat{M}^{-1}\left(\mat{A}\vec{x} - \vec{b}\right) = 0\) instead, where \(\mat{M}^{-1}\) is the preconditioner.
 Note that \(\mat{M}\) should be similar to \(\mat{A}\), but \(\mat{M}^{-1}\) should be easier to compute than \(\mat{A}^{-1}\).
+When \(\mat{M}\) is similar to \(\mat{A}\), the system becomes close to \(\mat{I}\vec{x} = \mat{M}^{-1}\vec{b}\), which is easy to solve if \(\mat{M}^{-1}\vec{b}\) can be computed cheaply.
 Algorithm~\ref{alg:bg-cg-alg-pcg} shows the preconditioned variant of the Conjugate Gradient.
 \begin{algorithm}[tb]
 	\begin{algorithmic}
