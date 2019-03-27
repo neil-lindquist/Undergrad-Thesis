@@ -41,5 +41,8 @@
 *.md5
 *.auxlock
 
+# Tikz & PGF - externalize
+*-figure*.pdf
+
 # Tikz & PGF - GNUPlot
 *contourtmp*

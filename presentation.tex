@@ -10,6 +10,8 @@
 \usepackage{pgfpages}
 %\setbeameroption{show notes on second screen=left}
 \hypersetup{pdfpagemode=FullScreen}
+\usepackage{ifdraft}
+\newcommand{\skipable}[1]{#1}% doesn't need to be rendered in a draft
 
 % type setting packages
 \usepackage{algorithmic}
@@ -24,6 +26,8 @@
 \usepackage{pgfplots}
 	\pgfplotsset{compat=1.16}
 \usepackage{pgfplotstable}
+\usepgfplotslibrary{external} 
+\tikzexternalize
 
 \pgfplotstableset{col sep=semicolon}
 
@@ -53,10 +57,79 @@ All-College Thesis Defense}
 	\end{itemize}
 \end{frame}
 
+\begin{frame}
+	\frametitle{Mathematics of Conjugate Gradient}
+	\begin{itemize}
+		\item Solving \(\mat{A}\vec{x} = \vec{b}\)
+		\item Minimizing \(f(\vec{x}) = \tfrac{1}{2}\vec{x}^T\mat{A}\vec{x}-\vec{b}\cdot\vec{x}\)
+		\item Note that \(\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}\) when \(\mat{A}\) is symmetric
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Mathematics of Conjugate Gradient}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+				grid=major,
+				view={-30}{60},
+				xlabel=\(x_1\),
+				ylabel=\(x_2\),
+				samples=30,
+				]
+			\addplot3[surf,domain=0:3] 
+				{.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
+			\addplot3[mesh,domain=0:10/7,color=white] 
+				({x},{x}, {.5*(2*x^2 + 2*x*x + 3*x^2) - 5*x - 5*x});
+			\addplot3[mesh,domain=0:1,color=white] 
+				({(10/21)*x+10/7},{(-10/21)*x+10/7},
+				{.5*(2*((10/21)*x+10/7)^2 + 2*((10/21)*x+10/7)*((-10/21)*x+10/7) + 3*((-10/21)*x+10/7)^2) - 5*((10/21)*x+10/7) - 5*((-10/21)*x+10/7)});
+			\addplot3[mesh,domain=0:1,color=white] 
+				({(10/147)*x+40/21},{(10/147)*x+20/21},
+				{.5*(2*((10/147)*x+40/21)^2 + 2*((10/147)*x+40/21)*((10/147)*x+20/21) + 3*((10/147)*x+20/21)^2) - 5*((10/147)*x+40/21) - 5*((10/147)*x+20/21)});
+			\addplot3[mesh,domain=0:1,color=white] 
+				({(10/441)*x+290/147},{(-10/441)*x+50/49},
+				{.5*(2*((10/441)*x+290/147)^2 + 2*((10/441)*x+290/147)*((-10/441)*x+50/49) + 3*((-10/441)*x+50/49)^2) - 5*((10/441)*x+290/147) - 5*((-10/441)*x+50/49)});
+%			\addplot3[mesh,domain=0:1,color=white] 
+%				({(10/3087)*x + 880/441},{(10/3087)*x + 440/441},
+%				{.5*(2*((10/3087)*x+880/441)^2 + 2*((10/3087)*x+880/441)*((10/3087)*x+440/441) + 3*((10/3087)*x+440/441)^2) - 5*((10/3087)*x+880/441) - 5*((10/3087)*x+440/441)});
+		\end{axis}
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Mathematics of Conjugate Gradient}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+				grid=major,
+				view={-30}{60},
+				xlabel=\(x_1\),
+				ylabel=\(x_2\),
+				samples=30,
+				]
+			\addplot3[surf,domain=0:3] 
+				{.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
+			\addplot3[mesh,domain=0:10/7,color=white] 
+				({x},{x}, {.5*(2*x^2 + 2*x*x + 3*x^2) - 5*x - 5*x});
+			\addplot3[mesh,domain=0:1,color=white] 
+				({(4/7)*x+10/7},{(-10/21)*x+10/7},
+				{.5*(2*((4/7)*x+10/7)^2 + 2*((4/7)*x+10/7)*((-3/7)*x+10/7) + 3*((-3/7)*x+10/7)^2) - 5*((4/7)*x+10/7) - 5*((-3/7)*x+10/7)});
+%			\addplot3[mesh,domain=0:1,color=white] 
+%				({(10/3087)*x + 880/441},{(10/3087)*x + 440/441},
+%				{.5*(2*((10/3087)*x+880/441)^2 + 2*((10/3087)*x+880/441)*((10/3087)*x+440/441) + 3*((10/3087)*x+440/441)^2) - 5*((10/3087)*x+880/441) - 5*((10/3087)*x+440/441)});
+		\end{axis}
+	\end{tikzpicture}
+\end{frame}
+
 % Data access patterns/compression limitations
 \begin{frame}
 	\frametitle{Solver Description}
 	\begin{itemize}
+		\item Approximating the steady state heat equation in 3 dimensions
+		\begin{itemize}
+			\item \(0 = \frac{\partial}{\partial x}u(\vec{x}) +\frac{\partial}{\partial y}u(\vec{x}) + \frac{\partial}{\partial z}u(\vec{x})\)
+		\end{itemize}
 		\item Preconditioned Conjugate Gradient was used
 		\begin{itemize}
 			\item Preconditioned with a 3-level multigrid preconditioner using Symmetric Gauss-Seidel step smoother
@@ -185,12 +258,14 @@ All-College Thesis Defense}
 		\end{itemize}
 		\item A 20-core, 2.2GHz, Intel Broadwell head node
 		\item Plus five 8-core, 1.7GHz Intel Broadwell nodes
+		\item MPI communication
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Vector Compression}
 	\raggedleft
+	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -214,11 +289,13 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
+	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Matrix Value Compression}
 	\raggedleft
+	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -233,11 +310,13 @@ All-College Thesis Defense}
 			\addplot table[x=gflops,y expr=\coordindex]{\valtable};
 		\end{axis}
 	\end{tikzpicture}
+	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Matrix Index Compression}
 	\raggedleft
+	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={GFLOP/s},
@@ -252,11 +331,13 @@ All-College Thesis Defense}
 			\addplot table[x=gflops,y expr=\coordindex]{\indtable};
 		\end{axis}
 	\end{tikzpicture}
+	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Matrix Value and Index Compression}
 	\raggedleft
+	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -296,11 +377,13 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
+	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Vector and Matrix Compression}
 	\raggedleft
+	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -339,6 +422,7 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
+	}
 \end{frame}
 
 % Conclusion
