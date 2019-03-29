@@ -51,15 +51,16 @@ All-College Thesis Defense}
 	\frametitle{Motivation}
 	\begin{itemize}
 		\item Sparse linear systems used by many scientific computations
-		\item Problems can be large, with millions of variables
+		\item Billions of variables or more
 		\item Arithmetic is faster than fetching data from memory
-		%TODO mention cache
+		%TODO mention cache?
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Mathematics of Conjugate Gradient}
 	\begin{itemize}
+		% mention that CG converges faster than other methods (SOR et al)
 		\item Solving \(\mat{A}\vec{x} = \vec{b}\)
 		\item Minimizing \(f(\vec{x}) = \tfrac{1}{2}\vec{x}^T\mat{A}\vec{x}-\vec{b}\cdot\vec{x}\)
 		\item Note that \(\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}\) when \(\mat{A}\) is symmetric
@@ -126,13 +127,16 @@ All-College Thesis Defense}
 \begin{frame}
 	\frametitle{Solver Description}
 	\begin{itemize}
+		%TODO should this information be here?
+		%just describe the matrix instead
 		\item Approximating the steady state heat equation in 3 dimensions
 		\begin{itemize}
-			\item \(0 = \frac{\partial}{\partial x}u(\vec{x}) +\frac{\partial}{\partial y}u(\vec{x}) + \frac{\partial}{\partial z}u(\vec{x})\)
+			%\item \(0 = \frac{\partial}{\partial x}u(x, y, z) +\frac{\partial}{\partial y}u(x, y, z) + \frac{\partial}{\partial z}u(x, y, z)\)
+			\item Discretized with a 27-point stencil
 		\end{itemize}
 		\item Preconditioned Conjugate Gradient was used
 		\begin{itemize}
-			\item Preconditioned with a 3-level multigrid preconditioner using Symmetric Gauss-Seidel step smoother
+			\item 3-level multigrid preconditioner with Symmetric Gauss-Seidel smoother
 		\end{itemize}
 		\item Matrix store in CSR format
 		\begin{itemize}
@@ -351,10 +355,10 @@ All-College Thesis Defense}
 					ymax=2.9,
 					ymin=.3,
 					ytick            ={0,1,2,3},
-					yticklabels={{Baseline},{SZ inds},{Gamma inds},{Delta inds}},
+					yticklabels={{Baseline},{SZ Indices},{Gamma Indices},{Delta Indices}},
 					legend style={
 						anchor=east,
-						at={(axis description cs:-.4,.4)}
+						at={(axis description cs:-.35,.55)}
 					},
 					legend cell align=left,
 					reverse legend,
@@ -364,13 +368,13 @@ All-College Thesis Defense}
 				(18.1835,2)
 				(12.8181,3)
 			};
-			\addlegendentry{32 bit vals}
+			\addlegendentry{32 bit Values}
 			\addplot coordinates{% SZ vals
 				(19.5759,1)
 				(13.9794,2)
 				(11.1961,3)
 			};
-			\addlegendentry{SZ vals}
+			\addlegendentry{SZ Values}
 			%don't add to legend, but use the third bar styling
 			\addplot[forget plot, brown!60!black,fill=brown!30!white,mark=none] coordinates{%baseline
 				(15.7394,.32)
@@ -395,7 +399,7 @@ All-College Thesis Defense}
 					ytick style={draw=none},
 					symbolic y coords={Baseline,SZ,Gamma},
 					ytick            ={Baseline,SZ,Gamma},
-					yticklabels={{Baseline},{SZ vals + SZ inds},{32 bit vals + Gamma inds}},
+					yticklabels={{Baseline},{SZ Values + SZ Indices},{32 bit Values + Gamma Indices}},
 					enlarge y limits=0.25,
 					legend entries={{\(\vec{b},\vec{x},\mat{A}\vec{d}\)},{\(\vec{b},\vec{x}\)},{No 32 bit Vectors}},
 					reverse legend=true,
