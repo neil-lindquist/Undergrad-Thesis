@@ -10,8 +10,6 @@
 \usepackage{pgfpages}
 %\setbeameroption{show notes on second screen=left}
 \hypersetup{pdfpagemode=FullScreen}
-\usepackage{ifdraft}
-\newcommand{\skipable}[1]{#1}% doesn't need to be rendered in a draft
 
 % type setting packages
 \usepackage{algorithmic}
@@ -37,8 +35,8 @@
 
 % title slide
 \title{\input{title.txt}}
-\author{\textbf{Neil Lindquist}\\
-All-College Thesis Defense}
+\subtitle{All-College Thesis Defense}
+\author{\textbf{Neil Lindquist}}
 \date{April 16th, 2019}
 
 \begin{document}
@@ -50,9 +48,10 @@ All-College Thesis Defense}
 \begin{frame}
 	\frametitle{Motivation}
 	\begin{itemize}
-		\item Sparse linear systems used by many scientific computations
+		\item Solving sparse linear systems used in many computations
 		\item Billions of variables or more
-		\item Arithmetic is faster than fetching data from memory
+		\item Spend most of the time fetching data from memory
+%		\item Arithmetic is faster than fetching data from memory
 		%TODO mention cache?
 	\end{itemize}
 \end{frame}
@@ -62,8 +61,12 @@ All-College Thesis Defense}
 	\begin{itemize}
 		% mention that CG converges faster than other methods (SOR et al)
 		\item Solving \(\mat{A}\vec{x} = \vec{b}\)
+		\pause
 		\item Minimizing \(f(\vec{x}) = \tfrac{1}{2}\vec{x}^T\mat{A}\vec{x}-\vec{b}\cdot\vec{x}\)
-		\item Note that \(\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}\) when \(\mat{A}\) is symmetric
+		\pause
+		\item If \(\mat{A}\) is symmetric, then \(\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}\)
+		\pause
+		\item \(-\nabla f(\vec{x})\) is in direction of maximal decrease
 	\end{itemize}
 \end{frame}
 
@@ -134,14 +137,17 @@ All-College Thesis Defense}
 			%\item \(0 = \frac{\partial}{\partial x}u(x, y, z) +\frac{\partial}{\partial y}u(x, y, z) + \frac{\partial}{\partial z}u(x, y, z)\)
 			\item Discretized with a 27-point stencil
 		\end{itemize}
+		\pause
 		\item Preconditioned Conjugate Gradient was used
 		\begin{itemize}
 			\item 3-level multigrid preconditioner with Symmetric Gauss-Seidel smoother
 		\end{itemize}
+		\pause
 		\item Matrix store in CSR format
 		\begin{itemize}
 			\item Stores the column index and value for each nonzero entry
 		\end{itemize}
+		\pause
 		\item 3 compressible data structures
 		\begin{itemize}
 			\item Vector Values
@@ -167,6 +173,7 @@ All-College Thesis Defense}
 	\end{algorithmic}
 	
 	\begin{itemize}
+		\pause
 		\item need random vector reads
 		\item need vector writes
 		\item need both forward and backward iteration of matrix rows
@@ -232,7 +239,9 @@ All-College Thesis Defense}
 	\begin{itemize}
 		\item Tries to predict each value from the previous few
 		\item Enforces a minimum accuracy
+		\pause
 		\item Available prediction functions are chosen based on the type of data
+		\pause
 		\item Compression rate is highly dependent on local patterns in the data
 	\end{itemize}
 \end{frame}
@@ -247,7 +256,9 @@ All-College Thesis Defense}
 			\item Very effective for small integers
 			\item Storing the difference from the previous index reduces the size of values
 		\end{itemize}
+		\pause
 		\item Elias Delta Coding is similar, but uses Gamma coding for the length
+		\pause
 		\item Compression rate is only dependent on the magnitude of the values
 	\end{itemize}
 \end{frame}
@@ -269,7 +280,6 @@ All-College Thesis Defense}
 \begin{frame}
 	\frametitle{Vector Compression}
 	\raggedleft
-	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -293,13 +303,11 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
-	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Matrix Value Compression}
 	\raggedleft
-	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -314,13 +322,11 @@ All-College Thesis Defense}
 			\addplot table[x=gflops,y expr=\coordindex]{\valtable};
 		\end{axis}
 	\end{tikzpicture}
-	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Matrix Index Compression}
 	\raggedleft
-	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={GFLOP/s},
@@ -335,13 +341,11 @@ All-College Thesis Defense}
 			\addplot table[x=gflops,y expr=\coordindex]{\indtable};
 		\end{axis}
 	\end{tikzpicture}
-	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Matrix Value and Index Compression}
 	\raggedleft
-	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -381,13 +385,11 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
-	}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Vector and Matrix Compression}
 	\raggedleft
-	\skipable{
 	\begin{tikzpicture}[scale=.9]
 		\begin{axis}[xbar,
 					xlabel={Effective GFLOP/s},
@@ -426,7 +428,6 @@ All-College Thesis Defense}
 			};
 		\end{axis}
 	\end{tikzpicture}
-	}
 \end{frame}
 
 % Conclusion
