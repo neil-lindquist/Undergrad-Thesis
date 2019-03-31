@@ -50,9 +50,9 @@
 	\begin{itemize}
 		\item Solving sparse linear systems used in many computations
 		\item Billions of variables or more
-		\item Spend most of the time fetching data from memory
+		\item Iterative solvers are used
+		\item Spend most of the time fetching data
 %		\item Arithmetic is faster than fetching data from memory
-		%TODO mention cache?
 	\end{itemize}
 \end{frame}
 
@@ -225,10 +225,11 @@
 	\frametitle{Mixed Floating Point Precision}
 	\begin{itemize}
 		\item Single Precision takes half the storage space
-		\item But drops from 15-17 significant digits to 6-9 digits
+		\item Only 6-9 digits instead of 15-17 digits
 		\item Certain vectors can be lower precision without slowing convergence
 		\begin{itemize}
 			\item \(\vec{b}, \vec{x}, \mat{A}\vec{d}\)
+			\item Retains result accuracy
 		\end{itemize}
 	\end{itemize}
 	%TODO this needs work
@@ -237,10 +238,10 @@
 \begin{frame}
 	\frametitle{Squeeze ``SZ'' Compression}
 	\begin{itemize}
-		\item Tries to predict each value from the previous few
-		\item Enforces a minimum accuracy
+		\item Predicts each value from the previous few
+		\item Enforces minimum accuracy
 		\pause
-		\item Available prediction functions are chosen based on the type of data
+		\item Available prediction functions are based on the data
 		\pause
 		\item Compression rate is highly dependent on local patterns in the data
 	\end{itemize}
@@ -251,7 +252,7 @@
 	\frametitle{Elias Gamma Coding}
 	\begin{itemize}
 		\item Positive integers
-		\item For each value, stores the number of bits needed then the data
+		\item For each value, stores the size then the data
 		\begin{itemize}
 			\item Very effective for small integers
 			\item Storing the difference from the previous index reduces the size of values
@@ -434,7 +435,7 @@
 \begin{frame}
 	\frametitle{Conclusion}
 	\begin{itemize}
-		\item Iterative linear solvers are memory access bound
+		\item Iterative, sparse linear solvers are memory access bound
 		\item Compressing key data structures provided an 84\% increase in performance
 	\end{itemize}
 \end{frame}
