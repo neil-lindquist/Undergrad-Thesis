@@ -49,10 +49,8 @@
 	\frametitle{Motivation}
 	\begin{itemize}
 		\item Solving sparse linear systems used in many computations
-		\item Billions of variables or more
 		\item Iterative solvers are used
 		\item Spend most of the time fetching data
-%		\item Arithmetic is faster than fetching data from memory
 	\end{itemize}
 \end{frame}
 
@@ -157,57 +155,6 @@
 	\end{itemize}
 \end{frame}
 
-%TODO consider describing test matrix
-
-\begin{frame}
-	\frametitle{Main Data Access Pattern}
-	\begin{algorithmic}
-		\FOR{row in rows}
-			\FOR{nonzero entry in row}
-				\STATE LOAD entry's value
-				\STATE LOAD entry's column index
-				\STATE LOAD vector value for column index
-			\ENDFOR
-			\STATE WRITE vector value for row
-		\ENDFOR
-	\end{algorithmic}
-	
-	\begin{itemize}
-		\pause
-		\item need random vector reads
-		\item need vector writes
-		\item need both forward and backward iteration of matrix rows
-	\end{itemize}
-\end{frame}
-
-%TODO consider adding model results, they don't actually tell that much
-%\begin{frame}
-%	\frametitle{Analytical Performance Model}
-%	\begin{itemize}
-%		\item System of equations that assumes no processor-level parallelism
-%		\item Solving for what conditions outperform the baseline gives:
-%	\end{itemize}
-%	\begin{align*}
-%%		\mathrm{vectEncode} <& 878.513 \\
-%		\mathrm{totalDecode} <& 32.5375 - 0.037037\cdot\mathrm{vectEncode} \\
-%		\mathrm{matBytes} <& 12.9664 - 0.398506\cdot\mathrm{totalDecode} \\
-%							&- 0.0147595\cdot\mathrm{vectEncode}\\
-%		\mathrm{vectBytes} <& 7.9998 + 8.27835\cdot(12 - \mathrm{matBytes}) \\
-%							&- 3.29897\cdot\mathrm{totalDecode}- 0.122184\cdot\mathrm{vectEncode}\\
-%	\end{align*}
-%\end{frame}
-
-%\begin{frame}
-%	\frametitle{Simulation Performance Model}
-%	\begin{itemize}
-%		\item Some processor level parallelism
-%		\item Conditions for outperforming the baseline:
-%	\end{itemize}
-%	
-%	%TODO consider switching to a graph
-%	\input{figures/3.Models/singleCompTimings--table.tex}
-%\end{frame}
-
 % Select Compression methods
 \begin{frame}
 	\frametitle{Compression Methods}
@@ -228,7 +175,6 @@
 		\item Only 6-9 digits instead of 15-17 digits
 		\item Certain vectors can be lower precision without slowing convergence
 		\begin{itemize}
-			\item \(\vec{b}, \vec{x}, \mat{A}\vec{d}\)
 			\item Retains result accuracy
 		\end{itemize}
 	\end{itemize}
