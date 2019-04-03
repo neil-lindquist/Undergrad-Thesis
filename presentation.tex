@@ -6,6 +6,10 @@
 \setbeamertemplate{bibliography item}{\insertbiblabel}
 \setbeamercovered{again covered={\opaqueness<1->{15}}}
 
+% Support Pi Mu Epsilon
+\newif\ifpme
+\pmefalse
+
 % output configuration
 \usepackage{pgfpages}
 %\setbeameroption{show notes on second screen=left}
@@ -35,9 +39,15 @@
 
 % title slide
 \title{\input{title.txt}}
-\subtitle{All-College Thesis Defense}
 \author{\textbf{Neil Lindquist}}
-\date{April 16th, 2019}
+
+\ifpme
+	\subtitle{Pi Mu Epsilon Conference}
+	\date{April 12th, 2019}
+\else
+	\subtitle{All-College Thesis Defense}
+	\date{April 16th, 2019}
+\fi
 
 \begin{document}
 \begin{frame}
@@ -54,75 +64,79 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Mathematics of Conjugate Gradient}
-	\begin{itemize}
-		% mention that CG converges faster than other methods (SOR et al)
-		\item Solving \(\mat{A}\vec{x} = \vec{b}\)
-		\pause
-		\item Minimizing \(f(\vec{x}) = \tfrac{1}{2}\vec{x}^T\mat{A}\vec{x}-\vec{b}\cdot\vec{x}\)
-		\pause
-		\item If \(\mat{A}\) is symmetric, then \(\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}\)
-		\pause
-		\item \(-\nabla f(\vec{x})\) is in direction of maximal decrease
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Mathematics of Conjugate Gradient}
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-				grid=major,
-				view={-30}{60},
-				xlabel=\(x_1\),
-				ylabel=\(x_2\),
-				samples=30,
-				]
-			\addplot3[surf,domain=0:3] 
-				{.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
-			\addplot3[mesh,domain=0:10/7,color=white] 
-				({x},{x}, {.5*(2*x^2 + 2*x*x + 3*x^2) - 5*x - 5*x});
-			\addplot3[mesh,domain=0:1,color=white] 
-				({(10/21)*x+10/7},{(-10/21)*x+10/7},
-				{.5*(2*((10/21)*x+10/7)^2 + 2*((10/21)*x+10/7)*((-10/21)*x+10/7) + 3*((-10/21)*x+10/7)^2) - 5*((10/21)*x+10/7) - 5*((-10/21)*x+10/7)});
-			\addplot3[mesh,domain=0:1,color=white] 
-				({(10/147)*x+40/21},{(10/147)*x+20/21},
-				{.5*(2*((10/147)*x+40/21)^2 + 2*((10/147)*x+40/21)*((10/147)*x+20/21) + 3*((10/147)*x+20/21)^2) - 5*((10/147)*x+40/21) - 5*((10/147)*x+20/21)});
-			\addplot3[mesh,domain=0:1,color=white] 
-				({(10/441)*x+290/147},{(-10/441)*x+50/49},
-				{.5*(2*((10/441)*x+290/147)^2 + 2*((10/441)*x+290/147)*((-10/441)*x+50/49) + 3*((-10/441)*x+50/49)^2) - 5*((10/441)*x+290/147) - 5*((-10/441)*x+50/49)});
-%			\addplot3[mesh,domain=0:1,color=white] 
-%				({(10/3087)*x + 880/441},{(10/3087)*x + 440/441},
-%				{.5*(2*((10/3087)*x+880/441)^2 + 2*((10/3087)*x+880/441)*((10/3087)*x+440/441) + 3*((10/3087)*x+440/441)^2) - 5*((10/3087)*x+880/441) - 5*((10/3087)*x+440/441)});
-		\end{axis}
-	\end{tikzpicture}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Mathematics of Conjugate Gradient}
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-				grid=major,
-				view={-30}{60},
-				xlabel=\(x_1\),
-				ylabel=\(x_2\),
-				samples=30,
-				]
-			\addplot3[surf,domain=0:3] 
-				{.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
-			\addplot3[mesh,domain=0:10/7,color=white] 
-				({x},{x}, {.5*(2*x^2 + 2*x*x + 3*x^2) - 5*x - 5*x});
-			\addplot3[mesh,domain=0:1,color=white] 
-				({(4/7)*x+10/7},{(-10/21)*x+10/7},
-				{.5*(2*((4/7)*x+10/7)^2 + 2*((4/7)*x+10/7)*((-3/7)*x+10/7) + 3*((-3/7)*x+10/7)^2) - 5*((4/7)*x+10/7) - 5*((-3/7)*x+10/7)});
-%			\addplot3[mesh,domain=0:1,color=white] 
-%				({(10/3087)*x + 880/441},{(10/3087)*x + 440/441},
-%				{.5*(2*((10/3087)*x+880/441)^2 + 2*((10/3087)*x+880/441)*((10/3087)*x+440/441) + 3*((10/3087)*x+440/441)^2) - 5*((10/3087)*x+880/441) - 5*((10/3087)*x+440/441)});
-		\end{axis}
-	\end{tikzpicture}
-\end{frame}
+\ifpme
+\else
+	
+	\begin{frame}
+		\frametitle{Mathematics of Conjugate Gradient}
+		\begin{itemize}
+			% mention that CG converges faster than other methods (SOR et al)
+			\item Solving \(\mat{A}\vec{x} = \vec{b}\)
+			\pause
+			\item Minimizing \(f(\vec{x}) = \tfrac{1}{2}\vec{x}^T\mat{A}\vec{x}-\vec{b}\cdot\vec{x}\)
+			\pause
+			\item If \(\mat{A}\) is symmetric, then \(\nabla f(\vec{x}) = \mat{A}\vec{x} - \vec{b}\)
+			\pause
+			\item \(-\nabla f(\vec{x})\) is in direction of maximal decrease
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Mathematics of Conjugate Gradient}
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+					grid=major,
+					view={-30}{60},
+					xlabel=\(x_1\),
+					ylabel=\(x_2\),
+					samples=30,
+					]
+				\addplot3[surf,domain=0:3] 
+					{.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
+				\addplot3[mesh,domain=0:10/7,color=white] 
+					({x},{x}, {.5*(2*x^2 + 2*x*x + 3*x^2) - 5*x - 5*x});
+				\addplot3[mesh,domain=0:1,color=white] 
+					({(10/21)*x+10/7},{(-10/21)*x+10/7},
+					{.5*(2*((10/21)*x+10/7)^2 + 2*((10/21)*x+10/7)*((-10/21)*x+10/7) + 3*((-10/21)*x+10/7)^2) - 5*((10/21)*x+10/7) - 5*((-10/21)*x+10/7)});
+				\addplot3[mesh,domain=0:1,color=white] 
+					({(10/147)*x+40/21},{(10/147)*x+20/21},
+					{.5*(2*((10/147)*x+40/21)^2 + 2*((10/147)*x+40/21)*((10/147)*x+20/21) + 3*((10/147)*x+20/21)^2) - 5*((10/147)*x+40/21) - 5*((10/147)*x+20/21)});
+				\addplot3[mesh,domain=0:1,color=white] 
+					({(10/441)*x+290/147},{(-10/441)*x+50/49},
+					{.5*(2*((10/441)*x+290/147)^2 + 2*((10/441)*x+290/147)*((-10/441)*x+50/49) + 3*((-10/441)*x+50/49)^2) - 5*((10/441)*x+290/147) - 5*((-10/441)*x+50/49)});
+	%			\addplot3[mesh,domain=0:1,color=white] 
+	%				({(10/3087)*x + 880/441},{(10/3087)*x + 440/441},
+	%				{.5*(2*((10/3087)*x+880/441)^2 + 2*((10/3087)*x+880/441)*((10/3087)*x+440/441) + 3*((10/3087)*x+440/441)^2) - 5*((10/3087)*x+880/441) - 5*((10/3087)*x+440/441)});
+			\end{axis}
+		\end{tikzpicture}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Mathematics of Conjugate Gradient}
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+					grid=major,
+					view={-30}{60},
+					xlabel=\(x_1\),
+					ylabel=\(x_2\),
+					samples=30,
+					]
+				\addplot3[surf,domain=0:3] 
+					{.5*(2*x^2 + 2*x*y + 3*y^2) - 5*x - 5*y};
+				\addplot3[mesh,domain=0:10/7,color=white] 
+					({x},{x}, {.5*(2*x^2 + 2*x*x + 3*x^2) - 5*x - 5*x});
+				\addplot3[mesh,domain=0:1,color=white] 
+					({(4/7)*x+10/7},{(-10/21)*x+10/7},
+					{.5*(2*((4/7)*x+10/7)^2 + 2*((4/7)*x+10/7)*((-3/7)*x+10/7) + 3*((-3/7)*x+10/7)^2) - 5*((4/7)*x+10/7) - 5*((-3/7)*x+10/7)});
+	%			\addplot3[mesh,domain=0:1,color=white] 
+	%				({(10/3087)*x + 880/441},{(10/3087)*x + 440/441},
+	%				{.5*(2*((10/3087)*x+880/441)^2 + 2*((10/3087)*x+880/441)*((10/3087)*x+440/441) + 3*((10/3087)*x+440/441)^2) - 5*((10/3087)*x+880/441) - 5*((10/3087)*x+440/441)});
+			\end{axis}
+		\end{tikzpicture}
+	\end{frame}
+\fi
 
 % Data access patterns/compression limitations
 \begin{frame}
