@@ -58,7 +58,7 @@
 \begin{frame}
 	\frametitle{Motivation}
 	\begin{itemize}
-		\item Solving sparse linear systems used in many computations
+		\item Sparse systems of linear equations used in many computations
 		\item Iterative solvers are used
 		\item Spend most of the time fetching data
 	\end{itemize}
@@ -232,6 +232,7 @@
 		\end{itemize}
 		\item A 20-core, 2.2GHz, Intel Broadwell head node
 		\item Plus five 8-core, 1.7GHz Intel Broadwell nodes
+		\item Based on the HPCG benchmark
 		\item MPI communication
 	\end{itemize}
 \end{frame}
@@ -396,6 +397,12 @@
 		\item Iterative, sparse linear solvers are memory access bound
 		\item Compressing key data structures provided an 84\% increase in performance
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sources}
+	\centering
+	\url{Github.com/Collegeville/HPCG-ZFP}
 \end{frame}
 
 \end{document}
