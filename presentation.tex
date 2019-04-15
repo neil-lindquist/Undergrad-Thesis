@@ -27,6 +27,7 @@
 % plotting setup
 \usepackage{pgfplots}
 	\pgfplotsset{compat=1.16}
+	\usetikzlibrary{arrows.meta}
 \usepackage{pgfplotstable}
 \usepgfplotslibrary{external} 
 \tikzexternalize
@@ -142,7 +143,7 @@
 
 % Data access patterns/compression limitations
 \begin{frame}
-	\frametitle{Solver Description}
+	\frametitle{Test Problem}
 	\begin{itemize}
 		%TODO should this information be here?
 		%just describe the matrix instead
@@ -151,24 +152,78 @@
 			%\item \(0 = \frac{\partial}{\partial x}u(x, y, z) +\frac{\partial}{\partial y}u(x, y, z) + \frac{\partial}{\partial z}u(x, y, z)\)
 			\item Discretized with a 27-point stencil
 		\end{itemize}
-		\pause
-		\item Preconditioned Conjugate Gradient was used
-		\begin{itemize}
-			\item 3-level multigrid preconditioner with Symmetric Gauss-Seidel smoother
-		\end{itemize}
-		\pause
-		\item Matrix store in CSR format
-		\begin{itemize}
-			\item Stores the column index and value for each nonzero entry
-		\end{itemize}
-		\pause
-		\item 3 compressible data structures
-		\begin{itemize}
-			\item Vector Values
-			\item Matrix Indices
-			\item Matrix Values
-		\end{itemize}
 	\end{itemize}
+	\centering
+	\begin{tikzpicture}
+		\foreach \y in {-1,...,1}
+			\foreach \z in {-1,...,1}
+				{
+				\node[draw, circle] (-1\y\z) at (-2, 2*\y, 2*\z) {};
+				\node[draw, circle] (1\y\z) at ( 2, 2*\y, 2*\z) {};
+				}
+		\foreach \z in {-1,...,1}
+			{
+				\node[draw, circle] (0-1\z) at (0, -2, 2*\z) {};
+				\node[draw, circle] (01\z) at (0, 2, 2*\z) {};
+			}
+		\node[draw, circle, fill] (000) at (0, 0, 0) {};
+		\node[draw, circle] (00-1) at (0, 0, -2) {};
+		\node[draw, circle] (001) at (0, 0,  2) {};
+		
+		\foreach \x in {-1,0,1}
+			{
+			\draw[thick] (\x-1-1) -- (\x-10) (\x-10) -- (\x-11);
+			\draw[thick] (\x0-1) -- (\x00) (\x00) -- (\x01);
+			\draw[thick] (\x1-1) -- (\x10) (\x10) -- (\x11);
+			\draw[thick] (\x-1-1) -- (\x0-1) (\x0-1) -- (\x1-1);
+			\draw[thick] (\x-10) -- (\x00) (\x00) -- (\x10);
+			\draw[thick] (\x-11) -- (\x01) (\x01) -- (\x11);
+			}
+		\foreach \y in {-1,0,1}
+			{
+			\draw[thick] (-1\y-1) -- (-1\y0) (-1\y0) -- (-1\y1);
+			\draw[thick] (0\y-1) -- (0\y0) (0\y0) -- (0\y1);
+			\draw[thick] (1\y-1) -- (1\y0) (1\y0) -- (1\y1);
+			\draw[thick] (-1\y-1) -- (0\y-1) (0\y-1) -- (1\y-1);
+			\draw[thick] (-1\y0) -- (0\y0) (0\y0) -- (1\y0);
+			\draw[thick] (-1\y1) -- (0\y1) (0\y1) -- (1\y1);
+			}
+		\draw[-{Latex[length=3mm]},very thick] (-2,-2.5,2.5) -- (2,-2.5,2.5) node[midway,below] {X};
+		\draw[-{Latex[length=3mm]},very thick] (2.5,-2.5,2) -- (2.5,-2.5,-2) node[midway,right] {Y};
+		\draw[-{Latex[length=3mm]},very thick] (-2.5,-2,2.5) -- (-2.5,2,2.5) node[midway,left] {Z};
+	\end{tikzpicture}
+\end{frame}
+\begin{frame}
+	\frametitle{Solver Description}
+	\begin{itemize}
+		\item Preconditioned Conjugate Gradient was used
+		\item 3-level multigrid preconditioner with Symmetric Gauss-Seidel smoother
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{Compressed Sparse Row Format}
+	\centering
+	\[
+		\begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		5 & 8 & 0 & 0 \\
+		0 & 0 & 3 & 0 \\
+		0 & 6 & 0 & 4 \\
+		\end{bmatrix}
+	\]
+	\begin{tabular}{rcccc}
+	Row     & 0 & 1 & 2 & 3 \\
+	Values  & [1] & [5, 8] & [3] & [6, 4] \\
+	Indices & [0] & [0, 1] & [2] & [1, 3] \\
+	\end{tabular}
+\end{frame}
+\begin{frame}
+	\frametitle{Main Data Structures}
+	\begin{enumerate}
+		\item Vector Values
+		\item Matrix Indices
+		\item Matrix Values
+	\end{enumerate}
 \end{frame}
 
 % Select Compression methods
