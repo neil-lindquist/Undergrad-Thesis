@@ -1,6 +1,7 @@
 #### Latex Generated Files
 ## Core latex/pdflatex auxiliary files:
 *.aux
+*.loa
 *.lof
 *.log
 *.lot
