@@ -86,6 +86,7 @@ In Partial Fulfillment of the Requirements for All College Honors}}}
 \if@sigpage
   \begin{flushleft}
     \large{\textbf{Project Title:} \@title}\\
+    \medskip
     Approved by:\\
     \vspace{1cm}
     \@advisors
