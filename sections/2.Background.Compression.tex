@@ -1,8 +1,7 @@
 Numerous compression strategies were considered for this project.
 Figure~\ref{fig:comp-overview} lists the compressions tried for each of the main data structures.
+\input{"figures/2.Background/Compression/Strategies Overview.tex"} %
 Note that most compression methods were only used with one or two of the data types, even if able to be reasonably used within the constraints of other types of data.
-
-\input{"figures/2.Background/Compression/Strategies Overview.tex"}
 
 \subsubsection{Restrictions on Compression Strategies}
 The restrictions on usable compression strategies primarily come from the data access requirements described in Section~\ref{sec:bg-da}.
@@ -55,10 +54,9 @@ where \(s\) be the number of bits used by an uncompressed value, \(p\) be the pe
 Note that due to the granularity of the matrix values and indices, bounding the error to be less than one results in an effective error bound of 0.
 Thus, when compressing those data structure, only an error bound of 0 is used.
 
-\input{figures/2.Background/Compression/SZ-modes.tex}
-
 The predictors available are selected based on the nature of the data being compressed.
 Figure~\ref{fig:comp-sz-modes} shows all predictor functions used.
+\input{figures/2.Background/Compression/SZ-modes.tex} %
 For compressing vector values, the Neighbor, Linear and Quadratic predictors were used.
 Because the vector values represent a value at each grid point, these predictors attempted to capture smooth changes and relations in the data.
 The matrix indices were compressed using only the increment compression mode, since approximately two thirds of the indices fit that pattern.
@@ -89,16 +87,14 @@ Then, \(n\) is represented by \(N-1\) zeros followed by the \(N\) bits of \(n\)~
 Thus, \(n\) can be stored with only \(2N-1\) bits.
 For small values of \(N\) this is highly affected, reaching compression ratios of up to 1:32.
 See Figure~\ref{fig:bg-comp-gamma-ex} for examples of gamma coding.
-
 \input{figures/2.Background/Compression/Gamma-Ex.tex}
 
 Delta coding is like Gamma coding, except instead of preceding the number with \(N-1\) 0's, the number is preceded by \(gamma(N)\) and only the last \(N-1\) bits are stored.
 So, \(n\) can be stored with only \(N + 2\floor{\log_2(N)}\) bits.
 Figure~\ref{fig:bg-comp-delta-ex} contains examples of delta coding.
+\input{figures/2.Background/Compression/Delta-Ex.tex} %
 Note that delta coding provides better compression for large numbers, but worse compression for certain smaller numbers.
 Additionally, because decoding a delta encoded value requires decoding a gamma encoded value, decoding a delta coded value is more expensive than decoding a gamma coded value.
-
-\input{figures/2.Background/Compression/Delta-Ex.tex}
 
 \subsubsection{Huffman Coding}
 \label{sec:bg-comp-huffman}
@@ -124,7 +120,6 @@ For example, if 0, 10 and 11 are the possible opcodes, then the information for 
 The description of CCI matrix format uses a fixed decode table.
 However, when using a lookup table, using custom decode tables to adjust the compression for the specific matrix's sparsity pattern will not have a significant performance penalty to decoding.
 Table~\ref{tab:bg-comp-opcode-CCIdecodeTable} shows the opcodes used for CCI format.
-
 \input{figures/2.Background/Compression/opcode-CCIdecodeTable.tex}
 
 \subsubsection{Combined Compression Strategies}

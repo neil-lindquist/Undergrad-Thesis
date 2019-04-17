@@ -6,6 +6,7 @@ Additionally, the models only provide estimates for rows with 27 elements, becau
 Finally, the models assume that the compression does not reduce the rate of convergence.
 The models were analyzed using the memory access latencies of the head node of the testing cluster.
 These latencies are shown in Table~\ref{tab:models-baseLatencies}.
+\input{figures/3.Models/baseLatencies} %
 The models were primarily used to find the minimum compression performance to outperform the baseline implementation.
 The following variables represent the relevant compression characteristics in this section
 \begin{align*}
@@ -17,8 +18,6 @@ The following variables represent the relevant compression characteristics in th
 	\mathrm{matValDecode} &= \text{time to decode one matrix value} \\
 	\mathrm{matValBytes} &= \text{the number of bytes per matrix value}
 \end{align*}
-
-\input{figures/3.Models/baseLatencies}
 
 Both models indicate that vector decoding must be incredibly efficient to see overall performance improvement, while matrix decoding can be less efficient.
 This implies matrix compression has greater potential for overall performance improvement.
@@ -70,24 +69,20 @@ Matrix compression on the other hand, appears to be able to achieve a performanc
 \subsection{Simulation Based Model}
 The parallel model attempts to estimate the performance required to outperform the baseline implementation while considering processor level parallelism.
 Figure~\ref{fig:models-dataDeps} shows the dependencies used by each model.
+\input{figures/3.Models/dataDependacies} %
 Note that this model assumes that the compiler and processor can fully parallelize any operations without data dependencies, while, at the absolute minimum, the instructions must be read serially~\cite{Hennessy:1990:ComputerArchitecture}.
 Additionally, the model assumes that the bytes of each compressed value is constant, which is not true for most matrix compression and for some vector compression.
 Lastly, the model was used with integral values for the bytes, decode times and encode times.
 The model then takes the same compression properties as the first model and computes the time to fetch and decode the values and encode the result value over 10 matrix rows with 27 entries per row.
 Appendix~\ref{app:decode-model-source} contains source code for this model.
 
-\input{figures/3.Models/dataDependacies}
-
 The bounds on outperforming the baseline implementation were hard to determine for the simulation model due to the nature of the model as a sum of maximizations.
 However, some boundaries were computed.
-%
-%
 Table~\ref{tab:models-singleComp} shows the restrictions when compressing only a single data structure.
+\input{figures/3.Models/singleCompTimings} %
 The matrix index and value columns contain the maximum time to decode a value, in clocks.
 The vector column contains equations that restrict the decode and encode time, with values in clocks.
 Note that the vector limits are not the only way to compute the restriction.
 These compression bounds appear to be significantly related to the frequency at which multiple values are fetched from main memory.
 
 \review{Is there a way to look at combined compression results? Size variables are too strange to be able to do a set of equations}
-
-\input{figures/3.Models/singleCompTimings}

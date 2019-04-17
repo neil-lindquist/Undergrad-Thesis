@@ -2,11 +2,9 @@ Data compression was able to successfully increase the performance of the sparse
 The best performance increase came from using SZ compression on the matrix indices and values and using single precision values for select vectors with an increase in the effective GFLOPs of about 84\%.
 However, there are only a few compression strategies that outperform the baseline.
 
-\review{Should this analysis of compression effectiveness be located somewhere else?  With the results?}
 When considering more general matrices, note that the effectiveness of SZ compression is highly dependent on local relationships between compressed values.
 So, SZ based compression strategies will likely lose performance on many other matrices.
-However, note that the performance of single precision ``compression'' is unaffected by the values being compressed and that the effectiveness of gamma compression is proportional to the number of significant bits.
-Thus, using 32bit matrix values and gamma compressed matrix indices will likely perform more consistently than the SZ based compression approach and may perform better on some matrices.
+However, because the performance of single precision ``compression'' is unaffected by the values being compressed and that the effectiveness of gamma compression is proportional to the number of significant bits, using 32bit matrix values and gamma compressed matrix indices will likely perform more consistently than the SZ based compression approach and may perform better on some matrices.
 
 \subsection{Future Work}
 \review{this order/organization of these paragraphs}

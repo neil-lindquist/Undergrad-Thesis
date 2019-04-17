@@ -1,13 +1,10 @@
-Tables~\ref{tab:results-vec}, \ref{tab:results-val} and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values, and matrix indices, respectively.
-These tables, and all following tables of test results, contain the rating measured by HPCG, the GFLOP rating with convergence overhead, the number of iterations needed for convergence and, where computed, the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
+Tables~\ref{tab:results-vec}, \ref{tab:results-val}, and~\ref{tab:results-ind} show the compression results for compressing just the vector values, matrix values, and matrix indices, respectively.
+\input{figures/4.Results/Vec.tex} %
+\input{figures/4.Results/Val.tex} %
+\input{figures/4.Results/Ind.tex} %
+These tables, and all following tables of test results, contain the HPCG rating; the GFLOP rating with convergence overhead; the number of iterations needed for convergence; and, where computed, the compression rate based on the number of cache lines fetched, which may be different then the memory allocated.
 Note that some compression strategies had multiple variations that were tested.
-Sections~\ref{sec:results-vec}, \ref{sec:results-vals} and~\ref{sec:results-inds} provide details on the compression of each specific data structure.
-
-\review{Make sure that the results shown don't need to be cut down to be understandable}
-
-\input{figures/4.Results/Vec.tex}
-\input{figures/4.Results/Val.tex}
-\input{figures/4.Results/Ind.tex}
+Sections~\ref{sec:results-vec}, \ref{sec:results-vals}, and~\ref{sec:results-inds} provide details on the compression of each specific data structure.
 
 Note that for comparing times, ten runs of the baseline implementation with the standard test settings had a range of 0.6128 and a standard deviation of 0.1846 for the HPCG rating.
 For the effective GFLOP/s, there was a range of 0.4629 and a standard deviation of 0.1504.
@@ -17,18 +14,16 @@ Next, because compressing a single data structure failed to improve performance,
 SZ and single precision compression where tried for the matrix values and using SZ, gamma and delta compression for the matrix indices.
 Table~\ref{tab:results-combined-mat} shows the results of these combined schemes.
 The combined scheme with the best performance used SZ compression for both values and indices.
+\input{figures/4.Results/Combined-mat.tex} %
 The only other approach that outperformed the baseline implementation used 32-bit compression for the values and gamma compression for the indices.
 
-\input{figures/4.Results/Combined-mat.tex}
-
 Finally, vector compression was combined with the successful combined matrix compression.
-Due to the deficient performance of SZ and ZFP vector compression, only the better versions of mixed precision vector compression were used.
+Only the best few versions of mixed precision vector compression were used.
 Table~\ref{tab:results-combined-vec+mat} shows the results for these compression strategies.
+\input{figures/4.Results/Combined-vec+mat.tex} %
 The first column indicates which vectors were stored in 32bit; the rest of the columns correspond to their counterparts in Table~\ref{tab:results-combined-mat}.
 Note that vector compression improved the performance of the SZ compressed matrices but reduced the performance of the gamma compressed matrices.
 So, the best implementation for the test problem uses mixed precision vectors with \(\vec{b}, \vec{x}\) and \(\mat{A}\vec{d}\) stored in single precision, and SZ compressed matrix values and indices.
-
-\input{figures/4.Results/Combined-vec+mat.tex}
 
 \subsection{Vector Compression}
 \label{sec:results-vec}
@@ -51,12 +46,11 @@ ZFP had poor performance when compressing vector information.
 The high-level array API was used to provide the necessary random access.
 That API provides an adjustable cache for decoded values.
 Figure~\ref{fig:results-zfp-cache} shows the performance of 1d ZFP compression versus the cache size.
+\input{figures/4.Results/Vec-zfp-cache.tex} %
 Note that the two large jumps occur when the values only need to be decoded once per matrix-vector product and when the values can be left permanently decoded.
 The results in Table~\ref{tab:results-vec} use the default cache size of 2 blocks for 1 dimensional compression and \({2\cdot\ceil{nz/2}\cdot\ceil{ny/2}}\) blocks for 3-dimensional compression.
 The array API also allows selecting the compression rate, with a 16-bit granularity for 1-dimensional compression and a 1-bit granularity for 3-dimensional compression~\cite{Lindstrom:2014:zfp}.
 These granularity restrictions and the resulting iterations needed were used to select the tested compression rates.
-
-\input{figures/4.Results/Vec-zfp-cache.tex}
 
 SZ compression has two main configurable settings, the number of values in each block and the error bound.
 There were two measures of error that were considered, absolute error and pointwise relative error.
@@ -65,10 +59,9 @@ Absolute error is the absolute value of the difference between predicted and act
 The pointwise relative error is the absolute error divided by the actual value.
 Table~\ref{tab:results-vec} contains results for various block sizes with both an absolute error bound of \(10^{-10}\) and a pointwise relative error bound of \(10^{-10}\).
 Table~\ref{tab:results-vec-SZ} contains a comparison of various error bounds for a block size of 8 values per block.
+\input{figures/4.Results/Vec-SZ.tex} %
 Note that an absolute bound of \(10^{-2}\) was unable to converge within 500 iterations.
 
-
-\input{figures/4.Results/Vec-SZ.tex}
 
 \subsection{Matrix Value Compression}
 \label{sec:results-vals}
@@ -114,9 +107,8 @@ So, a higher window size increases the memory needed, but reduces the total numb
 Although Opcode compression has outperformed uncompressed values in some settings, it was unable to perform well in this code base~\cite{Lawlor:2013:compression}.
 Several sets of opcodes were tried, including the original shown in Figure~\ref{tab:bg-comp-opcode-CCIdecodeTable}.
 The set of opcodes with the best performance is shown in Figure~\ref{tab:results-opcode-decodeTable}; it was designed for the best performance on the matrices used.
+\input{figures/4.Results/opcode-decodeTable} %
 The difference in success of the CCI opcodes from previous works likely comes from a difference in the data access patterns, cache sizes or decoding implementation.
-
-\input{figures/4.Results/opcode-decodeTable}
 
 \subsection{Testing Environment}
 The compression rates were either analytically computed or computed from the compressed size.
