@@ -70,8 +70,9 @@ Matrix compression on the other hand, appears to be able to achieve a performanc
 The parallel model attempts to estimate the performance required to outperform the baseline implementation while considering processor level parallelism.
 Figure~\ref{fig:models-dataDeps} shows the dependencies used by each model.
 \input{figures/3.Models/dataDependacies} %
-Note that this model assumes that the compiler and processor can fully parallelize any operations without data dependencies, while, at the absolute minimum, the instructions must be read serially~\cite{Hennessy:1990:ComputerArchitecture}.
+Note that this model assumes that the compiler and processor can fully parallelize any operations without data dependencies, while, the instructions must be at least read serially~\cite{Hennessy:1990:ComputerArchitecture}.
 Additionally, the model assumes that the bytes of each compressed value is constant, which is not true for most matrix compression and for some vector compression.
+Also, the model was not used to analyze compressing multiple data structures simultaneously due to the difficulty of analyzing the resulting seven-dimension region.
 Lastly, the model was used with integral values for the bytes, decode times and encode times.
 The model then takes the same compression properties as the first model and computes the time to fetch and decode the values and encode the result value over 10 matrix rows with 27 entries per row.
 Appendix~\ref{app:decode-model-source} contains source code for this model.
@@ -83,6 +84,4 @@ Table~\ref{tab:models-singleComp} shows the restrictions when compressing only a
 The matrix index and value columns contain the maximum time to decode a value, in clocks.
 The vector column contains equations that restrict the decode and encode time, with values in clocks.
 Note that the vector limits are not the only way to compute the restriction.
-These compression bounds appear to be significantly related to the frequency at which multiple values are fetched from main memory.
-
-\review{Is there a way to look at combined compression results? Size variables are too strange to be able to do a set of equations}
+These compression bounds appear to be significantly related to the frequency at which multiple values are fetched from main memory simultaneously.

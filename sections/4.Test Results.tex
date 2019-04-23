@@ -92,8 +92,6 @@ Matrix index compression was unable to outperform the baseline implementation.
 Both SZ compression and the Elias codings were able to perform in the ballpark of the baseline implementation.
 Neither Huffman coding nor Op Code compression were able to perform close to the performance of baseline implementation.
 
-\review{Does there need to be stuff written about SZ, Gamma or Delta compression?}
-
 Variations of the Huffman coding implementation were experimented with to find the best set of parameters.
 The first parameter was whether to compress the first index or to leave it uncompressed.
 Because Huffman coding needs a codeword for each represented value, compressing the first index will reduce the memory of that value but reduce the efficiency of compressing the rest of the values~\cite{Huffman:1952:coding}.

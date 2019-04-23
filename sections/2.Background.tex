@@ -1,7 +1,14 @@
+This project builds on existing work in both linear solvers and data compression.
+First, Sections~\ref{sec:bg-cg} and~\ref{sec:bg-mg} describe the underlying mathematics of linear solver used in this work.
+Next, Sections~\ref{sec:bg-setup} and~\ref{sec:bg-da} discuss how the problem is setup, the data access patterns of the solver, and the resulting requirements on compression methods.
+Finally, Section~\ref{sec:bg-comp} discusses the various compression strategies used in this project.
+
 \subsection{Conjugate Gradient}
+\label{sec:bg-cg}
 \input{"sections/2.Background.Conjugate Gradient.tex"}
 
 \subsection{Multigrid Preconditioner with Gauss-Seidel Step}
+\label{sec:bg-mg}
 \input{"sections/2.Background.MG Preconditioner.tex"}
 
 \subsection{Problem Setup of High Performance Conjugate Gradient}
