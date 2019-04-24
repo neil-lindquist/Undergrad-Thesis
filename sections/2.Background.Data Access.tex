@@ -30,7 +30,7 @@ The matrix vector product iterates once over the rows and for each row sums the 
 Both the rows and the sum in each row may be iterated in any order or in parallel.
 Thus, the matrix information can be compressed for any iteration order of rows and any iteration order of the values in each row.
 However, the vector information must be able to be read at an arbitrary index.
-For each iteration, the matrix information is read only once, and the vector entries are read for each nonzero value in the corresponding column (8 to 27 times for the matrix described in Section~\ref{sec:bg-setup}).
+For each iteration, the matrix information is read only once, and the vector entries are read for each nonzero value in the corresponding column (8 to 27 times for this matrix).
 So, assuming the problem is too large for the matrix to fit entirely in the memory caches, the matrix data will always need to be read from main memory, while vector data will be able to utilize caches, resulting in up to 27-fold fewer reads than the matrix data.
 This hints that the compressing matrix information is more likely to provide an increase in performance of the matrix vector product than compressing the vector information.
 

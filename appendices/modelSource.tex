@@ -58,7 +58,7 @@ The model was implemented in Common Lisp and used with Steel Bank Common Lisp ve
 
 
 (defun 1-row ()
-  "Computings the average cost to load a row.
+  "Computes the average cost to load a row.
    *rows-to-check* provides the number of rows to use"
   (+ (/ (loop
           :for i :from 0 :below (* *rows-to-check* 27)
