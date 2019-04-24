@@ -15,53 +15,16 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{csbsjuthesis}
-    [2019/02/09 v1.0.0 CSB/SJU Thesis]
+    [2019/04/23 v2.0.0 CSB/SJU Thesis]
 \LoadClass{article}
-\RequirePackage{algorithm}
 \newcommand{\@honors}{}
-\newif\if@sigpage
-\@sigpagetrue
 \DeclareOption{honors}{\renewcommand{\@honors}{\vspace{2cm}\Large{%
 In Partial Fulfillment of the Requirements for All College Honors}}}
-\DeclareOption{nosignatures}{\@sigpagefalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 \RequirePackage{etoolbox}
 \patchcmd{\thebibliography}{\section*}{\section}{}{}
 \bibliographystyle{plain}
-\newcommand{\@advisors}{}
-\newcommand{\advisor}[2]{\g@addto@macro{\@advisors}{%
-  \vspace{1.5cm}
-  \hrulefill \\
-  \large{#1}\\
-  \small{#2}\\
-}}
-\newcommand{\@readers}{}
-\newcommand{\reader}[2]{\g@addto@macro{\@readers}{%
-  \vspace{1.5cm}
-  \hrulefill \\
-  \large{#1}\\
-  \small{#2}\\
-}}
-\newcommand{\@chairs}{}
-\newcommand{\deptchair}[2]{\g@addto@macro{\@chairs}{%
-  \vspace{1.5cm}
-  \hrulefill \\
-  \large{#1}\\
-  \small{Chair, Department of #2}\\
-}}
-\newbox\@abstractbox
-\renewenvironment{abstract}{%
-  \global\setbox\@abstractbox=\vbox\bgroup
-  {\centering\noindent\unskip\textbf{\abstractname}\par}
-  \medskip\unskip\ignorespaces}
-{\egroup}
-\newenvironment{frontpage}{%
-\pagenumbering{roman}%
-}{%
-\clearpage
-\pagenumbering{arabic}
-}
 \renewcommand{\maketitle}{%
 \begin{center}
   \vspace*{1cm}
@@ -83,7 +46,29 @@ In Partial Fulfillment of the Requirements for All College Honors}}}
 \pagenumbering{gobble}
 \clearpage
 \pagenumbering{roman}
-\if@sigpage
+}
+\newcommand{\@advisors}{}
+\newcommand{\advisor}[2]{\g@addto@macro{\@advisors}{%
+  \vspace{1.5cm}
+  \hrulefill \\
+  \large{#1}\\
+  \small{#2}\\
+}}
+\newcommand{\@readers}{}
+\newcommand{\reader}[2]{\g@addto@macro{\@readers}{%
+  \vspace{1.5cm}
+  \hrulefill \\
+  \large{#1}\\
+  \small{#2}\\
+}}
+\newcommand{\@chairs}{}
+\newcommand{\deptchair}[2]{\g@addto@macro{\@chairs}{%
+  \vspace{1.5cm}
+  \hrulefill \\
+  \large{#1}\\
+  \small{Chair, Department of #2}\\
+}}
+\newcommand{\sigpage}{
   \begin{flushleft}
     \large{\textbf{Project Title:} \@title}\\
     \medskip
@@ -97,20 +82,20 @@ In Partial Fulfillment of the Requirements for All College Honors}}}
     \small{Director, All College Thesis Program}\\
   \end{flushleft}
   \clearpage
-\fi
-\ifdim\wd\@abstractbox>0pt
-    \vspace*{\fill}
-    \box\@abstractbox
-    \vspace*{\fill}
-    \clearpage
-\fi
-\tableofcontents
-\clearpage
-\listofalgorithms
-\listoffigures
-\listoftables
-\clearpage
-\pagenumbering{arabic}
+}
+\renewenvironment{abstract}{%
+  \vspace*{\fill}
+  \vbox\bgroup
+  {\centering\noindent\unskip\textbf{\abstractname}\par}
+  \medskip\unskip\ignorespaces %
+}{%
+  \egroup
+  \vspace*{\fill}
+  \clearpage
+}
+\newcommand{\mainmatter}{%
+  \clearpage
+  \pagenumbering{arabic}
 }
 \endinput
 %%

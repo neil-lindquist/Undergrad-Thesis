@@ -37,7 +37,7 @@
 \date{April 2019}
 
 \advisor{Mike Heroux}{Scientist in Residence}
-\reader{Robert Hesse}{Associate Professor of Math}
+\reader{Robert Hesse}{Associate Professor of Mathematics}
 \reader{Jeremy Iverson}{Assistant Professor of Computer Science}
 \deptchair{Bret Benesh}{Mathematics}
 \deptchair{Imad Rahal}{Computer Science}
@@ -48,6 +48,10 @@
 \theoremstyle{definition}
 \newtheorem{example}{Example}
 
+\maketitle
+
+\sigpage
+
 \begin{abstract}
 	Solving large, sparse systems of linear equations plays a significant role in certain scientific computations, such as approximating the solutions of partial differential equations.
 	However, solvers for these types of problems usually spend most of their time fetching data from main memory.
@@ -56,7 +60,15 @@
 	These results indicate that, if similar improvements can be made with other linear systems, compression could improve the performance of real-world solvers.
 \end{abstract}
 
-\maketitle
+\tableofcontents
+\clearpage
+
+\listofalgorithms
+\listoffigures
+\listoftables
+\clearpage
+
+\mainmatter
 
 \section{Introduction}
 \input{sections/1.Introduction.tex}
